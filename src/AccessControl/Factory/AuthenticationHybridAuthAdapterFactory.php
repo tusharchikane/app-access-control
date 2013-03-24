@@ -1,10 +1,15 @@
 <?php
 namespace BoilerAppAccessControl\Factory;
 class AuthenticationHybridAuthAdapterFactory implements \Zend\ServiceManager\FactoryInterface{
+	/**
+	 * @param \Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator
+	 * @throws \LogicException
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter|Exception
+	 */
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
 		try{
 			$aConfiguration = $oServiceLocator->get('Config');
-			if(!isset($aConfiguration['hybrid_auth']) || !is_array($aConfiguration['hybrid_auth']))throw new \Exception('HybridAuth\'s config is undefined');
+			if(!isset($aConfiguration['hybrid_auth']) || !is_array($aConfiguration['hybrid_auth']))throw new \LogicException('HybridAuth\'s config is undefined');
 			$aConfiguration = $aConfiguration['hybrid_auth'];
 			//Rewrite base url
 			$aConfiguration['base_url'] = $oServiceLocator->get('Router')->assemble(array(),array('name' => $aConfiguration['base_url'],'force_canonical' => true));

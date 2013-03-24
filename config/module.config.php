@@ -57,13 +57,14 @@ return array(
 			'RegistrationService' => 'BoilerAppAccessControl\Service\RegistrationService'
 		),
 		'factories' => array(
-			'BoilerAppAccessControlAuthenticationService' => 'BoilerAppAccessControl\Factory\BoilerAppAccessControlAuthenticationServiceFactory',
+			'AccessControlAuthenticationService' => 'BoilerAppAccessControl\Factory\BoilerAppAccessControlAuthenticationServiceFactory',
 			'AuthenticationStorage' => 'BoilerAppAccessControl\Factory\AuthenticationStorageFactory',
 			'AuthenticationDoctrineAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationDoctrineAdapterFactory',
 			'AuthenticationHybridAuthAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationHybridAuthAdapterFactory',
 			'AuthenticateForm' => 'BoilerAppAccessControl\Factory\AuthenticateFormFactory',
 			'RegisterForm' => 'BoilerAppAccessControl\Factory\RegisterFormFactory',
 			'ResetCredentialForm' => 'BoilerAppAccessControl\Factory\ResetCredentialFormFactory',
+			'SessionManager' => 'BoilerAppAccessControl\Factory\SessionManagerFactory',
 		)
 	),
 	'view_manager' => array(
