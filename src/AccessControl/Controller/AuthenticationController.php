@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Controller;
+namespace BoilerAppAccessControl\Controller;
 class AuthenticationController extends \Templating\Mvc\Controller\AbstractActionController{
 	/**
 	 * Show authenticate form or process authenticate attempt
@@ -8,7 +8,7 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 	 */
 	public function authenticateAction(){
 		//If user is already logged in, redirect him
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()){
+		if($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity()){
 			$sRedirectUrl = empty($this->getServiceLocator()->get('Session')->redirect)
 			?$this->url()->fromRoute('Home')
 			:$this->getServiceLocator()->get('Session')->redirect;
@@ -30,14 +30,14 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 		elseif((
 			$this->params('service') &&
 			($bReturn = $this->getServiceLocator()->get('AuthenticationService')->authenticate(
-				\AccessControl\Service\AuthenticationService::HYBRID_AUTH_AUTHENTICATION,
+				\BoilerAppAccessControl\Service\AuthenticationService::HYBRID_AUTH_AUTHENTICATION,
 				$this->params('service')
 			)) === true
 		) ||
 		(
 			$this->getRequest()->isPost() && $this->view->form->setData($this->params()->fromPost())->isValid() &&
 			($bReturn = $this->getServiceLocator()->get('AuthenticationService')->authenticate(
-				\AccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
+				\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 				$this->params()->fromPost('auth_access_identity'),
 				$this->params()->fromPost('auth_access_credential')
 			)) === true
@@ -75,7 +75,7 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 				$this->getServiceLocator()->get('translator')->translate('provider_authentification_canceled'),
 				$sProvider
 			));
-			return $this->redirect()->toRoute('AccessControl/authentication');
+			return $this->redirect()->toRoute('BoilerAppAccessControl/authentication');
 		}
 		\Hybrid_Endpoint::process();
 	}
@@ -122,7 +122,7 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 	 * @throws \RuntimeException
 	 */
 	public function logoutAction(){
-		if(!$this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()
+		if(!$this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity()
 		|| $this->getServiceLocator()->get('AuthenticationService')->logout())return (
 			//Try to define redirect url
 			empty($this->getServiceLocator()->get('Session')->redirect)

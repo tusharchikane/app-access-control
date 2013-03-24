@@ -1,7 +1,7 @@
 <?php
 return array(
     'assets' => array(
-    	'AccessControl\Controller\Registration' => array(
+    	'BoilerAppAccessControl\Controller\Registration' => array(
     		'register' => array('js' => array(
     			__DIR__ . '/../assets/js/Validator/auth-access-identities.js',
     			__DIR__ . '/../assets/js/Controller/RegistrationRegisterController.js',
@@ -9,7 +9,7 @@ return array(
     			__DIR__ . '/../assets/js/Behavior/Form.PasswordStrength.js'
     		)),
     	),
-    	'AccessControl\Controller\Authentication' => array(
+    	'BoilerAppAccessControl\Controller\Authentication' => array(
     		'js' => array(__DIR__ . '/../assets/js/Controller/AuthenticationAuthenticateController.js')
     	)
     )

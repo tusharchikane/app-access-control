@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\InputFilter;
+namespace BoilerAppAccessControl\InputFilter;
 class AuthenticateInputFilter extends \Zend\InputFilter\InputFilter{
 	/**
 	 * Constructor

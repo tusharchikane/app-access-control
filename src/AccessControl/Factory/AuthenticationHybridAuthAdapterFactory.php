@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Factory;
+namespace BoilerAppAccessControl\Factory;
 class AuthenticationHybridAuthAdapterFactory implements \Zend\ServiceManager\FactoryInterface{
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
 		try{
@@ -20,7 +20,7 @@ class AuthenticationHybridAuthAdapterFactory implements \Zend\ServiceManager\Fac
 				elseif(isset($aConfiguration['providers'][$sProvider]['keys']['key']))$aConfiguration['providers'][$sProvider]['keys']['key'] = $aProviderConfig['id'];
 				$aConfiguration['providers'][$sProvider]['keys']['secret'] = $aProviderConfig['key'];
 			}
-			return new \AccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter(new \Hybrid_Auth($aConfiguration));
+			return new \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter(new \Hybrid_Auth($aConfiguration));
 		}
 		catch(\Exception $oException){
 			return $oException;

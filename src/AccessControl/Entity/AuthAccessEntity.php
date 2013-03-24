@@ -1,8 +1,8 @@
 <?php
-namespace AccessControl\Entity;
+namespace BoilerAppAccessControl\Entity;
 
 /**
- * @\Doctrine\ORM\Mapping\Entity(repositoryClass="\AccessControl\Repository\AuthAccessRepository")
+ * @\Doctrine\ORM\Mapping\Entity(repositoryClass="\BoilerAppAccessControl\Repository\AuthAccessRepository")
  * @\Doctrine\ORM\Mapping\Table(name="auth_access")
  */
 class AuthAccessEntity extends \Database\Entity\AbstractEntity{
@@ -60,7 +60,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param string $sEmailIdentity
-	 * @return \AccessControl\Entity\AuthAccessEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
 	public function setAuthAccessEmailIdentity($sEmailIdentity){
 		$this->auth_access_email_identity = $sEmailIdentity;
@@ -76,7 +76,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param string $sUsernameIdentity
-	 * @return \AccessControl\Entity\AuthAccessEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
 	public function setAuthAccessUsernameIdentity($sUsernameIdentity){
 		$this->auth_access_username_identity = $sUsernameIdentity;
@@ -92,7 +92,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param string $sCredential
-	 * @return \AccessControl\Entity\AuthAccessEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
 	public function setAuthAccessCredential($sCredential){
 		$this->auth_access_credential = $sCredential;
@@ -115,7 +115,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param string $sPublicKey
-	 * @return \AccessControl\Entity\AuthAccessEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
 	public function setAuthAccessPublicKey($sPublicKey){
 		$this->auth_access_public_key = $sPublicKey;
@@ -131,7 +131,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param string $sState
-	 * @return \AccessControl\Entity\AuthAccessEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
 	public function setAuthAccessState($sState){
 		$this->auth_access_state = $sState;
@@ -140,7 +140,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param \User\Entity\UserEntity $oUser
-	 * @return \AccessControl\Entity\AuthAccessEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
 	public function setAuthAccessUser(\User\Entity\UserEntity $oUser){
 		$this->auth_access_user = $oUser;

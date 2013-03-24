@@ -1,8 +1,8 @@
 <?php
-namespace AccessControl\Factory;
+namespace BoilerAppAccessControl\Factory;
 class AuthenticateFormFactory implements \Zend\ServiceManager\FactoryInterface{
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
-		$oForm = new \AccessControl\Form\AuthenticateForm('authenticate');
-		return $oForm->setInputFilter(new \AccessControl\InputFilter\AuthenticateInputFilter())->prepare();
+		$oForm = new \BoilerAppAccessControl\Form\AuthenticateForm('authenticate');
+		return $oForm->setInputFilter(new \BoilerAppAccessControl\InputFilter\AuthenticateInputFilter())->prepare();
     }
 }

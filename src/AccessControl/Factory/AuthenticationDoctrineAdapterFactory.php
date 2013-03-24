@@ -1,7 +1,7 @@
 <?php
-namespace AccessControl\Factory;
+namespace BoilerAppAccessControl\Factory;
 class AuthenticationDoctrineAdapterFactory implements \Zend\ServiceManager\FactoryInterface{
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
-		return new \AccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter($oServiceLocator->get('AccessControlService'));
+		return new \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter($oServiceLocator->get('BoilerAppAccessControlService'));
     }
 }

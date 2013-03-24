@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Controller;
+namespace BoilerAppAccessControl\Controller;
 class RegistrationController extends \Templating\Mvc\Controller\AbstractActionController{
 
 	/**
@@ -8,7 +8,7 @@ class RegistrationController extends \Templating\Mvc\Controller\AbstractActionCo
 	 */
 	public function registerAction(){
 		//If user is already logged in, redirect him
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()){
+		if($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity()){
 			$sRedirectUrl = empty($this->getServiceLocator()->get('Session')->redirect)
 			?$this->url()->fromRoute('Home')
 			:$this->getServiceLocator()->get('Session')->redirect;
@@ -40,7 +40,7 @@ class RegistrationController extends \Templating\Mvc\Controller\AbstractActionCo
 
 		return $this->view->setVariable(
 			'available',
-			$this->getServiceLocator()->get('AccessControlService')->isEmailIdentityAvailable($sEmail)
+			$this->getServiceLocator()->get('BoilerAppAccessControlService')->isEmailIdentityAvailable($sEmail)
 		);
 	}
 
@@ -55,7 +55,7 @@ class RegistrationController extends \Templating\Mvc\Controller\AbstractActionCo
 
 		return $this->view->setVariable(
 			'available',
-			$this->getServiceLocator()->get('AccessControlService')->isUsernameIdentityAvailable($sUserName)
+			$this->getServiceLocator()->get('BoilerAppAccessControlService')->isUsernameIdentityAvailable($sUserName)
 		);
 	}
 

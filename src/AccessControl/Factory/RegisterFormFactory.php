@@ -1,12 +1,12 @@
 <?php
-namespace AccessControl\Factory;
+namespace BoilerAppAccessControl\Factory;
 class RegisterFormFactory implements \Zend\ServiceManager\FactoryInterface{
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
 		$oTranslator = $oServiceLocator->get('translator');
-		$oForm = new \AccessControl\Form\RegisterForm('register');
+		$oForm = new \BoilerAppAccessControl\Form\RegisterForm('register');
 		return $oForm->setTranslator($oTranslator)
-		->setInputFilter(new \AccessControl\InputFilter\RegisterInputFilter(
-			$oServiceLocator->get('AccessControl\Repository\AuthAccessRepository'),
+		->setInputFilter(new \BoilerAppAccessControl\InputFilter\RegisterInputFilter(
+			$oServiceLocator->get('BoilerAppAccessControl\Repository\AuthAccessRepository'),
 			$oTranslator
 		))->prepare();
     }

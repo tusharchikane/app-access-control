@@ -1,7 +1,7 @@
 <?php
 return array(
 	'routes' => array(
-		'AccessControl' => array(
+		'BoilerAppAccessControl' => array(
 			'type' => 'Zend\Mvc\Router\Http\Literal',
 			'options' => array('route' => '/access-control'),
 			'may_terminate' => true,
@@ -11,7 +11,7 @@ return array(
 					'options' => array(
 						'route' => '/register[/:service]',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Registration',
+							'controller' => 'BoilerAppAccessControl\Controller\Registration',
 							'action'  => 'register'
 						)
 					)
@@ -21,7 +21,7 @@ return array(
 					'options' => array(
 						'route' => '/check-email-identity-availability',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Registration',
+							'controller' => 'BoilerAppAccessControl\Controller\Registration',
 							'action' => 'checkEmailIdentityAvailability'
 						)
 					)
@@ -31,7 +31,7 @@ return array(
 					'options' => array(
 						'route' => '/check-username-identity-availability',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Registration',
+							'controller' => 'BoilerAppAccessControl\Controller\Registration',
 							'action' => 'checkUsernameIdentityAvailability'
 						)
 					)
@@ -41,7 +41,7 @@ return array(
 					'options' => array(
 						'route' => '/confirm-email/:public_key/:email_identity',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Registration',
+							'controller' => 'BoilerAppAccessControl\Controller\Registration',
 							'action' => 'confirmEmail'
 						)
 					)
@@ -51,7 +51,7 @@ return array(
 					'options' => array(
 						'route' => '/resend-confirmation-email',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Registration',
+							'controller' => 'BoilerAppAccessControl\Controller\Registration',
 							'action' => 'resendConfirmationEmail'
 						)
 					)
@@ -61,7 +61,7 @@ return array(
 					'options' => array(
 						'route' => '/authenticate[/:service][/:redirect]',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Authentication',
+							'controller' => 'BoilerAppAccessControl\Controller\Authentication',
 							'action'  => 'authenticate'
 						)
 					)
@@ -71,7 +71,7 @@ return array(
 					'options' => array(
 						'route' => '/forgotten-credential',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Authentication',
+							'controller' => 'BoilerAppAccessControl\Controller\Authentication',
 							'action' => 'forgottenCredential'
 						)
 					)
@@ -81,7 +81,7 @@ return array(
 					'options' => array(
 						'route' => '/reset-credential/:public_key/:email_identity',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Authentication',
+							'controller' => 'BoilerAppAccessControl\Controller\Authentication',
 							'action' => 'resetCredential'
 						)
 					)
@@ -91,7 +91,7 @@ return array(
 					'options' => array(
 						'route' => '/hybridauth',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Authentication',
+							'controller' => 'BoilerAppAccessControl\Controller\Authentication',
 							'action' => 'hybridauth'
 						)
 					)
@@ -101,7 +101,7 @@ return array(
 					'options' => array(
 						'route' => '/logout',
 						'defaults' => array(
-							'controller' => 'AccessControl\Controller\Authentication',
+							'controller' => 'BoilerAppAccessControl\Controller\Authentication',
 							'action' => 'logout'
 						)
 					)

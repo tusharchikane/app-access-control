@@ -1,21 +1,21 @@
 <?php
 return array(
 	'driver' => array(
-		'accesscontrol_driver' => array(
+		'BoilerAppAccessControl_driver' => array(
 			'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 			'cache' => 'array',
-			'paths' => array(__DIR__ . '/../src/AccessControl/Entity')
+			'paths' => array(__DIR__ . '/../src/BoilerAppAccessControl/Entity')
 		),
 		'orm_default' => array(
 			'drivers' => array(
-				'AccessControl\Entity' => 'accesscontrol_driver'
+				'BoilerAppAccessControl\Entity' => 'BoilerAppAccessControl_driver'
 			)
 		)
 	),
 	'configuration' => array(
 		'orm_default' => array(
 			'types' => array(
-				'authaccessstateenum' => 'AccessControl\Doctrine\DBAL\Types\AuthAccessStateEnumType'
+				'authaccessstateenum' => 'BoilerAppAccessControl\Doctrine\DBAL\Types\AuthAccessStateEnumType'
 			)
 		)
 	)

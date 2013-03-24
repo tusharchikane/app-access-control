@@ -1,0 +1,24 @@
+{
+    "name": " zf2-boiler-app/app-access-control",
+    "type": "library",
+    "description": "ZF2 BoilerApp Access control module",
+    "keywords": ["Zend Framework 2","ZF2 Boiler-App","authentication"],
+    "authors": [
+        {
+            "name": "Neilime",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability" : "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "dev-master",
+        "hybridauth/hybridauth": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "BoilerAppBoilerAppAccessControl": "src"
+        },
+        "classmap" : ["Module.php"]
+    }
+}

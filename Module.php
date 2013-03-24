@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl;
+namespace BoilerAppAccessControl;
 class Module{
 
 	/**
@@ -12,10 +12,10 @@ class Module{
 
 		//Set logged user to layout if exists
 		if($oServiceManager->get('ViewRenderer') instanceof \Zend\View\Renderer\PhpRenderer){
-			if($oServiceManager->get('AccessControlAuthenticationService')->hasIdentity()){
+			if($oServiceManager->get('BoilerAppAccessControlAuthenticationService')->hasIdentity()){
 				//Prevents session error
 				try{
-					$oEvent->getViewModel()->loggedUser = $oServiceManager->get('AccessControlService')->getLoggedUser();
+					$oEvent->getViewModel()->loggedUser = $oServiceManager->get('BoilerAppAccessControlService')->getLoggedUser();
 				}
 				catch(\Exception $oException){
 					$oServiceManager->get('AuthenticationService')->logout();

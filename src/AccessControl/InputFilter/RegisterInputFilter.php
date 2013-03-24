@@ -1,12 +1,12 @@
 <?php
-namespace AccessControl\InputFilter;
+namespace BoilerAppAccessControl\InputFilter;
 class RegisterInputFilter extends \Zend\InputFilter\InputFilter{
 	/**
 	 * Constructor
-	 * @param \AccessControl\Repository\AuthAccessRepository $oAuthAccessRepository
+	 * @param \BoilerAppAccessControl\Repository\AuthAccessRepository $oAuthAccessRepository
 	 * @param \Zend\I18n\Translator\Translator $oTranslator
 	 */
-    public function __construct(\AccessControl\Repository\AuthAccessRepository $oAuthAccessRepository,\Zend\I18n\Translator\Translator $oTranslator){
+    public function __construct(\BoilerAppAccessControl\Repository\AuthAccessRepository $oAuthAccessRepository,\Zend\I18n\Translator\Translator $oTranslator){
     	$this->add(array(
 			'name' => 'auth_access_email_identity',
 			'required' => true,
@@ -14,7 +14,7 @@ class RegisterInputFilter extends \Zend\InputFilter\InputFilter{
 			'validators' => array(
 				array('name'=> 'EmailAddress','break_chain_on_failure' => true),
 				array(
-					'name'=> 'AccessControl\Validator\IdentityAvailabilityValidator',
+					'name'=> 'BoilerAppAccessControl\Validator\IdentityAvailabilityValidator',
 					'options' => array(
 						'identityName' => $oTranslator->translate('the_email'),
 						'checkAvailabilityCallback' => array($oAuthAccessRepository, 'isIdentityEmailAvailable')
@@ -34,7 +34,7 @@ class RegisterInputFilter extends \Zend\InputFilter\InputFilter{
 					'break_chain_on_failure' => true
 				),
 				array(
-					'name'=> 'AccessControl\Validator\IdentityAvailabilityValidator',
+					'name'=> 'BoilerAppAccessControl\Validator\IdentityAvailabilityValidator',
 					'options' => array(
 						'identityName' => $oTranslator->translate('the_username'),
 						'checkAvailabilityCallback' => array($oAuthAccessRepository, 'isIdentityUsernameAvailable')

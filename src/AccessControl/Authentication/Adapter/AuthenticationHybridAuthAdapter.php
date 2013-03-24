@@ -1,6 +1,6 @@
 <?php
-namespace AccessControl\Authentication\Adapter;
-class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\Adapter\AuthenticationAdapterInterface{
+namespace BoilerAppAccessControl\Authentication\Adapter;
+class AuthenticationHybridAuthAdapter implements \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface{
 	const AUTH_RESULT_HYBRID_AUTH_USER_NOT_CONNECTED = '';
 	const AUTH_RESULT_HYBRID_AUTH_CANCELED = '';
 
@@ -10,7 +10,7 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 	protected $userRepository;
 
 	/**
-	 * @var \AccessControl\Repository\AuthProviderRepository
+	 * @var \BoilerAppAccessControl\Repository\AuthProviderRepository
 	 */
 	protected $authProviderRepository;
 
@@ -32,12 +32,12 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 	/**
 	 * Constructor
 	 * @param \User\Repository\UserRepository $oUserRepository
-	 * @param \AccessControl\Repository\AuthProviderRepository $oAuthProviderRepository
+	 * @param \BoilerAppAccessControl\Repository\AuthProviderRepository $oAuthProviderRepository
 	 * @param \Hybrid_Auth $oHybridAuth
 	 */
 	public function __construct(
 		\User\Repository\UserRepository $oUserRepository = null,
-		\AccessControl\Repository\AuthProviderRepository $oAuthProviderRepository = null,
+		\BoilerAppAccessControl\Repository\AuthProviderRepository $oAuthProviderRepository = null,
 		\Hybrid_Auth $oHybridAuth = null
 	){
 		if($oUserRepository)$this->setUserRepository($oUserRepository);
@@ -47,7 +47,7 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 
 	/**
 	 * @param \User\Repository\UserRepository $oRepository
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
 	 */
 	public function setUserRepository(\User\Repository\UserRepository $oRepository){
 		$this->userRepository = $oRepository;
@@ -64,26 +64,26 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 	}
 
 	/**
-	 * @param \AccessControl\Repository\AuthProviderRepository $oRepository
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
+	 * @param \BoilerAppAccessControl\Repository\AuthProviderRepository $oRepository
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
 	 */
-	public function setAuthProviderRepository(\AccessControl\Repository\AuthProviderRepository $oRepository){
+	public function setAuthProviderRepository(\BoilerAppAccessControl\Repository\AuthProviderRepository $oRepository){
 		$this->authProviderRepository = $oRepository;
 		return $this;
 	}
 
 	/**
 	 * @throws \LogicException
-	 * @return \AccessControl\Repository\AuthProviderRepository
+	 * @return \BoilerAppAccessControl\Repository\AuthProviderRepository
 	 */
 	public function getAuthProviderRepository(){
-		if(!($this->authProviderRepository instanceof \AccessControl\Repository\AuthProviderRepository))throw new \LogicException('AuthProvider repository is undefined');
+		if(!($this->authProviderRepository instanceof \BoilerAppAccessControl\Repository\AuthProviderRepository))throw new \LogicException('AuthProvider repository is undefined');
 		return $this->authProviderRepository;
 	}
 
 	/**
 	 * @param \Hybrid_Auth $oHybridAuth
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
 	 */
 	public function setHybridAuth(\Hybrid_Auth $oHybridAuth){
 		$this->hybridAuth = $oHybridAuth;
@@ -102,7 +102,7 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 	/**
 	 * @param string $sCurrentService
 	 * @throws \InvalidArgumentException
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
 	 */
 	public function setCurrentService($sCurrentService){
 		if(!is_string($sCurrentService))throw new \InvalidArgumentException('Service expects string, "'.gettype($sCurrentService).'" given');
@@ -121,7 +121,7 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 
 	/**
 	 * @param string $sCurrentService
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
 	 */
 	public function postAuthenticate($sCurrentService){
 		if($sCurrentService)$this->setCurrentService($sCurrentService);
@@ -172,7 +172,7 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 			->setUserState(\User\Repository\UserRepository::USER_STATUS_ACTIVE));
 
 			//Link to auth provider
-			$oAuthProvider = new \AccessControl\Entity\AuthProviderEntity();
+			$oAuthProvider = new \BoilerAppAccessControl\Entity\AuthProviderEntity();
 			$this->getAuthProviderRepository()->create($oAuthProvider->setUser($oUser)->setProviderId($oUserProfile->identifier)->setProviderName($sService));
 
 			$this->resultRow = array(
@@ -216,7 +216,7 @@ class AuthenticationHybridAuthAdapter implements \AccessControl\Authentication\A
 	}
 
 	/**
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter
 	 */
 	public function clearIdentity(){
 		$this->logoutAllProviders();

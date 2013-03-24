@@ -1,6 +1,6 @@
 <?php
-namespace AccessControl\Service;
-class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
+namespace BoilerAppAccessControl\Service;
+class BoilerAppAccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
 	use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 	/**
@@ -9,7 +9,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 	 * @return \User\Entity\UserEntity
 	 */
 	public function getLoggedUser(){
-		$iUserId = $this->getServiceLocator()->get('AccessControlAuthenticationService')->getIdentity();
+		$iUserId = $this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->getIdentity();
 
 		//Prevent from session value error
 		try{
@@ -19,7 +19,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 			$this->logout();
 			throw new \RuntimeException('An error occurred when retrieving logged user',$oException->getCode(),$oException);
 		}
-		if($oUser->getUserAuthAccess()->getAuthAccessState() !== \AccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)throw new \LogicException(sprintf(
+		if($oUser->getUserAuthAccess()->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)throw new \LogicException(sprintf(
 			'User\'s "%s" AuthAccess is not active',
 			$oUser->getUserId()
 		));
@@ -29,7 +29,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 	/**
 	 * @param string $sAuthAccessIdentity
 	 * @throws \InvalidArgumentException
-	 * @return \AccessControl\Entity\AuthAccessEntity|NULL
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity|NULL
 	 */
 	public function getAuthAccessFromIdentity($sAuthAccessIdentity){
 		if(empty($sAuthAccessIdentity) || !is_string($sAuthAccessIdentity))throw new \InvalidArgumentException(sprintf(
@@ -37,7 +37,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 			is_scalar($sAuthAccessIdentity)?$sAuthAccessIdentity:gettype($sAuthAccessIdentity)
 		));
 
-		$oAuthAccessRepository = $this->getServiceLocator()->get('AccessControl\Repository\AuthAccessRepository');
+		$oAuthAccessRepository = $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository');
 
 		//Try retrieving existing AuthAccess for the giving identities
 		$aAvailableIdentities = $oAuthAccessRepository->getAvailableIdentities();
@@ -61,12 +61,12 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 		$oTranslator = $this->getServiceLocator()->get('translator');
 
 		//If request is from logged user
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sEmailIdentity)return str_ireplace(
+		if($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sEmailIdentity)return str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_email'),$sEmailIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);
 
-		return $this->getServiceLocator()->get('AccessControl\Repository\AuthAccessRepository')->isIdentityEmailAvailable($sEmailIdentity)?true:str_ireplace(
+		return $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->isIdentityEmailAvailable($sEmailIdentity)?true:str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_email'),$sEmailIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is unavailable','validator')
 		);
@@ -83,12 +83,12 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 		$oTranslator = $this->getServiceLocator()->get('translator');
 
 		//If request is from logged user
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sUsernameIdentity)return str_ireplace(
+		if($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sUsernameIdentity)return str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_username'),$sUsernameIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);
 
-		return $this->getServiceLocator()->get('AccessControl\Repository\AuthAccessRepository')->isIdentityUserNameAvailable($sUsernameIdentity)?true:str_ireplace(
+		return $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->isIdentityUserNameAvailable($sUsernameIdentity)?true:str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_username'),$sUsernameIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is unavailable','validator')
 		);

@@ -21,7 +21,7 @@ return array(
 		)
 	),
 	'hybrid_auth' =>  array(
-		'base_url' => 'AccessControl/hybridauth',
+		'base_url' => 'BoilerAppAccessControl/hybridauth',
 
 		'providers' => array(
 			//Set Redirect URIs = "http://xxxxx/access-control/hybridauth?hauth.done=Google" in google APIs console
@@ -46,27 +46,27 @@ return array(
 	),
 	'controllers' => array(
 		'invokables' => array(
-			'AccessControl\Controller\Registration' => 'AccessControl\Controller\RegistrationController',
-			'AccessControl\Controller\Authentication' => 'AccessControl\Controller\AuthenticationController'
+			'BoilerAppAccessControl\Controller\Registration' => 'BoilerAppAccessControl\Controller\RegistrationController',
+			'BoilerAppAccessControl\Controller\Authentication' => 'BoilerAppAccessControl\Controller\AuthenticationController'
 		)
 	),
 	'service_manager' => array(
 		'invokables' => array(
-			'AccessControlService' => 'AccessControl\Service\AccessControlService',
-			'AuthenticationService' => 'AccessControl\Service\AuthenticationService',
-			'RegistrationService' => 'AccessControl\Service\RegistrationService'
+			'BoilerAppAccessControlService' => 'BoilerAppAccessControl\Service\BoilerAppAccessControlService',
+			'AuthenticationService' => 'BoilerAppAccessControl\Service\AuthenticationService',
+			'RegistrationService' => 'BoilerAppAccessControl\Service\RegistrationService'
 		),
 		'factories' => array(
-			'AccessControlAuthenticationService' => 'AccessControl\Factory\AccessControlAuthenticationServiceFactory',
-			'AuthenticationStorage' => 'AccessControl\Factory\AuthenticationStorageFactory',
-			'AuthenticationDoctrineAdapter' => 'AccessControl\Factory\AuthenticationDoctrineAdapterFactory',
-			'AuthenticationHybridAuthAdapter' => 'AccessControl\Factory\AuthenticationHybridAuthAdapterFactory',
-			'AuthenticateForm' => 'AccessControl\Factory\AuthenticateFormFactory',
-			'RegisterForm' => 'AccessControl\Factory\RegisterFormFactory',
-			'ResetCredentialForm' => 'AccessControl\Factory\ResetCredentialFormFactory',
+			'BoilerAppAccessControlAuthenticationService' => 'BoilerAppAccessControl\Factory\BoilerAppAccessControlAuthenticationServiceFactory',
+			'AuthenticationStorage' => 'BoilerAppAccessControl\Factory\AuthenticationStorageFactory',
+			'AuthenticationDoctrineAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationDoctrineAdapterFactory',
+			'AuthenticationHybridAuthAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationHybridAuthAdapterFactory',
+			'AuthenticateForm' => 'BoilerAppAccessControl\Factory\AuthenticateFormFactory',
+			'RegisterForm' => 'BoilerAppAccessControl\Factory\RegisterFormFactory',
+			'ResetCredentialForm' => 'BoilerAppAccessControl\Factory\ResetCredentialFormFactory',
 		)
 	),
 	'view_manager' => array(
-		'template_path_stack' => array('AccessControl' => __DIR__ . '/../view')
+		'template_path_stack' => array('BoilerAppAccessControl' => __DIR__ . '/../view')
 	)
 );

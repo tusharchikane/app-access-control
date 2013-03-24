@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Form;
+namespace BoilerAppAccessControl\Form;
 class ResetCredentialForm extends \Application\Form\AbstractForm{
 	/**
 	 * Constructor

@@ -1,9 +1,9 @@
 <?php
-namespace AccessControl\Factory;
-class AccessControlAuthenticationServiceFactory implements \Zend\ServiceManager\FactoryInterface{
+namespace BoilerAppAccessControl\Factory;
+class BoilerAppAccessControlAuthenticationServiceFactory implements \Zend\ServiceManager\FactoryInterface{
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
 		$aConfiguration = $oServiceLocator->get('config');
-		return \AccessControl\Authentication\AccessControlAuthenticationService::factory(
+		return \BoilerAppAccessControl\Authentication\BoilerAppAccessControlAuthenticationService::factory(
 			isset($aConfiguration['authentication'])?$aConfiguration['authentication']:array(),
 			$oServiceLocator
 		);

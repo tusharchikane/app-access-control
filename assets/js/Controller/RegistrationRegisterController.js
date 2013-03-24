@@ -1,4 +1,4 @@
-var AccessControlControllerRegistrationRegister = {
+var BoilerAppAccessControlControllerRegistrationRegister = {
 	Extends: Controller,
 	
 	/**
@@ -13,7 +13,7 @@ var AccessControlControllerRegistrationRegister = {
 	
 	/**
 	 * @param HTMLElement eEmailIdentity
-	 * @return AccessControlControllerRegistrationRegister
+	 * @return BoilerAppAccessControlControllerRegistrationRegister
 	 */
 	checkEmailIdentityAvailability : function(eEmailIdentity){
 		eEmailIdentity = document.id(eEmailIdentity);
@@ -27,7 +27,7 @@ var AccessControlControllerRegistrationRegister = {
 			//Set input is loading
 			eEmailIdentity.setLoading();
 			new Request.JSON({
-				'url':this.url('AccessControl/CheckEmailIdentityAvailability'),
+				'url':this.url('BoilerAppAccessControl/CheckEmailIdentityAvailability'),
 				'data':{'email':sEmail},
 				'onSuccess':function(oResponse){
 					var bAvailable = oResponse.available === true;
@@ -48,7 +48,7 @@ var AccessControlControllerRegistrationRegister = {
 	
 	/**
 	 * @param HTMLElement eUsernameIdentity
-	 * @return AccessControlControllerRegistrationRegister
+	 * @return BoilerAppAccessControlControllerRegistrationRegister
 	 */
 	checkUsernameIdentityAvailability : function(eUsernameIdentity){
 		eUsernameIdentity = document.id(eUsernameIdentity);
@@ -62,7 +62,7 @@ var AccessControlControllerRegistrationRegister = {
 			//Set input is loading
 			eUsernameIdentity.setLoading();
 			new Request.JSON({
-				'url':this.url('AccessControl/CheckUsernameIdentityAvailability'),
+				'url':this.url('BoilerAppAccessControl/CheckUsernameIdentityAvailability'),
 				'data':{'username':sUserName},
 				'onSuccess':function(oResponse){
 					var bAvailable = oResponse.available === true;
@@ -76,4 +76,4 @@ var AccessControlControllerRegistrationRegister = {
 		return this;
 	}
 };
-AccessControlControllerRegistrationRegister = new Class(AccessControlControllerRegistrationRegister);
+BoilerAppAccessControlControllerRegistrationRegister = new Class(BoilerAppAccessControlControllerRegistrationRegister);

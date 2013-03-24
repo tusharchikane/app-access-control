@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Repository;
+namespace BoilerAppAccessControl\Repository;
 class AuthAccessRepository extends \Database\Repository\AbstractEntityRepository{
 
 	/** User states */
@@ -16,7 +16,7 @@ class AuthAccessRepository extends \Database\Repository\AbstractEntityRepository
 
 	/**
 	 * @param array $aAvailableIdentities
-	 * @return \AccessControl\Repository\AuthAccessRepository
+	 * @return \BoilerAppAccessControl\Repository\AuthAccessRepository
 	 */
 	public function setAvailableIdentities(array $aAvailableIdentities){
 		$this->availableIdentities = $aAvailableIdentities;

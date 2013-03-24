@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Authentication\Adapter;
+namespace BoilerAppAccessControl\Authentication\Adapter;
 interface AuthenticationAdapterInterface extends \Zend\Authentication\Adapter\AdapterInterface{
 	/**
 	 * Returns the result row as a stdClass object

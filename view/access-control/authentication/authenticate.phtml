@@ -1,6 +1,6 @@
 <h3><?=$this->layout()->title?></h3>
 <div class="well">
-<?=$this->translate('new_user').' ? <a href="'.$this->url('AccessControl/Register').'">'.$this->translate('sign_up').'</a> ! | '.$this->translate('forgot_your_password').' ? <a href="'.$this->url('AccessControl/ForgottenCredential').'">'.$this->translate('reset_password').'</a>'?>
+<?=$this->translate('new_user').' ? <a href="'.$this->url('BoilerAppAccessControl/Register').'">'.$this->translate('sign_up').'</a> ! | '.$this->translate('forgot_your_password').' ? <a href="'.$this->url('BoilerAppAccessControl/ForgottenCredential').'">'.$this->translate('reset_password').'</a>'?>
 </div>
 <?php
 	if(!empty($this->error)){
@@ -16,7 +16,7 @@
 ?>
 <fieldset>
 	<legend><?=$this->translate('or_use_another_service')?></legend>
-    <a class="btn btn-mini" href="<?=$this->url('AccessControl/Authenticate',array('service'=>'facebook'))?>"><i class="icon-facebook"></i> Facebook</a>
-    <a class="btn btn-mini" href="<?=$this->url('AccessControl/Authenticate',array('service'=>'twitter'))?>"><i class="icon-twitter"></i> Twitter</a>
-    <a class="btn btn-mini" href="<?=$this->url('AccessControl/Authenticate',array('service'=>'google'))?>"><i class="icon-google-plus"></i> Google+</a>
+    <a class="btn btn-mini" href="<?=$this->url('BoilerAppAccessControl/Authenticate',array('service'=>'facebook'))?>"><i class="icon-facebook"></i> Facebook</a>
+    <a class="btn btn-mini" href="<?=$this->url('BoilerAppAccessControl/Authenticate',array('service'=>'twitter'))?>"><i class="icon-twitter"></i> Twitter</a>
+    <a class="btn btn-mini" href="<?=$this->url('BoilerAppAccessControl/Authenticate',array('service'=>'google'))?>"><i class="icon-google-plus"></i> Google+</a>
 </fieldset>

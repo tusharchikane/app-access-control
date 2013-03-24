@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Validator;
+namespace BoilerAppAccessControl\Validator;
 class IdentityAvailabilityValidator extends \Zend\Validator\AbstractValidator{
 	const INVALID = 'identityInvalid';
     const SAME_AS_CURRENTLY_USED = 'identitySameAsCurrentlyUsed';
@@ -31,7 +31,7 @@ class IdentityAvailabilityValidator extends \Zend\Validator\AbstractValidator{
     /**
      * @param string $sIdentityName
      * @throws \InvalidArgumentException
-     * @return \AccessControl\Validator\IdentityAvailabilityValidator
+     * @return \BoilerAppAccessControl\Validator\IdentityAvailabilityValidator
      */
     public function setIdentityName($sIdentityName){
     	if(!is_string($sIdentityName))throw new \InvalidArgumentException(sprintf(
@@ -52,7 +52,7 @@ class IdentityAvailabilityValidator extends \Zend\Validator\AbstractValidator{
     /**
      * @param string $sCurrentIdentity
      * @throws \InvalidArgumentException
-     * @return \AccessControl\Validator\IdentityAvailabilityValidator
+     * @return \BoilerAppAccessControl\Validator\IdentityAvailabilityValidator
      */
     public function setCurrentIdentity($sCurrentIdentity){
     	if(!is_string($sCurrentIdentity))throw new \InvalidArgumentException(sprintf(
@@ -73,7 +73,7 @@ class IdentityAvailabilityValidator extends \Zend\Validator\AbstractValidator{
 	/**
 	 * @param mixed $oCallback
 	 * @throws \BadFunctionCallException
-	 * @return \AccessControl\Validator\IdentityAvailabilityValidator
+	 * @return \BoilerAppAccessControl\Validator\IdentityAvailabilityValidator
 	 */
     public function setCheckAvailabilityCallback($oCallback){
     	if(!is_callable($oCallback))throw new \BadFunctionCallException('$oCallback is not callable');

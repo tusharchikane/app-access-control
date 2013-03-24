@@ -1,11 +1,11 @@
 <?php
-namespace AccessControl\Authentication\Adapter;
-class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\AbstractAdapter implements \AccessControl\Authentication\Adapter\AuthenticationAdapterInterface{
+namespace BoilerAppAccessControl\Authentication\Adapter;
+class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\AbstractAdapter implements \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface{
 
 	/**
-	 * @var \AccessControl\Service\AccessControlService
+	 * @var \BoilerAppAccessControl\Service\BoilerAppAccessControlService
 	 */
-	protected $accessControlService;
+	protected $BoilerAppAccessControlService;
 
 	/**
 	 * @var array
@@ -14,35 +14,35 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 
 	/**
 	 * Constructor
-	 * @param \AccessControl\Service\AccessControlService $oAccessControlService
+	 * @param \BoilerAppAccessControl\Service\BoilerAppAccessControlService $oBoilerAppAccessControlService
 	 */
-	public function __construct(\AccessControl\Service\AccessControlService $oAccessControlService = null){
-		if($oAccessControlService)$this->setAccessControlService($oAccessControlService);
+	public function __construct(\BoilerAppAccessControl\Service\BoilerAppAccessControlService $oBoilerAppAccessControlService = null){
+		if($oBoilerAppAccessControlService)$this->setBoilerAppAccessControlService($oBoilerAppAccessControlService);
 	}
 
 	/**
-	 * @param \AccessControl\Repository\AuthAccessRepository $oAccessControlService
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
+	 * @param \BoilerAppAccessControl\Repository\AuthAccessRepository $oBoilerAppAccessControlService
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
 	 */
-	public function setAccessControlService(\AccessControl\Service\AccessControlService $oAccessControlService){
-		$this->accessControlService = $oAccessControlService;
+	public function setBoilerAppAccessControlService(\BoilerAppAccessControl\Service\BoilerAppAccessControlService $oBoilerAppAccessControlService){
+		$this->BoilerAppAccessControlService = $oBoilerAppAccessControlService;
 		return $this;
 	}
 
 	/**
 	 * @throws \LogicException
-	 * @return \AccessControl\Service\AccessControlService
+	 * @return \BoilerAppAccessControl\Service\BoilerAppAccessControlService
 	 */
-	public function getAccessControlService(){
-		if(!($this->accessControlService instanceof \AccessControl\Service\AccessControlService))throw new \LogicException('AccessControl service is undefined');
-		return $this->accessControlService;
+	public function getBoilerAppAccessControlService(){
+		if(!($this->BoilerAppAccessControlService instanceof \BoilerAppAccessControl\Service\BoilerAppAccessControlService))throw new \LogicException('BoilerAppAccessControl service is undefined');
+		return $this->BoilerAppAccessControlService;
 	}
 
 	/**
 	 * @param string $sIdentity
 	 * @param string $sCredential
 	 * @throws \InvalidArgumentException
-	 * @return \AccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
 	 */
 	public function postAuthenticate($sIdentity,$sCredential){
 		if(!is_string($sIdentity) || !is_string($sCredential))throw new \InvalidArgumentException(sprintf(
@@ -61,7 +61,7 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 		$this->resultRow = null;
 
 		//Retrieve AuthAccess from provided identity
-		if(!($oAuthAccess = $this->getAccessControlService()->getAuthAccessFromIdentity($this->getIdentity())))return new \Zend\Authentication\Result(\Zend\Authentication\Result::FAILURE_IDENTITY_NOT_FOUND,null);
+		if(!($oAuthAccess = $this->getBoilerAppAccessControlService()->getAuthAccessFromIdentity($this->getIdentity())))return new \Zend\Authentication\Result(\Zend\Authentication\Result::FAILURE_IDENTITY_NOT_FOUND,null);
 
 		//Verify credential
 

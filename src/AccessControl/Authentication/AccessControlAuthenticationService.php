@@ -1,6 +1,6 @@
 <?php
-namespace AccessControl\Authentication;
-class AccessControlAuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
+namespace BoilerAppAccessControl\Authentication;
+class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
 	const AUTH_RESULT_AUTH_ACCESS_STATE_PENDING = -1;
 	const AUTH_RESULT_EMAIL_OR_PASSWORD_WRONG = 0;
 	const AUTH_RESULT_VALID = 1;
@@ -120,9 +120,9 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 	public function getAdapter($sAdapterName){
 		if(!is_string($sAdapterName))throw new \Exception('Adapter\'s name expects string, '.gettype($sAdapterName));
 		if(!isset($this->adapters[$sAdapterName]))throw new \Exception('Adapter "'.$sAdapterName.'" is undefined');
-		if(!($this->adapters[$sAdapterName] instanceof \AccessControl\Authentication\Adapter\AuthenticationAdapterInterface)){
+		if(!($this->adapters[$sAdapterName] instanceof \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface)){
 			if(!is_string($this->adapters[$sAdapterName]))throw new \InvalidArgumentException(sprintf(
-				'Adapter "%s" expects \AccessControl\Authentication\Adapter\AuthenticationAdapterInterface or string, "%s" given',
+				'Adapter "%s" expects \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface or string, "%s" given',
 				$sAdapterName,is_object($this->adapters[$sAdapterName])?get_class($this->adapters[$sAdapterName]):gettype($sAdapterName)
 			));
 			if($this->getServiceLocator()->has($this->adapters[$sAdapterName]))$this->adapters[$sAdapterName] = $this->getServiceLocator()->get($this->adapters[$sAdapterName]);

@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Doctrine\DBAL\Types;
+namespace BoilerAppAccessControl\Doctrine\DBAL\Types;
 class AuthAccessStateEnumType extends \Database\Doctrine\DBAL\Types\AbstractEnumType{
 	/**
 	 * @var string
@@ -10,7 +10,7 @@ class AuthAccessStateEnumType extends \Database\Doctrine\DBAL\Types\AbstractEnum
 	 * @var array
 	 */
     protected $values = array(
-    	\AccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_PENDING_STATE,
-    	\AccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE
+    	\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_PENDING_STATE,
+    	\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE
     );
 }

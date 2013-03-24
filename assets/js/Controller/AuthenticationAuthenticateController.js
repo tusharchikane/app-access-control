@@ -1,4 +1,4 @@
-var AccessControlControllerAuthentication = {
+var BoilerAppAccessControlControllerAuthentication = {
 	Extends: Controller,
 	
 	/**
@@ -9,10 +9,10 @@ var AccessControlControllerAuthentication = {
 		if('string' !== typeof sAuthAccessIdentity)throw 'AuthAccess identity expects string';
 		new Modal.Popup({
 			'title':this.translate('resend_confirmation_email'),
-			'url':this.url('AccessControl/ResendConfirmationEmail'),
+			'url':this.url('BoilerAppAccessControl/ResendConfirmationEmail'),
 			'data':{'auth_access_identity':sAuthAccessIdentity},
 			'method':'post'
 		});		
 	}
 };
-AccessControlControllerAuthentication = new Class(AccessControlControllerAuthentication);
+BoilerAppAccessControlControllerAuthentication = new Class(BoilerAppAccessControlControllerAuthentication);

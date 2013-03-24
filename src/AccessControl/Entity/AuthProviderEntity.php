@@ -1,5 +1,5 @@
 <?php
-namespace AccessControl\Entity;
+namespace BoilerAppAccessControl\Entity;
 /**
  * @\Doctrine\ORM\Mapping\Entity(repositoryClass="\User\Repository\UserRepository")
  * @\Doctrine\ORM\Mapping\Table(name="users")
@@ -27,7 +27,7 @@ class AuthProviderEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param \User\Entity\UserEntity $oUser
-	 * @return \AccessControl\Entity\AuthProviderEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthProviderEntity
 	 */
 	public function setUser(\User\Entity\UserEntity $oUser){
 		$this->user = $oUser;
@@ -43,7 +43,7 @@ class AuthProviderEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param string $sProviderId
-	 * @return \AccessControl\Entity\AuthProviderEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthProviderEntity
 	 */
 	public function setProviderId($sProviderId){
 		$this->provider_id = $sProviderId;
@@ -59,7 +59,7 @@ class AuthProviderEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @param string $sProviderName
-	 * @return \AccessControl\Entity\AuthProviderEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthProviderEntity
 	 */
 	public function setProviderName($sProviderName){
 		$this->provider_name = $sProviderName;
