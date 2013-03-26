@@ -1,5 +1,5 @@
 {
-    "name": " zf2-boiler-app/app-access-control",
+    "name": "zf2-boiler-app/app-access-control",
     "type": "library",
     "description": "ZF2 BoilerApp Access control module",
     "keywords": ["Zend Framework 2","ZF2 Boiler-App","authentication"],
