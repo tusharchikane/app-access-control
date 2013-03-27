@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Service;
-class BoilerAppAccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
+class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
 	use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 	/**
@@ -9,7 +9,7 @@ class BoilerAppAccessControlService implements \Zend\ServiceManager\ServiceLocat
 	 * @return \User\Entity\UserEntity
 	 */
 	public function getLoggedUser(){
-		$iUserId = $this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->getIdentity();
+		$iUserId = $this->getServiceLocator()->get('AccessControlAuthenticationService')->getIdentity();
 
 		//Prevent from session value error
 		try{
@@ -61,7 +61,7 @@ class BoilerAppAccessControlService implements \Zend\ServiceManager\ServiceLocat
 		$oTranslator = $this->getServiceLocator()->get('translator');
 
 		//If request is from logged user
-		if($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sEmailIdentity)return str_ireplace(
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sEmailIdentity)return str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_email'),$sEmailIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);
@@ -83,7 +83,7 @@ class BoilerAppAccessControlService implements \Zend\ServiceManager\ServiceLocat
 		$oTranslator = $this->getServiceLocator()->get('translator');
 
 		//If request is from logged user
-		if($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sUsernameIdentity)return str_ireplace(
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sUsernameIdentity)return str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_username'),$sUsernameIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);

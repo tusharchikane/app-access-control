@@ -7,15 +7,14 @@ class Module{
 	 * @throws \RuntimeException
 	 */
 	public function onBootstrap(\Zend\Mvc\MvcEvent $oEvent){
-		/* @var $oServiceManager \Zend\ServiceManager\ServiceManager */
 		$oServiceManager = $oEvent->getApplication()->getServiceManager();
 
 		//Set logged user to layout if exists
 		if($oServiceManager->get('ViewRenderer') instanceof \Zend\View\Renderer\PhpRenderer){
-			if($oServiceManager->get('BoilerAppAccessControlAuthenticationService')->hasIdentity()){
+			if($oServiceManager->get('AccessControlAuthenticationService')->hasIdentity()){
 				//Prevents session error
 				try{
-					$oEvent->getViewModel()->loggedUser = $oServiceManager->get('BoilerAppAccessControlService')->getLoggedUser();
+					$oEvent->getViewModel()->loggedUser = $oServiceManager->get('AccessControlService')->getLoggedUser();
 				}
 				catch(\Exception $oException){
 					$oServiceManager->get('AuthenticationService')->logout();

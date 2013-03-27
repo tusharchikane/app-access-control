@@ -8,7 +8,7 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 	 */
 	public function authenticateAction(){
 		//If user is already logged in, redirect him
-		if($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity()){
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()){
 			$sRedirectUrl = empty($this->getServiceLocator()->get('Session')->redirect)
 			?$this->url()->fromRoute('Home')
 			:$this->getServiceLocator()->get('Session')->redirect;
@@ -122,7 +122,7 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 	 * @throws \RuntimeException
 	 */
 	public function logoutAction(){
-		if(!$this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->hasIdentity()
+		if(!$this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()
 		|| $this->getServiceLocator()->get('AuthenticationService')->logout())return (
 			//Try to define redirect url
 			empty($this->getServiceLocator()->get('Session')->redirect)

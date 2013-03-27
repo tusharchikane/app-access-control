@@ -1,6 +1,7 @@
 {
     "name": "zf2-boiler-app/app-access-control",
-    "type": "library",
+    "license": "MIT",
+   	"type": "library",
     "description": "ZF2 BoilerApp Access control module",
     "keywords": ["Zend Framework 2","ZF2 Boiler-App","authentication"],
     "authors": [
@@ -13,6 +14,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "dev-master",
+        "zf2-boiler-app/app-db": "dev-master",
         "hybridauth/hybridauth": "dev-master"
     },
     "autoload": {

@@ -52,12 +52,12 @@ return array(
 	),
 	'service_manager' => array(
 		'invokables' => array(
-			'BoilerAppAccessControlService' => 'BoilerAppAccessControl\Service\BoilerAppAccessControlService',
+			'AccessControlService' => 'BoilerAppAccessControl\Service\AccessControlService',
 			'AuthenticationService' => 'BoilerAppAccessControl\Service\AuthenticationService',
 			'RegistrationService' => 'BoilerAppAccessControl\Service\RegistrationService'
 		),
 		'factories' => array(
-			'AccessControlAuthenticationService' => 'BoilerAppAccessControl\Factory\BoilerAppAccessControlAuthenticationServiceFactory',
+			'AccessControlAuthenticationService' => 'BoilerAppAccessControl\Factory\AccessControlAuthenticationServiceFactory',
 			'AuthenticationStorage' => 'BoilerAppAccessControl\Factory\AuthenticationStorageFactory',
 			'AuthenticationDoctrineAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationDoctrineAdapterFactory',
 			'AuthenticationHybridAuthAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationHybridAuthAdapterFactory',

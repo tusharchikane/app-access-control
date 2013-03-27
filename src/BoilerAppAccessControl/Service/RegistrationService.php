@@ -49,7 +49,7 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 
 		//Set crypted credential
 		->setAuthAccessCredential($oBCrypt->create(md5($sCredential)))
-		->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $this->getServiceLocator()->get('BoilerAppAccessControlService')->generateAuthAccessPublicKey()))
+		->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $this->getServiceLocator()->get('AccessControlService')->generateAuthAccessPublicKey()))
 		->setAuthAccessState(\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_PENDING_STATE)
 		->setAuthAccessUser($oUser);
 
@@ -131,14 +131,16 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 			is_scalar($sAuthAccessIdentity)?$sAuthAccessIdentity:gettype($sAuthAccessIdentity)
 		));
 
-		if(!($oAuthAccess = $this->getServiceLocator()->get('BoilerAppAccessControlService')->getAuthAccessFromIdentity($sAuthAccessIdentity)))throw new \LogicException(sprintf(
+		$oAccessControlService = $this->getServiceLocator()->get('AccessControlService');
+
+		if(!($oAuthAccess = $oAccessControlService->getAuthAccessFromIdentity($sAuthAccessIdentity)))throw new \LogicException(sprintf(
 			'AuthAccess with identity "%s" does not exist',
 			$sAuthAccessIdentity
 		));
 
 		//Reset public key
 		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		$oAuthAccess->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $this->getServiceLocator()->get('BoilerAppAccessControlService')->generateAuthAccessPublicKey()));
+		$oAuthAccess->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $oAccessControlService->generateAuthAccessPublicKey()));
 		$this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->update($oAuthAccess);
 
 		//Create email view body

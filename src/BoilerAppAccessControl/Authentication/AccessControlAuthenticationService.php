@@ -1,14 +1,11 @@
 <?php
 namespace BoilerAppAccessControl\Authentication;
-class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
+class AccessControlAuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareInterface{
+	use \Zend\ServiceManager\ServiceLocatorAwareTrait;
+
 	const AUTH_RESULT_AUTH_ACCESS_STATE_PENDING = -1;
 	const AUTH_RESULT_EMAIL_OR_PASSWORD_WRONG = 0;
 	const AUTH_RESULT_VALID = 1;
-
-	/**
-	 * @var \Zend\ServiceManager\ServiceLocatorInterface
-	 */
-	protected $serviceLocator;
 
 	/**
 	 * @var \Zend\Authentication\AuthenticationService
@@ -26,65 +23,45 @@ class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManage
 	protected $storage;
 
 	/**
-	 * Constructor
-	 * @param array $aAdapters : (optionnal)
-	 */
-	public function __construct(\Zend\Authentication\Storage\StorageInterface $oStorage = null, array $aAdapters = null){
-		if($aAdapters)$this->setAdapters($aAdapters);
-
-	}
-
-	/**
-	 * Instantiate a UserAuthenticationService
+	 * Instantiate AccessControl Authentication Service
 	 * @param array|Traversable $aConfiguration
-	 * @throws \Exception
+	 * @param \Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator
+	 * @throws \InvalidArgumentException
+	 * @return \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
 	 */
 	public static function factory($aConfiguration,\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
 		if($aConfiguration instanceof \Traversable)$aConfiguration = \Zend\Stdlib\ArrayUtils::iteratorToArray($aConfiguration);
-		elseif(!is_array($aConfiguration))throw new \Exception(__METHOD__.' expects an array or Traversable object; received "'.(is_object($aConfiguration)?get_class($aConfiguration):gettype($aConfiguration)).'"');
+		elseif(!is_array($aConfiguration))throw new \InvalidArgumentException(__METHOD__.' expects an array or Traversable object; received "'.(is_object($aConfiguration)?get_class($aConfiguration):gettype($aConfiguration)).'"');
+
+		$oUserAuthenticationService = new static($aConfiguration['storage'],isset($aConfiguration['adapters'])?$aConfiguration['adapters']:array());
+
+		//Adapters
+		if(isset($aConfiguration['adapters']))$oUserAuthenticationService->setAdapters($aConfiguration['adapters']);
+
+		//Storage
 		if(isset($aConfiguration['storage'])){
 			if(!($aConfiguration['storage'] instanceof \Zend\Authentication\Storage\StorageInterface)){
-				if(!is_string($aConfiguration['storage']))throw new\Exception(sprintf(
+				if(!is_string($aConfiguration['storage']))throw new \InvalidArgumentException(sprintf(
 					'Storage configuration expects \Zend\Authentication\Storage\StorageInterface or string, "%s" given',
 					is_object($aConfiguration['storage'])?get_class($aConfiguration['storage']):gettype($aConfiguration['storage'])
 				));
 				if($oServiceLocator->has($aConfiguration['storage']))$aConfiguration['storage'] = $oServiceLocator->get($aConfiguration['storage']);
 				elseif(class_exists($aConfiguration['storage']))$aConfiguration['storage'] = new $aConfiguration['storage']();
-				else throw new \Exception($aConfiguration['storage'].' is not an available service or an existing class');
+				else throw new \InvalidArgumentException($aConfiguration['storage'].' is not an available service or an existing class');
 			}
-
+			$oUserAuthenticationService->setStorage($aConfiguration['storage']);
 		}
-		else $aConfiguration['storage'] = null;
 
-		$oUserAuthenticationService = new static($aConfiguration['storage'],isset($aConfiguration['adapters'])?$aConfiguration['adapters']:array());
 		return $oUserAuthenticationService->setServiceLocator($oServiceLocator);
 	}
 
 	/**
-	 * @param \Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator
-	 * @return \User\Service\UserAccountService
-	 */
-	public function setServiceLocator(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
-		$this->serviceLocator = $oServiceLocator;
-		return $this;
-	}
-
-	/**
-	 * @throws \Exception
-	 * @return \Zend\ServiceManager\ServiceManager
-	 */
-	public function getServiceLocator(){
-		if($this->serviceLocator instanceof \Zend\ServiceManager\ServiceLocatorInterface)return $this->serviceLocator;
-		throw new \Exception('Service Locator is undefined');
-	}
-
-	/**
 	 * @param array $aAdapters
-	 * @throws \Exception
-	 * @return \User\Service\UserAccountService
+	 * @throws \InvalidArgumentException
+	 * @return \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
 	 */
 	public function setAdapters(array $aAdapters){
-		if(empty($aAdapters))throw new \Exception('setAdapters expects not empty array');
+		if(empty($aAdapters))throw new \InvalidArgumentException('setAdapters expects not empty array');
 		foreach($aAdapters as $sAdapterName => $oAdapter){
 			if(is_array($sAdapterName)){
 				if(!empty($oAdapter['name']))$sAdapterName = $oAdapter['name'];
@@ -97,16 +74,16 @@ class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManage
 
 	/**
 	 * @param string $sAdapterName
-	 * @param \User\Authentication\Adapter\AuthenticationAdapterInterface|string $oAdapter
-	 * @throws \Exception
-	 * @return \User\Service\UserAccountService
+	 * @param string|\BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface $oAdapter
+	 * @throws \InvalidArgumentException
+	 * @return \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
 	 */
 	protected function setAdapter($sAdapterName, $oAdapter){
-		if(!is_string($sAdapterName))throw new \Exception('Adapter\'s name expects string, '.gettype($sAdapterName));
-		if($oAdapter instanceof \User\Authentication\Adapter\AuthenticationAdapterInterface)$this->adapters[$sAdapterName] = $oAdapter;
+		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, '.gettype($sAdapterName));
+		if($oAdapter instanceof \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface)$this->adapters[$sAdapterName] = $oAdapter;
 		elseif(is_string($oAdapter))$this->adapters[$sAdapterName] = $oAdapter;
-		else throw new \Exception(sprintf(
-			'Adapter expects \User\Authentication\Adapter\AuthenticationAdapterInterface or string, "%s" given',
+		else throw new \InvalidArgumentException(sprintf(
+			'Adapter expects \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface or string, "%s" given',
 			is_object($oAdapter)?get_class($oAdapter):gettype($oAdapter)
 		));
 		return $this;
@@ -114,12 +91,12 @@ class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManage
 
 	/**
 	 * @param string $sAdapterName
-	 * @throws \Exception
-	 * @return \User\Authentication\Adapter\AuthenticationAdapterInterface
+	 * @throws \InvalidArgumentException
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface
 	 */
 	public function getAdapter($sAdapterName){
-		if(!is_string($sAdapterName))throw new \Exception('Adapter\'s name expects string, '.gettype($sAdapterName));
-		if(!isset($this->adapters[$sAdapterName]))throw new \Exception('Adapter "'.$sAdapterName.'" is undefined');
+		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, '.gettype($sAdapterName));
+		if(!isset($this->adapters[$sAdapterName]))throw new \InvalidArgumentException('Adapter "'.$sAdapterName.'" is undefined');
 		if(!($this->adapters[$sAdapterName] instanceof \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface)){
 			if(!is_string($this->adapters[$sAdapterName]))throw new \InvalidArgumentException(sprintf(
 				'Adapter "%s" expects \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface or string, "%s" given',
@@ -127,9 +104,18 @@ class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManage
 			));
 			if($this->getServiceLocator()->has($this->adapters[$sAdapterName]))$this->adapters[$sAdapterName] = $this->getServiceLocator()->get($this->adapters[$sAdapterName]);
 			elseif(class_exists($this->adapters[$sAdapterName]))$this->adapters[$sAdapterName] = new $this->adapters[$sAdapterName]();
-			else throw new \Exception($this->adapters[$sAdapterName].' is not an available service or an existing class');
+			else throw new \InvalidArgumentException($this->adapters[$sAdapterName].' is not an available service or an existing class');
 		}
 		return $this->adapters[$sAdapterName];
+	}
+
+	/**
+	 * @param \Zend\Authentication\Storage\StorageInterface $oStorage
+	 * @return \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
+	 */
+	public function setStorage(\Zend\Authentication\Storage\StorageInterface $oStorage){
+		$this->storage = $oStorage;
+		return $this;
 	}
 
 	/**
@@ -142,10 +128,14 @@ class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManage
 	}
 
 	/**
-	 * @param string $sAdapter
+	 * @param string $sAdapterName
+	 * @throws \InvalidArgumentException
+	 * @throws \DomainException
+	 * @throws \LogicException
+	 * @return string
 	 */
 	public function authenticate($sAdapterName){
-		if(!is_string($sAdapterName))throw new \Exception('Adapter\'s name expects string, '.gettype($sAdapterName));
+		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, '.gettype($sAdapterName));
 
 		//Performs adapter initialization
 		$oAdapter = $this->getAdapter($sAdapterName);
@@ -178,11 +168,11 @@ class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManage
 					return $sReturn;
 				}
 			default:
-				throw new \Exception('Unknown result failure code : '.$oAuthResult->getCode());
+				throw new \DomainException('Unknown result failure code : '.$oAuthResult->getCode());
 		}
 
 		//Authentication is valid, check user state
-		if(!isset($iUserId,$sUserState))throw new \Exception('User\'s id or user\'s state are undefined');
+		if(!isset($iUserId,$sUserState))throw new \LogicException('User\'s id or user\'s state are undefined');
 
 		if($sUserState === \User\Model\UserModel::USER_STATUS_ACTIVE){
 			//Store user id
@@ -200,20 +190,20 @@ class BoilerAppAccessControlAuthenticationService implements \Zend\ServiceManage
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws \LogicException
 	 * @return mixed
 	 */
 	public function getIdentity(){
 		if($this->hasIdentity())return $this->getAuthenticationService()->getIdentity();
-		throw new \Exception('There is no stored identity');
+		throw new \LogicException('There is no stored identity');
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws \LogicException
 	 * @return \User\Authentication\UserAuthenticationService
 	 */
 	public function clearIdentity(){
-		if(!$this->hasIdentity())throw new \Exception('There is no stored identity');
+		if(!$this->hasIdentity())throw new \LogicException('There is no stored identity');
 		//Clear auth storage
 		$this->getAuthenticationService()->clearIdentity();
 

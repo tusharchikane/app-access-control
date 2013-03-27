@@ -17,16 +17,16 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 
 		//Performs authentication attempt
 		switch($iResult = call_user_func_array(
-			array($this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService'),'authenticate'),
+			array($this->getServiceLocator()->get('AccessControlAuthenticationService'),'authenticate'),
 			func_get_args()
 		)){
-			case \BoilerAppAccessControl\Authentication\BoilerAppAccessControlAuthenticationService::AUTH_RESULT_VALID:
+			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID:
 				return true;
 
-			case \BoilerAppAccessControl\Authentication\BoilerAppAccessControlAuthenticationService::AUTH_RESULT_EMAIL_OR_PASSWORD_WRONG:
+			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_EMAIL_OR_PASSWORD_WRONG:
 				return $this->getServiceLocator()->get('translator')->translate('email_or_password_wrong');
 
-			case \BoilerAppAccessControl\Authentication\BoilerAppAccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING:
+			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING:
 				return $this->getServiceLocator()->get('translator')->translate('auth_access_state_pending');
 			//Unknown error
 			default:
@@ -48,14 +48,16 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 		//Retrieve translator
 		$oTranslator = $this->getServiceLocator()->get('translator');
 
-		if(!($oAuthAccess = $this->getServiceLocator()->get('BoilerAppAccessControlService')->getAuthAccessFromIdentity($sAuthAccessIdentity)))return $oTranslator->translate('identity_does_not_match_any_registered_user');
+		$oAccessControlService = $this->getServiceLocator()->get('AccessControlService');
+
+		if(!($oAuthAccess = $oAccessControlService->getAuthAccessFromIdentity($sAuthAccessIdentity)))return $oTranslator->translate('identity_does_not_match_any_registered_user');
 
 		//If AuthAccess is in pending state
 		if($oAuthAccess->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)return $this->getServiceLocator()->get('translator')->translate('auth_access_pending');
 
 		//Reset public key
 		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		$oAuthAccess->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $this->getServiceLocator()->get('BoilerAppAccessControlService')->generateAuthAccessPublicKey()));
+		$oAuthAccess->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $oAccessControlService->generateAuthAccessPublicKey()));
 		$this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->update($oAuthAccess);
 
 		//Create email view body
@@ -115,7 +117,7 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 		//Reset credential
 		->setAuthAccessCredential($oBCrypt->create(md5($sCredential = md5(date('Y-m-d').str_shuffle(uniqid())))))
 		//Reset public key
-		->setAuthAccessPublicKey($oBCrypt->create($this->getServiceLocator()->get('BoilerAppAccessControlService')->generateAuthAccessPublicKey())));
+		->setAuthAccessPublicKey($oBCrypt->create($this->getServiceLocator()->get('AccessControlService')->generateAuthAccessPublicKey())));
 
 		//Create email view body
 		$oView = new \Zend\View\Model\ViewModel(array(
@@ -148,7 +150,7 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 	 * @return \BoilerAppAccessControl\Service\AuthenticationService
 	 */
 	public function logout(){
-		$this->getServiceLocator()->get('BoilerAppAccessControlAuthenticationService')->clearIdentity();
+		$this->getServiceLocator()->get('AccessControlAuthenticationService')->clearIdentity();
 		return $this;
 	}
 }
