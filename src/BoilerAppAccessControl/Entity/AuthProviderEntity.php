@@ -1,14 +1,14 @@
 <?php
 namespace BoilerAppAccessControl\Entity;
 /**
- * @\Doctrine\ORM\Mapping\Entity(repositoryClass="\User\Repository\UserRepository")
- * @\Doctrine\ORM\Mapping\Table(name="users")
+ * @\Doctrine\ORM\Mapping\Entity(repositoryClass="\BoilerAppAccessControl\Repository\AuthProviderRepository")
+ * @\Doctrine\ORM\Mapping\Table(name="auth_providers")
  */
-class AuthProviderEntity extends \Database\Entity\AbstractEntity{
+class AuthProviderEntity extends \BoilerAppDb\Entity\AbstractEntity{
 
 	/**
-     * @var \User\Entity\UserEntity
-     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="User\Entity\UserEntity")
+     * @var \BoilerAppUser\Entity\UserEntity
+     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="BoilerAppUser\Entity\UserEntity")
 	 */
 	protected $user;
 
@@ -26,16 +26,16 @@ class AuthProviderEntity extends \Database\Entity\AbstractEntity{
 	protected $provider_name;
 
 	/**
-	 * @param \User\Entity\UserEntity $oUser
+	 * @param \BoilerAppUser\Entity\UserEntity $oUser
 	 * @return \BoilerAppAccessControl\Entity\AuthProviderEntity
 	 */
-	public function setUser(\User\Entity\UserEntity $oUser){
+	public function setUser(\BoilerAppUser\Entity\UserEntity $oUser){
 		$this->user = $oUser;
 		return $this;
 	}
 
 	/**
-	 * @return int
+	 * @return \BoilerAppUser\Entity\UserEntity
 	 */
 	public function getUser(){
 		return $this->user;

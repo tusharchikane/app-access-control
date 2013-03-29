@@ -1,5 +1,5 @@
 {
-    "hash": "fa996cc7fa87bdc0676608a1c5cbd5af",
+    "hash": "6a4e31eede10e531186da46f1049b22e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -639,12 +639,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "a4db7c8b429f3ac2cabf9bd9e368ca174325386b"
+                "reference": "484d03a5bc0cd21ad0ec0982ab6763a86c7b4daf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/a4db7c8b429f3ac2cabf9bd9e368ca174325386b",
-                "reference": "a4db7c8b429f3ac2cabf9bd9e368ca174325386b",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/484d03a5bc0cd21ad0ec0982ab6763a86c7b4daf",
+                "reference": "484d03a5bc0cd21ad0ec0982ab6763a86c7b4daf",
                 "shasum": ""
             },
             "require": {
@@ -702,7 +702,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-03-26 16:18:01"
+            "time": "2013-03-28 04:26:24"
         },
         {
             "name": "hybridauth/hybridauth",
@@ -809,12 +809,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "732d8be2fad0649bf0a1c68530c92ed7f6dcda04"
+                "reference": "44ca4a43e121b7f9f34dd8a89f47461716205ab3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/732d8be2fad0649bf0a1c68530c92ed7f6dcda04",
-                "reference": "732d8be2fad0649bf0a1c68530c92ed7f6dcda04",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/44ca4a43e121b7f9f34dd8a89f47461716205ab3",
+                "reference": "44ca4a43e121b7f9f34dd8a89f47461716205ab3",
                 "shasum": ""
             },
             "require": {
@@ -912,7 +912,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-03-25 17:37:28"
+            "time": "2013-03-28 17:13:36"
         },
         {
             "name": "zf2-boiler-app/app-db",
@@ -920,12 +920,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zf2-boiler-app/app-db.git",
-                "reference": "21ccebff433ab845d2c82257f6a17e781ee0c199"
+                "reference": "06f492b78a937e3cc67e313a1d5c98426c89b4cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zf2-boiler-app/app-db/zipball/21ccebff433ab845d2c82257f6a17e781ee0c199",
-                "reference": "21ccebff433ab845d2c82257f6a17e781ee0c199",
+                "url": "https://api.github.com/repos/zf2-boiler-app/app-db/zipball/06f492b78a937e3cc67e313a1d5c98426c89b4cb",
+                "reference": "06f492b78a937e3cc67e313a1d5c98426c89b4cb",
                 "shasum": ""
             },
             "require": {
@@ -943,6 +943,9 @@
                 ]
             },
             "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Neilime",
@@ -956,7 +959,51 @@
                 "doctrine",
                 "zend framework 2"
             ],
-            "time": "2013-03-26 21:23:25"
+            "time": "2013-03-27 16:36:59"
+        },
+        {
+            "name": "zf2-boiler-app/app-user",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zf2-boiler-app/app-user.git",
+                "reference": "3ac5e3ada2ffb6b1feaf883b20e1dd5fa18c425c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zf2-boiler-app/app-user/zipball/3ac5e3ada2ffb6b1feaf883b20e1dd5fa18c425c",
+                "reference": "3ac5e3ada2ffb6b1feaf883b20e1dd5fa18c425c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "dev-master",
+                "zf2-boiler-app/app-db": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "BoilerAppUser": "src"
+                },
+                "classmap": [
+                    "Module.php"
+                ]
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Neilime",
+                    "role": "Developer"
+                }
+            ],
+            "description": "ZF2 BoilerApp User module",
+            "keywords": [
+                "ZF2 Boiler-App",
+                "account",
+                "user",
+                "zend framework 2"
+            ],
+            "time": "2013-03-28 13:01:24"
         }
     ],
     "packages-dev": [
@@ -969,10 +1016,12 @@
     "stability-flags": {
         "zendframework/zendframework": 20,
         "zf2-boiler-app/app-db": 20,
+        "zf2-boiler-app/app-user": 20,
         "hybridauth/hybridauth": 20
     },
     "platform": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "ext-pdo_mysql": "*"
     },
     "platform-dev": [
 

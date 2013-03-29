@@ -79,7 +79,7 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 	 * @return \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
 	 */
 	protected function setAdapter($sAdapterName, $oAdapter){
-		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, '.gettype($sAdapterName));
+		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, "'.gettype($sAdapterName).'" given');
 		if($oAdapter instanceof \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface)$this->adapters[$sAdapterName] = $oAdapter;
 		elseif(is_string($oAdapter))$this->adapters[$sAdapterName] = $oAdapter;
 		else throw new \InvalidArgumentException(sprintf(
@@ -95,7 +95,7 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface
 	 */
 	public function getAdapter($sAdapterName){
-		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, '.gettype($sAdapterName));
+		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, "'.gettype($sAdapterName).'" given');
 		if(!isset($this->adapters[$sAdapterName]))throw new \InvalidArgumentException('Adapter "'.$sAdapterName.'" is undefined');
 		if(!($this->adapters[$sAdapterName] instanceof \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface)){
 			if(!is_string($this->adapters[$sAdapterName]))throw new \InvalidArgumentException(sprintf(

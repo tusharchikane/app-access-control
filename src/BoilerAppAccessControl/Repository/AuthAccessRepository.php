@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Repository;
-class AuthAccessRepository extends \Database\Repository\AbstractEntityRepository{
+class AuthAccessRepository extends \BoilerAppDb\Repository\AbstractEntityRepository{
 
 	/** User states */
 	const AUTH_ACCESS_PENDING_STATE = 'PENDING';

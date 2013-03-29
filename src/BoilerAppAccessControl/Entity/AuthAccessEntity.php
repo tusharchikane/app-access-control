@@ -5,7 +5,7 @@ namespace BoilerAppAccessControl\Entity;
  * @\Doctrine\ORM\Mapping\Entity(repositoryClass="\BoilerAppAccessControl\Repository\AuthAccessRepository")
  * @\Doctrine\ORM\Mapping\Table(name="auth_access")
  */
-class AuthAccessEntity extends \Database\Entity\AbstractEntity{
+class AuthAccessEntity extends \BoilerAppDb\Entity\AbstractEntity{
 	/**
 	 * @var int
 	 * @\Doctrine\ORM\Mapping\Id
@@ -46,7 +46,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 
 	/**
 	 * @var \User\Entity\UserEntity
-	 * @\Doctrine\ORM\Mapping\OneToOne(targetEntity="User\Entity\UserEntity", inversedBy="user_auth_access")
+	 * @\Doctrine\ORM\Mapping\OneToOne(targetEntity="BoilerAppUser\Entity\UserEntity", inversedBy="user_auth_access")
      * @\Doctrine\ORM\Mapping\JoinColumn(name="auth_access_user_id", referencedColumnName="user_id")
 	 */
 	protected $auth_access_user;
@@ -139,7 +139,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 	}
 
 	/**
-	 * @param \User\Entity\UserEntity $oUser
+	 * @param \BoilerAppUser\Entity\UserEntity $oUser
 	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
 	public function setAuthAccessUser(\User\Entity\UserEntity $oUser){
@@ -148,7 +148,7 @@ class AuthAccessEntity extends \Database\Entity\AbstractEntity{
 	}
 
 	/**
-	 * @return \User\Entity\UserEntity
+	 * @return \BoilerAppUser\Entity\UserEntity
 	 */
 	public function getAuthAccessUser(){
 		return $this->auth_access_user;

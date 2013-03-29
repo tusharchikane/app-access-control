@@ -49,7 +49,11 @@ class AccessControlAuthenticationServiceTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('',$this->accessControlAuthenticationService->getIdentity());
 	}
 
-	public function clearIdentity(){
+	public function testClearIdentity(){
 		$this->assertInstanceOf('\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService',$this->accessControlAuthenticationService->clearIdentity());
+	}
+
+	public function tearDown(){
+		parent::tearDown();
 	}
 }

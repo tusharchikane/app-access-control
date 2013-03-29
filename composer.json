@@ -15,6 +15,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "dev-master",
         "zf2-boiler-app/app-db": "dev-master",
+        "zf2-boiler-app/app-user": "dev-master",
         "hybridauth/hybridauth": "dev-master"
     },
     "autoload": {

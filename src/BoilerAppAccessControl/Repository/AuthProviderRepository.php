@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Repository;
-class AuthProviderRepository extends \Database\Repository\AbstractEntityRepository{
+class AuthProviderRepository extends \BoilerAppDb\Repository\AbstractEntityRepository{
 
 	/**
 	 * @param \BoilerAppAccessControl\Entity\AuthAccessEntity $oAuthAccessEntity
