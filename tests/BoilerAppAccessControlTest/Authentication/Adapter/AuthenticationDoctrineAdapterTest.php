@@ -1,6 +1,6 @@
 <?php
-namespace BoilerAppAccessControl\Authentication\Adapter;
-class AuthenticationDoctrineAdapterTest extends \PHPUnit_Framework_TestCase{
+namespace BoilerAppAccessControlTest\Authentication\Adapter;
+class AuthenticationDoctrineAdapterTest extends \BoilerAppPHPUnit\PHPUnit\TestCase\DoctrineTestCase{
 
 	/**
 	 * @var \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter

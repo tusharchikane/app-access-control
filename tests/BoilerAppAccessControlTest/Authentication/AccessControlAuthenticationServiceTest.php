@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControlTest\Authentication;
-class AccessControlAuthenticationServiceTest extends \PHPUnit_Framework_TestCase{
+class AccessControlAuthenticationServiceTest extends \BoilerAppPHPUnit\PHPUnit\TestCase\DoctrineTestCase{
 	/**
 	 * @var \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
 	 */
@@ -10,10 +10,10 @@ class AccessControlAuthenticationServiceTest extends \PHPUnit_Framework_TestCase
 	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp(){
-		$oServiceManager = \BoilerAppAccessControlTest\Bootstrap::getServiceManager();
-		$aConfiguration = $oServiceManager->get('Config');
+		parent::setUp();
+		$aConfiguration = $this->getServiceManager()->get('Config');
 		$oAccessControlAuthenticationServiceFactory = new \BoilerAppAccessControl\Factory\AccessControlAuthenticationServiceFactory();
-		$this->accessControlAuthenticationService = $oAccessControlAuthenticationServiceFactory->createService($oServiceManager);
+		$this->accessControlAuthenticationService = $oAccessControlAuthenticationServiceFactory->createService($this->getServiceManager());
 	}
 
 	public function testGetServiceLocator(){

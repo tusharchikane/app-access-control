@@ -27,8 +27,6 @@ class AuthenticationHybridAuthAdapterFactory implements \Zend\ServiceManager\Fac
 			}
 			return new \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter(new \Hybrid_Auth($aConfiguration));
 		}
-		catch(\Exception $oException){
-			return $oException;
-		}
+		catch(\Exception $oException){}
     }
 }

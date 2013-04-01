@@ -7,6 +7,19 @@ return array(
 			'HybridAuth' => 'AuthenticationHybridAuthAdapter'
 		)
 	),
+	'hybrid_auth' =>  array(
+		'base_url' => 'AccessControl/hybridauth',
+		'providers' => array(
+			'Google' => array(
+				'enabled' => true,
+				'keys' => array('id' => '','secret' => ''),
+				'scope' => 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+				'access_type' => 'online',
+				'approval_prompt' => 'force'
+			)
+		),
+		'debug_mode' => true
+	),
 	'doctrine' => array(
 		'connection' => array(
 			'orm_default' => array(

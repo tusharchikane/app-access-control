@@ -10,7 +10,7 @@ class Module{
 		$oServiceManager = $oEvent->getApplication()->getServiceManager();
 
 		//Set logged user to layout if exists
-		if($oServiceManager->get('ViewRenderer') instanceof \Zend\View\Renderer\PhpRenderer){
+		if($oServiceManager->has('ViewRenderer') && $oServiceManager->get('ViewRenderer') instanceof \Zend\View\Renderer\PhpRenderer){
 			if($oServiceManager->get('AccessControlAuthenticationService')->hasIdentity()){
 				//Prevents session error
 				try{

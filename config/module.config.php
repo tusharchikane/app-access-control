@@ -21,7 +21,7 @@ return array(
 		)
 	),
 	'hybrid_auth' =>  array(
-		'base_url' => 'BoilerAppAccessControl/hybridauth',
+		'base_url' => 'AccessControl/hybridauth',
 
 		'providers' => array(
 			//Set Redirect URIs = "http://xxxxx/access-control/hybridauth?hauth.done=Google" in google APIs console

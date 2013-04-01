@@ -63,14 +63,8 @@ class Bootstrap{
      * @throws RuntimeException
      */
     protected static function initAutoloader(){
-        $sVendorPath = static::findParentPath('vendor');
-
-        if(is_readable($sVendorPath . '/autoload.php'))$oLoader = include $sVendorPath.'/autoload.php';
-        else{
-            $sZf2Path = getenv('ZF2_PATH')?:(defined('ZF2_PATH')?ZF2_PATH:(is_dir($sVendorPath . '/ZF2/library')?$sVendorPath.'/ZF2/library':false));
-            if(!$sZf2Path)throw new \RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
-            include $sZf2Path . '/Zend/Loader/AutoloaderFactory.php';
-        }
+        if(is_readable($sAutoloadPath = static::findParentPath('vendor').'/autoload.php'))include $sAutoloadPath;
+        if(!class_exists('Zend\Loader\AutoloaderFactory'))throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
         \Zend\Loader\AutoloaderFactory::factory(array(
             'Zend\Loader\StandardAutoloader' => array(
                 'autoregister_zf' => true,
