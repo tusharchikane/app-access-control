@@ -21,7 +21,7 @@ return array(
 		)
 	),
 	'hybrid_auth' =>  array(
-		'base_url' => 'AccessControl/hybridauth',
+		'base_url' => 'AccessControl/HybridAuth',
 
 		'providers' => array(
 			//Set Redirect URIs = "http://xxxxx/access-control/hybridauth?hauth.done=Google" in google APIs console
@@ -68,6 +68,6 @@ return array(
 		)
 	),
 	'view_manager' => array(
-		'template_path_stack' => array('BoilerAppAccessControl' => __DIR__ . '/../view')
+		'template_path_stack' => array('boiler-app-access-control' => __DIR__ . '/../view')
 	)
 );

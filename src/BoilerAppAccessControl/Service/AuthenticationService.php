@@ -23,7 +23,7 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID:
 				return true;
 
-			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_EMAIL_OR_PASSWORD_WRONG:
+			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG:
 				return $this->getServiceLocator()->get('translator')->translate('email_or_password_wrong');
 
 			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING:

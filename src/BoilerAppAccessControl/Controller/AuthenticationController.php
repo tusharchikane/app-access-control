@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Controller;
-class AuthenticationController extends \Templating\Mvc\Controller\AbstractActionController{
+class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\AbstractActionController{
 	/**
 	 * Show authenticate form or process authenticate attempt
 	 * @throws \UnexpectedValueException
@@ -9,10 +9,10 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 	public function authenticateAction(){
 		//If user is already logged in, redirect him
 		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()){
-			$sRedirectUrl = empty($this->getServiceLocator()->get('Session')->redirect)
+			$sRedirectUrl = empty($this->getServiceLocator()->get('SessionManager')->redirect)
 			?$this->url()->fromRoute('Home')
-			:$this->getServiceLocator()->get('Session')->redirect;
-			unset($this->getServiceLocator()->get('Session')->redirect);
+			:$this->getServiceLocator()->get('SessionManager')->redirect;
+			unset($this->getServiceLocator()->get('SessionManager')->redirect);
 			return $this->redirect()->toUrl($sRedirectUrl);
 		}
 
@@ -42,10 +42,10 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 				$this->params()->fromPost('auth_access_credential')
 			)) === true
 		)){
-			$sRedirectUrl = empty($this->getServiceLocator()->get('Session')->redirect)
+			$sRedirectUrl = empty($this->getServiceLocator()->get('SessionManager')->redirect)
 			?$this->url()->fromRoute('Home')
-			:$this->getServiceLocator()->get('Session')->redirect;
-			unset($this->getServiceLocator()->get('Session')->redirect);
+			:$this->getServiceLocator()->get('SessionManager')->redirect;
+			unset($this->getServiceLocator()->get('SessionManager')->redirect);
 			return $this->redirect()->toUrl($sRedirectUrl);
 		}
 
@@ -56,11 +56,11 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 
 		//Try to define redirect url
 		if(
-			empty($this->getServiceLocator()->get('Session')->redirect)
+			empty($this->getServiceLocator()->get('SessionManager')->redirect)
 			&& ($sHttpReferer = $this->getRequest()->getServer('HTTP_REFERER'))
 			&& is_array($aInfosUrl = parse_url($sHttpReferer))
 			&& $this->getRequest()->getServer('HTTP_HOST') === $aInfosUrl['host']
-		)$this->getServiceLocator()->get('Session')->redirect = $sHttpReferer;
+		)$this->getServiceLocator()->get('SessionManager')->redirect = $sHttpReferer;
 
 		return $this->view;
 	}
@@ -125,7 +125,7 @@ class AuthenticationController extends \Templating\Mvc\Controller\AbstractAction
 		if(!$this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()
 		|| $this->getServiceLocator()->get('AuthenticationService')->logout())return (
 			//Try to define redirect url
-			empty($this->getServiceLocator()->get('Session')->redirect)
+			empty($this->getServiceLocator()->get('SessionManager')->redirect)
 			&& ($sHttpReferer = $this->getRequest()->getServer('HTTP_REFERER'))
 			&& is_array($aInfosUrl = parse_url($sHttpReferer))
 			&& $this->getRequest()->getServer('HTTP_HOST') === $aInfosUrl['host']

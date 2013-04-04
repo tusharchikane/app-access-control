@@ -45,7 +45,7 @@ class AuthAccessEntity extends \BoilerAppDb\Entity\AbstractEntity{
 	protected $auth_access_state;
 
 	/**
-	 * @var \User\Entity\UserEntity
+	 * @var \BoilerAppUser\Entity\UserEntity
 	 * @\Doctrine\ORM\Mapping\OneToOne(targetEntity="BoilerAppUser\Entity\UserEntity", inversedBy="user_auth_access")
      * @\Doctrine\ORM\Mapping\JoinColumn(name="auth_access_user_id", referencedColumnName="user_id")
 	 */
@@ -142,7 +142,7 @@ class AuthAccessEntity extends \BoilerAppDb\Entity\AbstractEntity{
 	 * @param \BoilerAppUser\Entity\UserEntity $oUser
 	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
-	public function setAuthAccessUser(\User\Entity\UserEntity $oUser){
+	public function setAuthAccessUser(\BoilerAppUser\Entity\UserEntity $oUser){
 		$this->auth_access_user = $oUser;
 		return $this;
 	}

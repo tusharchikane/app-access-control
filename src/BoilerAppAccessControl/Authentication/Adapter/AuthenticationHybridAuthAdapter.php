@@ -134,53 +134,6 @@ class AuthenticationHybridAuthAdapter implements \BoilerAppAccessControl\Authent
 	 * @return \Zend\Authentication\Result
 	 */
 	public function authenticate(){
-		//Reset previous identity datas
-		$this->resultRow = null;
-		$this->getHybridAuth()->logoutAllProviders();
-
-		try{
-			$this->getHybridAuth()->authenticate($this->currentService);
-			$oUserProfile = $this->getUserProfile();
-		}
-		catch(\Exception $oException){
-			$this->getHybridAuth()->logout();
-			$sMessage = null;
-			switch($oException->getCode()){
-				case 5 :
-					$sMessage = self::AUTH_RESULT_HYBRID_AUTH_CANCELED;
-				case 6 :
-				case 7 :
-					$sMessage = self::AUTH_RESULT_HYBRID_AUTH_USER_NOT_CONNECTED;
-				default:
-					throw new \UnexpectedValueException('Unexpected hybrid auth exception return code : '.$oException->getCode());
-			}
-			return new \Zend\Authentication\Result(\Zend\Authentication\Result::FAILURE,null,(array)$sMessage);
-		}
-
-		//Retrieve Auth provider entity & related User entity
-		if(($oAuthProvider = $this->getAuthProviderRepository()->findOneBy(array(
-			'provider_id' => $oUserProfile->identifier,
-			'provider_name' => $sService
-		))) && ($oUser = $oAuthProvider->getUser()))$this->resultRow = array(
-			'user_id' => $oUser->getUserId(),
-			'user_state' => $oUser->getUserState()
-		);
-		else{
-			//Create user
-			$oUser = new \User\Entity\UserEntity();
-			$oUser = $this->getUserRepository()->create($oUser->setUserEmail($oUserProfile->email)
-			->setUserState(\User\Repository\UserRepository::USER_STATUS_ACTIVE));
-
-			//Link to auth provider
-			$oAuthProvider = new \BoilerAppAccessControl\Entity\AuthProviderEntity();
-			$this->getAuthProviderRepository()->create($oAuthProvider->setUser($oUser)->setProviderId($oUserProfile->identifier)->setProviderName($sService));
-
-			$this->resultRow = array(
-				'user_id' => $oUser->getUserId(),
-				'user_state' => \User\Model\UserModel::USER_STATUS_ACTIVE
-			);
-		}
-		return new \Zend\Authentication\Result(\Zend\Authentication\Result::SUCCESS,$this->resultRow['user_id']);
 	}
 
 	/**

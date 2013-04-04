@@ -1,17 +1,16 @@
 <?php
 namespace BoilerAppAccessControlTest\Authentication;
-class AccessControlAuthenticationServiceTest extends \BoilerAppPHPUnit\PHPUnit\TestCase\DoctrineTestCase{
+class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractDoctrineTestCase{
 	/**
 	 * @var \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
 	 */
 	protected $accessControlAuthenticationService;
 
 	/**
-	 * @see PHPUnit_Framework_TestCase::setUp()
+	 * @see \BoilerAppTest\PHPUnit\TestCase\AbstractDoctrineTestCase::setUp()
 	 */
 	protected function setUp(){
 		parent::setUp();
-		$aConfiguration = $this->getServiceManager()->get('Config');
 		$oAccessControlAuthenticationServiceFactory = new \BoilerAppAccessControl\Factory\AccessControlAuthenticationServiceFactory();
 		$this->accessControlAuthenticationService = $oAccessControlAuthenticationServiceFactory->createService($this->getServiceManager());
 	}
@@ -22,7 +21,6 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppPHPUnit\PHPUnit\T
 
 	public function testGetAdapter(){
 		$this->assertInstanceOf('\BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface',$this->accessControlAuthenticationService->getAdapter('LocalAuth'));
-		$this->assertInstanceOf('\BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface',$this->accessControlAuthenticationService->getAdapter('HybridAuth'));
 	}
 
 	public function testGetAuthenticationService(){
@@ -30,30 +28,74 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppPHPUnit\PHPUnit\T
 	}
 
 	public function testAuthenticate(){
-		$this->assertEquals('',$this->accessControlAuthenticationService->authenticate('LocalAuth','test','test'));
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		//Wrong authentication
+		$this->assertEquals(
+			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG,
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','wrong','valid-credential')
+		);
+
+		$this->assertEquals(
+			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG,
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid@test.com','wrong-credential')
+		);
+
+		$this->assertEquals(
+			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG,
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending','wrong-credential')
+		);
+
+		//Pending authentication
+		$this->assertEquals(
+			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING,
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending','pending-credential')
+		);
+
+		$this->assertEquals(
+			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING,
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending@test.com','pending-credential')
+		);
+
+		//Valid authentication
+		$this->assertEquals(
+			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID,
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential')
+		);
+
+		$this->assertEquals(
+			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID,
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid@test.com','valid-credential')
+		);
 	}
 
 	public function testHasIdentity(){
-		//Logged
-		$this->assertTrue($this->accessControlAuthenticationService->hasIdentity());
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Unlogged
+		$this->accessControlAuthenticationService->clearIdentity();
 		$this->assertFalse($this->accessControlAuthenticationService->hasIdentity());
+
+		//Logged
+		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential');
+		$this->assertTrue($this->accessControlAuthenticationService->hasIdentity());
 	}
 
 	public function testGetIdentity(){
-		//Logged
-		$this->assertEquals('',$this->accessControlAuthenticationService->getIdentity());
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
-		//Unlogged
-		$this->assertEquals('',$this->accessControlAuthenticationService->getIdentity());
+		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential');
+		$this->assertEquals(1,$this->accessControlAuthenticationService->getIdentity());
 	}
 
 	public function testClearIdentity(){
-		$this->assertInstanceOf('\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService',$this->accessControlAuthenticationService->clearIdentity());
-	}
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
-	public function tearDown(){
-		parent::tearDown();
+		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential');
+		$this->assertInstanceOf('\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService',$this->accessControlAuthenticationService->clearIdentity());
 	}
 }

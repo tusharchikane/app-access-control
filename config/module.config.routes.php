@@ -1,7 +1,7 @@
 <?php
 return array(
 	'routes' => array(
-		'BoilerAppAccessControl' => array(
+		'AccessControl' => array(
 			'type' => 'Zend\Mvc\Router\Http\Literal',
 			'options' => array('route' => '/access-control'),
 			'may_terminate' => true,
@@ -12,7 +12,7 @@ return array(
 						'route' => '/register[/:service]',
 						'defaults' => array(
 							'controller' => 'BoilerAppAccessControl\Controller\Registration',
-							'action'  => 'register'
+							'action' => 'register'
 						)
 					)
 				),

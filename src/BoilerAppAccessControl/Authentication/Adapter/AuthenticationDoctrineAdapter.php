@@ -73,10 +73,10 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 		))return new \Zend\Authentication\Result(\Zend\Authentication\Result::FAILURE_CREDENTIAL_INVALID,null);
 
 		$this->resultRow = array(
-			'user_id' => $oAuthAccess->getAuthAccessUser()->getUserId(),
-			'user_state' => $oAuthAccess->getAuthAccessState()
+			'auth_access_id' => $oAuthAccess->getAuthAccessId(),
+			'auth_access_state' => $oAuthAccess->getAuthAccessState()
 		);
-		return new \Zend\Authentication\Result(\Zend\Authentication\Result::SUCCESS,$this->resultRow['user_id']);
+		return new \Zend\Authentication\Result(\Zend\Authentication\Result::SUCCESS,$this->resultRow['auth_access_id']);
 	}
 
 	/**

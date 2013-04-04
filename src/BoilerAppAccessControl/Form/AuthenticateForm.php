@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Form;
-class AuthenticateForm extends \Application\Form\AbstractForm{
+class AuthenticateForm extends \BoilerAppDisplay\Form\AbstractForm{
 
 	/**
 	 * Constructor

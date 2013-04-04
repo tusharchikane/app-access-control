@@ -4,7 +4,7 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 	use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 	const AUTH_RESULT_AUTH_ACCESS_STATE_PENDING = -1;
-	const AUTH_RESULT_EMAIL_OR_PASSWORD_WRONG = 0;
+	const AUTH_RESULT_IDENTITY_WRONG = 0;
 	const AUTH_RESULT_VALID = 1;
 
 	/**
@@ -146,16 +146,15 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 
 		$oAuthResult = $this->getAuthenticationService()->authenticate($oAdapter);
 		if($oAuthResult->isValid()){
-			//Check user's state
-			$aUserStateInfos = $oAdapter->getResultRowObject(array('user_id','user_state'));
-			$iUserId = (int)$aUserStateInfos->user_id;
-			$sUserState = $aUserStateInfos->user_state;
+			$aAuthAccessInfos = $oAdapter->getResultRowObject(array('auth_access_id','auth_access_state'));
+			$iAuthAccessId = $aAuthAccessInfos->auth_access_id;
+			$sAuthAccessState = $aAuthAccessInfos->auth_access_state;
 		}
 		else switch($oAuthResult->getCode()){
 			case \Zend\Authentication\Result::FAILURE_IDENTITY_NOT_FOUND:
 			case \Zend\Authentication\Result::FAILURE_IDENTITY_AMBIGUOUS:
 			case \Zend\Authentication\Result::FAILURE_CREDENTIAL_INVALID:
-				return self::AUTH_RESULT_EMAIL_OR_PASSWORD_WRONG;
+				return self::AUTH_RESULT_IDENTITY_WRONG;
 			case \Zend\Authentication\Result::FAILURE_UNCATEGORIZED:
 			case \Zend\Authentication\Result::FAILURE:
 				if($aMessages = $oAuthResult->getMessages()){
@@ -172,11 +171,11 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 		}
 
 		//Authentication is valid, check user state
-		if(!isset($iUserId,$sUserState))throw new \LogicException('User\'s id or user\'s state are undefined');
+		if(!isset($iAuthAccessId,$sAuthAccessState))throw new \LogicException('Auth access id or auth access state are undefined');
 
-		if($sUserState === \User\Model\UserModel::USER_STATUS_ACTIVE){
+		if($sAuthAccessState === \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE){
 			//Store user id
-			$this->getAuthenticationService()->getStorage()->write($iUserId);
+			$this->getAuthenticationService()->getStorage()->write($iAuthAccessId);
 			return self::AUTH_RESULT_VALID;
 		}
 		else return self::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING;

@@ -1,4 +1,5 @@
 <?php
+use Zend\Log\Writer\Stream;
 return array(
 	'authentication' => array(
 		'storage' => 'AuthenticationStorage',
@@ -8,7 +9,7 @@ return array(
 		)
 	),
 	'hybrid_auth' =>  array(
-		'base_url' => 'AccessControl/hybridauth',
+		'base_url' => 'AccessControl/HybridAuth',
 		'providers' => array(
 			'Google' => array(
 				'enabled' => true,
@@ -18,7 +19,7 @@ return array(
 				'approval_prompt' => 'force'
 			)
 		),
-		'debug_mode' => true
+		'debug_mode' => false
 	),
 	'doctrine' => array(
 		'connection' => array(
@@ -33,4 +34,24 @@ return array(
 			)
 		)
 	),
+	'templating' => array(
+		'template_map' => array(
+			'default' => array(
+				'template' => 'layout/layout'
+			)
+		)
+	),
+	'view_manager' => array(
+		'template_map' => array(
+			'layout/layout' => __DIR__ . '/_files/view/layout/layout.phtml'
+		)
+	),
+	'service_manager' => array(
+		'factories' => array(
+			'Logger' => function(){
+				$oLogger = new \Zend\Log\Logger();
+				return $oLogger->addWriter(new Zend\Log\Writer\Stream(STDERR));
+			}
+		)
+	)
 );

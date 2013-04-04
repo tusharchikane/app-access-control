@@ -11,22 +11,18 @@ class AuthenticationHybridAuthAdapterFactory implements \Zend\ServiceManager\Fac
 			$aConfiguration = $oServiceLocator->get('Config');
 			if(!isset($aConfiguration['hybrid_auth']) || !is_array($aConfiguration['hybrid_auth']))throw new \LogicException('HybridAuth\'s config is undefined');
 			$aConfiguration = $aConfiguration['hybrid_auth'];
+
+			if(!isset($aConfiguration['base_url']))throw new \LogicException('HybridAuth\'s "base_url" config is undefined');
+
 			//Rewrite base url
 			$aConfiguration['base_url'] = $oServiceLocator->get('Router')->assemble(array(),array('name' => $aConfiguration['base_url'],'force_canonical' => true));
 
 			//Initialize session manager
 			$oServiceLocator->get('SessionManager')->start();
-
-			/* @var $oSocialService \Application\View\Helper\Social */
-			$oSocialService = $oServiceLocator->get('social');
-			foreach($aConfiguration['providers'] as $sProvider => $aInfosProvider){
-				$aProviderConfig = $oSocialService->getServiceConfig(strtolower($sProvider));
-				if(isset($aConfiguration['providers'][$sProvider]['keys']['id']))$aConfiguration['providers'][$sProvider]['keys']['id'] = $aProviderConfig['id'];
-				elseif(isset($aConfiguration['providers'][$sProvider]['keys']['key']))$aConfiguration['providers'][$sProvider]['keys']['key'] = $aProviderConfig['id'];
-				$aConfiguration['providers'][$sProvider]['keys']['secret'] = $aProviderConfig['key'];
-			}
 			return new \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter(new \Hybrid_Auth($aConfiguration));
 		}
-		catch(\Exception $oException){}
+		catch(\Exception $oException){
+			/* TODO remove */error_log(print_r($oException->__toString(),true));
+		}
     }
 }

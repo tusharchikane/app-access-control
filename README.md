@@ -49,7 +49,7 @@ Installation
     return array(
         'modules' => array(
             // ...
-            'BoilerAppBoilerAppAccessControl',
+            'BoilerAppAccessControl',
         ),
         // ...
     );

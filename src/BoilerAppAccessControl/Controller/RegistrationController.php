@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Controller;
-class RegistrationController extends \Templating\Mvc\Controller\AbstractActionController{
+class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractActionController{
 
 	/**
 	 * Show register form or process register attempt
@@ -75,7 +75,6 @@ class RegistrationController extends \Templating\Mvc\Controller\AbstractActionCo
 		}
 		return $this->view;
 	}
-
 
 	/**
 	 * Process ajax request to resend email confirmation

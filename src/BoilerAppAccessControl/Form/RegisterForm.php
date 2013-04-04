@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Form;
-class RegisterForm extends \Application\Form\AbstractForm{
+class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 
 	/**
 	 * @see \Zend\Form\Form::prepare()

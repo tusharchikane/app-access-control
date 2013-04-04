@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Doctrine\DBAL\Types;
-class AuthAccessStateEnumType extends \Database\Doctrine\DBAL\Types\AbstractEnumType{
+class AuthAccessStateEnumType extends \BoilerAppDb\Doctrine\DBAL\Types\AbstractEnumType{
 	/**
 	 * @var string
 	 */
