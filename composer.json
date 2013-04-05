@@ -57,7 +57,7 @@
         "zf2-boiler-app/app-user": "dev-master",
         "zf2-boiler-app/app-messenger": "dev-master",
         "hybridauth/hybridauth": "dev-master"
-    },,
+    },
     "require-dev":{
     	"zf2-boiler-app/app-test": "dev-master"
     },
