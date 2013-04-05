@@ -8,13 +8,7 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 	 */
 	public function authenticateAction(){
 		//If user is already logged in, redirect him
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()){
-			$sRedirectUrl = empty($this->getServiceLocator()->get('SessionManager')->redirect)
-			?$this->url()->fromRoute('Home')
-			:$this->getServiceLocator()->get('SessionManager')->redirect;
-			unset($this->getServiceLocator()->get('SessionManager')->redirect);
-			return $this->redirect()->toUrl($sRedirectUrl);
-		}
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity())return $this->redirectUser();
 
 		//Define title
 		$this->layout()->title = $this->getServiceLocator()->get('Translator')->translate('sign_in');
@@ -41,13 +35,7 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 				$this->params()->fromPost('auth_access_identity'),
 				$this->params()->fromPost('auth_access_credential')
 			)) === true
-		)){
-			$sRedirectUrl = empty($this->getServiceLocator()->get('SessionManager')->redirect)
-			?$this->url()->fromRoute('Home')
-			:$this->getServiceLocator()->get('SessionManager')->redirect;
-			unset($this->getServiceLocator()->get('SessionManager')->redirect);
-			return $this->redirect()->toUrl($sRedirectUrl);
-		}
+		))return $this->redirectUser();
 
 		if(isset($bReturn)){
 			if(is_string($bReturn))$this->view->error = $bReturn;
@@ -56,11 +44,11 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 
 		//Try to define redirect url
 		if(
-			empty($this->getServiceLocator()->get('SessionManager')->redirect)
+			empty($this->getServiceLocator()->get('SessionContainer')->redirect)
 			&& ($sHttpReferer = $this->getRequest()->getServer('HTTP_REFERER'))
 			&& is_array($aInfosUrl = parse_url($sHttpReferer))
 			&& $this->getRequest()->getServer('HTTP_HOST') === $aInfosUrl['host']
-		)$this->getServiceLocator()->get('SessionManager')->redirect = $sHttpReferer;
+		)$this->getServiceLocator()->get('SessionContainer')->redirect = $sHttpReferer;
 
 		return $this->view;
 	}
@@ -75,9 +63,16 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 				$this->getServiceLocator()->get('translator')->translate('provider_authentification_canceled'),
 				$sProvider
 			));
-			return $this->redirect()->toRoute('BoilerAppAccessControl/authentication');
+			return $this->redirect()->toRoute('AccessControl/Authentication');
 		}
-		\Hybrid_Endpoint::process();
+		//Define request params
+		$oParams = $this->params();
+		\Hybrid_Endpoint::process(array_merge(
+			$oParams->fromPost(),
+			$oParams->fromQuery(),
+			$oParams->fromRoute()
+		));
+		return false;
 	}
 
 	/**
@@ -120,16 +115,10 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 	/**
 	 * Logout user
 	 * @throws \RuntimeException
+	 * @return \Zend\Http\Response
 	 */
 	public function logoutAction(){
-		if(!$this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()
-		|| $this->getServiceLocator()->get('AuthenticationService')->logout())return (
-			//Try to define redirect url
-			empty($this->getServiceLocator()->get('SessionManager')->redirect)
-			&& ($sHttpReferer = $this->getRequest()->getServer('HTTP_REFERER'))
-			&& is_array($aInfosUrl = parse_url($sHttpReferer))
-			&& $this->getRequest()->getServer('HTTP_HOST') === $aInfosUrl['host']
-		)?$this->redirect()->toUrl($sHttpReferer):$this->redirect()->toRoute('Home');
+		if(!$this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() || $this->getServiceLocator()->get('AuthenticationService')->logout())return $this->redirectUser();
 		else throw new \RuntimeException('Error occured during logout process');
 	}
 }

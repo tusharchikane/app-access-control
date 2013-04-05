@@ -1,23 +1,13 @@
 <?php
 namespace BoilerAppAccessControlTest\Controller;
 class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractHttpControllerTestCase{
-	public function testAuthenticateAction(){
+	/*public function testAuthenticateAction(){
 		$this->dispatch('/access-control/authenticate');
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
 		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
 		$this->assertControllerClass('AuthenticationController');
 		$this->assertMatchedRouteName('AccessControl/Authenticate');
-	}
-
-	public function testHybridauthAction(){
-		//Set $_SERVER params
-		$this->dispatch('/access-control/hybridauth');
-		$this->assertResponseStatusCode(200);
-		$this->assertModuleName('BoilerAppAccessControl');
-		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
-		$this->assertControllerClass('AuthenticationController');
-		$this->assertMatchedRouteName('AccessControl/Hybridauth');
 	}
 
 	public function testForgottenCredentialAction(){
@@ -27,10 +17,13 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
 		$this->assertControllerClass('AuthenticationController');
 		$this->assertMatchedRouteName('AccessControl/ForgottenCredential');
-	}
+	}*/
 
 	public function testResetCredentialAction(){
-		$this->dispatch('/access-control/reset-credential');
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+		$this->dispatch('/access-control/reset-credential/bc4b775da5e0d05ccbe5fa1c14/valid%40test.com');
+
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
 		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
@@ -38,12 +31,13 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 		$this->assertMatchedRouteName('AccessControl/ResetCredential');
 	}
 
-	public function testLogoutAction(){
+	/*public function testLogoutAction(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		//Log in
+		$this->getServiceManager()->get('AccessControlAuthenticationService')->authenticate('LocalAuth','valid','valid-credential');
 		$this->dispatch('/access-control/logout');
-		$this->assertResponseStatusCode(200);
-		$this->assertModuleName('BoilerAppAccessControl');
-		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
-		$this->assertControllerClass('AuthenticationController');
-		$this->assertMatchedRouteName('AccessControl/Logout');
-	}
+		$this->assertRedirectTo('/access-control/authenticate');
+	}*/
 }

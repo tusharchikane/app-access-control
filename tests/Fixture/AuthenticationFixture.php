@@ -19,7 +19,8 @@ class AuthenticationFixture extends \BoilerAppTest\Doctrine\Common\DataFixtures\
 			->setAuthAccessCredential($oBCrypt->create(md5('valid-credential')))
 			->setAuthAccessState(\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)
 			->setAuthAccessUser($oValidUser)
-			->setAuthAccessPublicKey($oBCrypt->create($oAccessControlService->generateAuthAccessPublicKey()))
+			//Not randomly generated key to be able to compare during testing
+			->setAuthAccessPublicKey($oBCrypt->create('bc4b775da5e0d05ccbe5fa1c14'))
 			->setEntityCreate(new \DateTime())
 		);
 

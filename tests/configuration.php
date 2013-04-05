@@ -1,6 +1,8 @@
 <?php
-use Zend\Log\Writer\Stream;
 return array(
+	'translator' => array(
+		'locale' => 'fr_FR'
+	),
 	'authentication' => array(
 		'storage' => 'AuthenticationStorage',
 		'adapters' => array(
@@ -50,7 +52,7 @@ return array(
 		'factories' => array(
 			'Logger' => function(){
 				$oLogger = new \Zend\Log\Logger();
-				return $oLogger->addWriter(new Zend\Log\Writer\Stream(STDERR));
+				return $oLogger->addWriter(new \Zend\Log\Writer\Stream(STDERR));
 			}
 		)
 	)

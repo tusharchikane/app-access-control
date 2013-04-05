@@ -1,5 +1,6 @@
 <?php
 return array(
+	'SessionNamespace' => 'BoilerAppAccessControl',
 	'router' => include 'module.config.routes.php',
 	'asset_bundle' => include 'module.config.assets.php',
 	'doctrine' => include 'module.config.doctrine.php',
@@ -18,7 +19,8 @@ return array(
 		'adapters' => array(
 			'LocalAuth' => 'AuthenticationDoctrineAdapter',
 			'HybridAuth' => 'AuthenticationHybridAuthAdapter'
-		)
+		),
+		'defaultRedirect' => 'AccessControl/Authenticate'
 	),
 	'hybrid_auth' =>  array(
 		'base_url' => 'AccessControl/HybridAuth',
@@ -50,6 +52,11 @@ return array(
 			'BoilerAppAccessControl\Controller\Authentication' => 'BoilerAppAccessControl\Controller\AuthenticationController'
 		)
 	),
+	'controller_plugins' => array(
+    	'invokables' => array(
+    		'RedirectUser' => 'BoilerAppAccessControl\Mvc\Controller\Plugin\RedirectUser',
+    	)
+    ),
 	'service_manager' => array(
 		'invokables' => array(
 			'AccessControlService' => 'BoilerAppAccessControl\Service\AccessControlService',
@@ -65,6 +72,10 @@ return array(
 			'RegisterForm' => 'BoilerAppAccessControl\Factory\RegisterFormFactory',
 			'ResetCredentialForm' => 'BoilerAppAccessControl\Factory\ResetCredentialFormFactory',
 			'SessionManager' => 'BoilerAppAccessControl\Factory\SessionManagerFactory',
+			'SessionContainer' => 'BoilerAppAccessControl\Factory\SessionContainerFactory',
+		),
+		'aliases' => array(
+			'Zend\Authentication\AuthenticationService' => 'AccessControlAuthenticationService'
 		)
 	),
 	'view_manager' => array(

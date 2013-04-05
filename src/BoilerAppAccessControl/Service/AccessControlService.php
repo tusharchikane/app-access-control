@@ -6,24 +6,24 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 	/**
 	 * @throws \RuntimeException
 	 * @throws \LogicException
-	 * @return \User\Entity\UserEntity
+	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
 	 */
-	public function getLoggedUser(){
-		$iUserId = $this->getServiceLocator()->get('AccessControlAuthenticationService')->getIdentity();
+	public function getAuthenticatedAuthAccess(){
+		$iAuthAccessId = $this->getServiceLocator()->get('AccessControlAuthenticationService')->getIdentity();
 
 		//Prevent from session value error
 		try{
-			$oUser = $this->getServiceLocator()->get('User\Repository\UserRepository')->find($iUserId);
+			$oAuthAccess = $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->find($iAuthAccessId);
 		}
 		catch(\Exception $oException){
-			$this->logout();
-			throw new \RuntimeException('An error occurred when retrieving logged user',$oException->getCode(),$oException);
+			$this->getServiceLocator()->get('AuthenticationService')->logout();
+			throw new \RuntimeException('An error occurred when retrieving authenticated AuthAccess',$oException->getCode(),$oException);
 		}
-		if($oUser->getUserAuthAccess()->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)throw new \LogicException(sprintf(
-			'User\'s "%s" AuthAccess is not active',
-			$oUser->getUserId()
+		if($oAuthAccess->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)throw new \LogicException(sprintf(
+			'AuthAccess "%s"  is not active',
+			$oAuthAccess->getAuthAccessId()
 		));
-		return $oUser;
+		return $oAuthAccess;
 	}
 
 	/**
@@ -61,7 +61,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 		$oTranslator = $this->getServiceLocator()->get('translator');
 
 		//If request is from logged user
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sEmailIdentity)return str_ireplace(
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getAuthenticatedAuthAccess()->getAuthAccessEmailIdentity() === $sEmailIdentity)return str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_email'),$sEmailIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);
@@ -83,7 +83,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 		$oTranslator = $this->getServiceLocator()->get('translator');
 
 		//If request is from logged user
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getLoggedUser()->getUserEmail() === $sUsernameIdentity)return str_ireplace(
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() && $this->getAuthenticatedAuthAccess()->getAuthAccessUsernameIdentity() === $sUsernameIdentity)return str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_username'),$sUsernameIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);
