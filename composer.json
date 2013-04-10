@@ -51,7 +51,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "ext-gd2": "*",
+        "ext-gd": "*",
         "zendframework/zendframework": "dev-master",
         "zf2-boiler-app/app-db": "dev-master",
         "zf2-boiler-app/app-display": "dev-master",
