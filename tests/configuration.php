@@ -1,5 +1,10 @@
 <?php
 return array(
+	'asset_bundle' => array(
+		'cachePath' => __DIR__.'/_files/cache',
+		'cacheUrl' => '@zfBaseUrl/cache/',
+		'assetsPath' => null
+	),
 	'translator' => array(
 		'locale' => 'fr_FR'
 	),
@@ -9,19 +14,6 @@ return array(
 			'LocalAuth' => 'AuthenticationDoctrineAdapter',
 			'HybridAuth' => 'AuthenticationHybridAuthAdapter'
 		)
-	),
-	'hybrid_auth' =>  array(
-		'base_url' => 'AccessControl/HybridAuth',
-		'providers' => array(
-			'Google' => array(
-				'enabled' => true,
-				'keys' => array('id' => '','secret' => ''),
-				'scope' => 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-				'access_type' => 'online',
-				'approval_prompt' => 'force'
-			)
-		),
-		'debug_mode' => false
 	),
 	'doctrine' => array(
 		'connection' => array(
@@ -36,16 +28,17 @@ return array(
 			)
 		)
 	),
-	'templating' => array(
-		'template_map' => array(
-			'default' => array(
-				'template' => 'layout/layout'
-			)
-		)
-	),
-	'view_manager' => array(
-		'template_map' => array(
-			'layout/layout' => __DIR__ . '/_files/view/layout/layout.phtml'
+	'messenger' => array(
+		'system_user' => array(
+			'email' => 'test-system@test.com',
+			'name' => 'Test System'
+		),
+		'transporters' => array(
+			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL => function(){
+				return new \BoilerAppMessenger\Mail\Transport\File(new \Zend\Mail\Transport\FileOptions(array(
+						'path' => __DIR__ . '/_files/mails'
+				)));
+			}
 		)
 	),
 	'service_manager' => array(
@@ -53,6 +46,9 @@ return array(
 			'Logger' => function(){
 				$oLogger = new \Zend\Log\Logger();
 				return $oLogger->addWriter(new \Zend\Log\Writer\Stream(STDERR));
+			},
+			'InlineStyleProcessor' => function(){
+				return \BoilerAppMessenger\StyleInliner\Processor\InlineStyleProcessor::factory(array('baseDir' => __DIR__.'/_files'));
 			}
 		)
 	)
