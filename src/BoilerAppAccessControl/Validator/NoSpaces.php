@@ -1,5 +1,5 @@
 <?php
-namespace Application\Validator;
+namespace BoilerAppAccessControl\Validator;
 class NoSpaces extends \Zend\Validator\AbstractValidator{
     const INVALID = 'noSpacesInvalid';
     const HAS_SPACES = 'hasSpaces';

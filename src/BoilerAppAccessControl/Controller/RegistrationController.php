@@ -37,7 +37,6 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 	public function checkEmailIdentityAvailabilityAction(){
 		if(!$this->getRequest()->isXmlHttpRequest())throw new \LogicException('Only ajax requests are allowed for this action');
 		if(!($sEmail = $this->params()->fromPost('email')))throw new \LogicException('Email param is missing');
-
 		return $this->view->setVariable(
 			'available',
 			$this->getServiceLocator()->get('AccessControlService')->isEmailIdentityAvailable($sEmail)

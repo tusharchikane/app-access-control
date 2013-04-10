@@ -1,7 +1,12 @@
 <?php
 namespace BoilerAppAccessControl\Factory;
 class ResetCredentialFormFactory implements \Zend\ServiceManager\FactoryInterface{
-	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
+	/**
+	 * @see \Zend\ServiceManager\FactoryInterface::createService()
+	 * @param \Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator
+	 * @return \BoilerAppAccessControl\Form\ResetCredentialForm
+	 */
+	public function createServicke(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
 		$oForm = new \BoilerAppAccessControl\Form\ResetCredentialForm('reset-credential');
 		return $oForm->setInputFilter(new \BoilerAppAccessControl\InputFilter\ResetCredentialInputFilter())->prepare();
     }

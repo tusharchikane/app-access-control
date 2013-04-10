@@ -73,6 +73,7 @@ return array(
 			'ResetCredentialForm' => 'BoilerAppAccessControl\Factory\ResetCredentialFormFactory',
 			'SessionManager' => 'BoilerAppAccessControl\Factory\SessionManagerFactory',
 			'SessionContainer' => 'BoilerAppAccessControl\Factory\SessionContainerFactory',
+			'Captcha' => 'BoilerAppAccessControl\Factory\CaptchaFactory'
 		),
 		'aliases' => array(
 			'Zend\Authentication\AuthenticationService' => 'AccessControlAuthenticationService'

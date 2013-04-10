@@ -1,22 +1,30 @@
 <?php
 namespace BoilerAppAccessControl\Form;
 class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
+	/**
+	 * @var \Zend\Captcha\AbstractWord
+	 */
+	protected $captcha;
+
+	public function setCaptcha(\Zend\Captcha\AbstractWord $oCaptcha){
+		$this->captcha = $oCaptcha;
+		return $this;
+	}
+
+	/**
+	 * @throws \LogicException
+	 * @return \Zend\Captcha\AbstractWord
+	 */
+	public function getCaptcha(){
+		if($this->captcha instanceof \Zend\Captcha\AbstractWord)return $this->captcha;
+		throw new \LogicException('Captcha is undefined');
+	}
 
 	/**
 	 * @see \Zend\Form\Form::prepare()
 	 */
 	public function prepare(){
 		if($this->isPrepared)return $this;
-		$oCaptchaImage = new \Zend\Captcha\Image(array(
-			'font' =>  './data/fonts/ARIAL.ttf',
-			'fsize' => 30,
-			'width' => 220,
-			'height' => 70,
-			'dotNoiseLevel' => 40,
-			'lineNoiseLevel' => 3,
-			'wordlen' => 6
-		));
-
 		$oHtmlAttrEscaper = new \Zend\View\Helper\EscapeHtmlAttr();
 
 		$this->add(array(
@@ -75,12 +83,12 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 			'type' => 'Zend\Form\Element\Captcha',
 			'attributes' => array(
 				'required' => true,
-				'placeholder' => sprintf($this->getTranslator()->translate('enter_the_x_characters'),$oCaptchaImage->getWordlen()),
+				'placeholder' => sprintf($this->getTranslator()->translate('enter_the_x_characters'), $this->getCaptcha()->getWordlen()),
 				'autocomplete' => 'off'
 			),
 			'options' => array(
 				'label' => 'im_not_a_robot',
-				'captcha' => $oCaptchaImage->setImgDir('./public/assets/captcha')->setImgUrl('/assets/captcha/'),
+				'captcha' => $this->getCaptcha(),
 				'class' => 'required'
 			)
 		))

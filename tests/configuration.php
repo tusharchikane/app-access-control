@@ -36,7 +36,7 @@ return array(
 		'transporters' => array(
 			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL => function(){
 				return new \BoilerAppMessenger\Mail\Transport\File(new \Zend\Mail\Transport\FileOptions(array(
-						'path' => __DIR__ . '/_files/mails'
+					'path' => __DIR__ . '/_files/mails'
 				)));
 			}
 		)
@@ -49,7 +49,25 @@ return array(
 			},
 			'InlineStyleProcessor' => function(){
 				return \BoilerAppMessenger\StyleInliner\Processor\InlineStyleProcessor::factory(array('baseDir' => __DIR__.'/_files'));
+			},
+			'Captcha' => function(){
+				return new \Zend\Captcha\Image(array(
+					'font' =>  getcwd().'/data/fonts/ARIAL.ttf',
+					'fsize' => 30,
+					'width' => 220,
+					'height' => 70,
+					'dotNoiseLevel' => 40,
+					'lineNoiseLevel' => 3,
+					'wordlen' => 6,
+					'imgDir' => __DIR__ . '/_files/captcha',
+					'imgUrl' => '/assets/captcha/'
+				));
 			}
+		)
+	),
+	'view_manager' => array(
+		'template_map' => array(
+			'layout/layout' => __DIR__ . '/_files/view/layout/layout.phtml'
 		)
 	)
 );

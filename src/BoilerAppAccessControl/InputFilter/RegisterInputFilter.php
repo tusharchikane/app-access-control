@@ -27,7 +27,7 @@ class RegisterInputFilter extends \Zend\InputFilter\InputFilter{
 			'required' => true,
 			'filters' => array(array('name' => 'StringTrim')),
 			'validators' => array(
-				array('name'=> 'Application\Validator\NoSpaces','break_chain_on_failure' => true),
+				array('name'=> 'BoilerAppAccessControl\Validator\NoSpaces','break_chain_on_failure' => true),
 				array(
 					'name'=> 'stringLength',
 					'options' => array('max' => 255),

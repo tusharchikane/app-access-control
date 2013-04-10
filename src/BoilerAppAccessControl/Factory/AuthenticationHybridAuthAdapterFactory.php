@@ -2,6 +2,7 @@
 namespace BoilerAppAccessControl\Factory;
 class AuthenticationHybridAuthAdapterFactory implements \Zend\ServiceManager\FactoryInterface{
 	/**
+	 * @see \Zend\ServiceManager\FactoryInterface::createService()
 	 * @param \Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator
 	 * @throws \LogicException
 	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationHybridAuthAdapter|Exception

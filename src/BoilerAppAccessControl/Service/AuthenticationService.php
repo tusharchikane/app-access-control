@@ -133,13 +133,13 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 
 		//Render view & send email to user
 		$oMessengerService->renderView($oView->setTemplate('email/authentication/credential-reset'),function($sHtml)use($oMessengerService,$oTranslator,$oAuthAccess){
-			$oMessage = new \Messenger\Message();
+			$oMessage = new \BoilerAppMessenger\Message();
 			$oMessengerService->sendMessage(
-				$oMessage->setFrom(\Messenger\Message::SYSTEM_USER)
+				$oMessage->setFrom(\BoilerAppMessenger\Message::SYSTEM_USER)
 				->setTo($oAuthAccess->getAuthAccessUser())
 				->setSubject($oTranslator->translate('reset_password'))
 				->setBody($sHtml),
-				\Messenger\Service\MessengerService::MEDIA_EMAIL
+				\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
 			);
 		});
 		return $this;
