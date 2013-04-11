@@ -27,15 +27,12 @@ var BoilerAppAccessControlControllerRegistrationRegister = {
 			//Set input is loading
 			eEmailIdentity.setLoading();
 			new Request.JSON({
-				'url':this.url('BoilerAppAccessControl/CheckEmailIdentityAvailability'),
+				'url':this.url('AccessControl/CheckEmailIdentityAvailability'),
 				'data':{'email':sEmail},
 				'onSuccess':function(oResponse){
 					var bAvailable = oResponse.available === true;
 					//Display email availability checked
 					if(!bAvailable)eEmailIdentity.removeClass('validation-passed');
-					
-					var bEmailAvailable = eEmailIdentity.retrieve('email-available',null);
-					//if(bEmailAvailable === null && bAvailable)
 					eEmailIdentity.store('email-available',oResponse.available).setLoading('icon-'+(bAvailable?'ok':'ban-circle')).fireEvent('change');
 					
 				}.bind(this)
@@ -62,7 +59,7 @@ var BoilerAppAccessControlControllerRegistrationRegister = {
 			//Set input is loading
 			eUsernameIdentity.setLoading();
 			new Request.JSON({
-				'url':this.url('BoilerAppAccessControl/CheckUsernameIdentityAvailability'),
+				'url':this.url('AccessControl/CheckUsernameIdentityAvailability'),
 				'data':{'username':sUserName},
 				'onSuccess':function(oResponse){
 					var bAvailable = oResponse.available === true;
