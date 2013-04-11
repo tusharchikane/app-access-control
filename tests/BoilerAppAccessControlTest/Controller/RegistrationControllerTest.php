@@ -34,7 +34,7 @@ class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstrac
 	}
 
 	public function testConfirmEmailAction(){
-		$this->dispatch('/access-control/confirm-email/bc4b775da5e0d05ccbe5fa1c14/pending%40test.com');
+		$this->dispatch('/access-control/confirm-email/bc4b775da5e0d05ccbe5fa1c15/pending%40test.com');
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
 		$this->assertControllerName('BoilerAppAccessControl\Controller\Registration');

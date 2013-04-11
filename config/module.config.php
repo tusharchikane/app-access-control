@@ -14,6 +14,17 @@ return array(
 			)
 		)
 	),
+	'captcha' => array(
+		'font' =>  __DIR__.'/../data/fonts/ARIAL.ttf',
+		'fsize' => 30,
+		'width' => 220,
+		'height' => 70,
+		'dotNoiseLevel' => 40,
+		'lineNoiseLevel' => 3,
+		'wordlen' => 6,
+		'imgDir' => './public/assets/captcha',
+		'imgUrl' => '/assets/captcha/'
+	),
 	'authentication' => array(
 		'storage' => 'AuthenticationStorage',
 		'adapters' => array(

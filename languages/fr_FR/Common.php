@@ -11,7 +11,7 @@ return array(
 	'email_confirmation_sent' => 'Vous allez recevoir un email vous permettant de valider votre accès.',
 	'email_or_password_wrong' => 'L\'adresse email et/ou le mot de passe semblent incorrects',
 	'email_or_username' => 'Adresse email ou identifiant',
-	'enter_the_x_characters' => 'Saisissez les %s caract�res',
+	'enter_the_x_characters' => 'Saisissez les %s caractères',
 
 	'forgot_your_password' => 'Mot de passe oublié',
 

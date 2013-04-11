@@ -41,6 +41,9 @@ return array(
 			}
 		)
 	),
+	'captcha' => array(
+		'imgDir' => __DIR__.'/_files/captcha'
+	),
 	'service_manager' => array(
 		'factories' => array(
 			'Logger' => function(){
@@ -49,19 +52,6 @@ return array(
 			},
 			'InlineStyleProcessor' => function(){
 				return \BoilerAppMessenger\StyleInliner\Processor\InlineStyleProcessor::factory(array('baseDir' => __DIR__.'/_files'));
-			},
-			'Captcha' => function(){
-				return new \Zend\Captcha\Image(array(
-					'font' =>  getcwd().'/data/fonts/ARIAL.ttf',
-					'fsize' => 30,
-					'width' => 220,
-					'height' => 70,
-					'dotNoiseLevel' => 40,
-					'lineNoiseLevel' => 3,
-					'wordlen' => 6,
-					'imgDir' => __DIR__ . '/_files/captcha',
-					'imgUrl' => '/assets/captcha/'
-				));
 			}
 		)
 	),

@@ -6,7 +6,7 @@ class ResetCredentialFormFactory implements \Zend\ServiceManager\FactoryInterfac
 	 * @param \Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator
 	 * @return \BoilerAppAccessControl\Form\ResetCredentialForm
 	 */
-	public function createServicke(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
+	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
 		$oForm = new \BoilerAppAccessControl\Form\ResetCredentialForm('reset-credential');
 		return $oForm->setInputFilter(new \BoilerAppAccessControl\InputFilter\ResetCredentialInputFilter())->prepare();
     }

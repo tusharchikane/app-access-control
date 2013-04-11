@@ -8,16 +8,7 @@ class CaptchaFactory implements \Zend\ServiceManager\FactoryInterface{
 	 * @return \Zend\Captcha\Image
 	 */
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
-		return new \Zend\Captcha\Image(array(
-			'font' =>  getcwd().'/data/fonts/ARIAL.ttf',
-			'fsize' => 30,
-			'width' => 220,
-			'height' => 70,
-			'dotNoiseLevel' => 40,
-			'lineNoiseLevel' => 3,
-			'wordlen' => 6,
-			'imgDir' => './public/assets/captcha',
-			'imgUrl' => '/assets/captcha/'
-		));
+		$aConfiguration = $oServiceLocator->get('Config');
+		return new \Zend\Captcha\Image(isset($aConfiguration['captcha'])?$aConfiguration['captcha']:array());
     }
 }

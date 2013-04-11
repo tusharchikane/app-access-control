@@ -75,7 +75,6 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Unlogged
-		$this->accessControlAuthenticationService->clearIdentity();
 		$this->assertFalse($this->accessControlAuthenticationService->hasIdentity());
 
 		//Logged
