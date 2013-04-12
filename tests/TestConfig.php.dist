@@ -1,24 +1,21 @@
 <?php
 return array(
-    'modules' => array(
-    	'DoctrineModule',
-    	'DoctrineORMModule',
-    	'BoilerAppDb',
-        'BoilerAppUser',
-        'BoilerAppDisplay',
-        'BoilerAppAccessControl',
-        'BoilerAppMessenger',
-       	'AssetsBundle',
-       	'TwbBundle'
-    ),
-    'module_listener_options' => array(
-        'config_glob_paths'    => array(
-            __DIR__.'/../config/autoload/{,*.}{global,local}.php',
-            __DIR__.'/configuration.php'
-        ),
-        'module_paths' => array(
-            'module',
-            'vendor'
-        )
-    )
+	'modules' => array(
+		'DoctrineModule',
+		'DoctrineORMModule',
+		'BoilerAppDb',
+		'BoilerAppUser',
+		'BoilerAppDisplay',
+		'BoilerAppAccessControl',
+		'BoilerAppMessenger',
+		'AssetsBundle',
+		'TwbBundle'
+	),
+	'module_listener_options' => array(
+		'config_glob_paths'    => array(
+			__DIR__.'/../config/autoload/{,*.}{global,local}.php',
+			__DIR__.'/configuration.php'
+		),
+		'module_paths' => array('module','vendor')
+	)
 );

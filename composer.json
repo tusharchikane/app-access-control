@@ -60,7 +60,8 @@
         "hybridauth/hybridauth": "dev-master"
     },
     "require-dev":{
-    	"zf2-boiler-app/app-test": "dev-master"
+    	"zf2-boiler-app/app-test": "dev-master",
+    	"neilime/zf2-translator-tools": "dev-master"
     },
     "autoload": {
         "psr-0": {
