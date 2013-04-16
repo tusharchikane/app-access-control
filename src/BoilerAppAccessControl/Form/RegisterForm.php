@@ -79,7 +79,7 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 			)
 		))
 		->add(array(
-			'name' => 'user_captcha',
+			'name' => 'auth_access_captcha',
 			'type' => 'Zend\Form\Element\Captcha',
 			'attributes' => array(
 				'required' => true,

@@ -16,31 +16,16 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 		//Assign form
 		$this->view->form = $this->getServiceLocator()->get('AuthenticateForm');
 
-		$oFlashMessenger = $this->flashMessenger()->setNamespace(__CLASS__);
-		if($oFlashMessenger->hasCurrentMessages()){
-			$bReturn = current($oFlashMessenger->getCurrentMessages());
-			$oFlashMessenger->clearCurrentMessages();
-		}
-		elseif((
-			$this->params('service') &&
-			($bReturn = $this->getServiceLocator()->get('AuthenticationService')->authenticate(
-				\BoilerAppAccessControl\Service\AuthenticationService::HYBRID_AUTH_AUTHENTICATION,
-				$this->params('service')
-			)) === true
-		) ||
-		(
+		if(
 			$this->getRequest()->isPost() && $this->view->form->setData($this->params()->fromPost())->isValid() &&
 			($bReturn = $this->getServiceLocator()->get('AuthenticationService')->authenticate(
 				\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 				$this->params()->fromPost('auth_access_identity'),
 				$this->params()->fromPost('auth_access_credential')
 			)) === true
-		))return $this->redirectUser();
+		)return $this->redirectUser();
 
-		if(isset($bReturn)){
-			if(is_string($bReturn))$this->view->error = $bReturn;
-			else throw new \UnexpectedValueException('Authenticate process failed return type expects string, "'.gettype($bReturn).'" given');
-		}
+		if(isset($bReturn))$this->view->error = $bReturn;
 
 		//Try to define redirect url
 		if(
@@ -68,10 +53,7 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 		if($this->getRequest()->isPost() && $this->view->form->setData($this->params()->fromPost())->isValid() &&
 			($bReturn = $this->getServiceLocator()->get('AuthenticationService')->sendConfirmationResetCredential($this->params()->fromPost('auth_access_identity'))) === true
 		)$this->view->credentialReset = true;
-		elseif(isset($bReturn)){
-			if(is_string($bReturn))$this->view->error = $bReturn;
-			else throw new \LogicException('Reset credential process return expects string, "'.gettype($bReturn).'" given');
-		}
+		elseif(isset($bReturn))$this->view->error = $bReturn;
 		return $this->view;
 	}
 
@@ -92,11 +74,10 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 
 	/**
 	 * Logout user
-	 * @throws \RuntimeException
 	 * @return \Zend\Http\Response
 	 */
 	public function logoutAction(){
-		if(!$this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity() || $this->getServiceLocator()->get('AuthenticationService')->logout())return $this->redirectUser();
-		else throw new \RuntimeException('Error occured during logout process');
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity())$this->getServiceLocator()->get('AuthenticationService')->logout();
+		return $this->redirectUser();
 	}
 }

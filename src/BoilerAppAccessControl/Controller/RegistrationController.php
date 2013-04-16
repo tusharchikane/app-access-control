@@ -8,24 +8,20 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 	 */
 	public function registerAction(){
 		//If user is already logged in, redirect him
-		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity()){
-			$sRedirectUrl = empty($this->getServiceLocator()->get('Session')->redirect)
-			?$this->url()->fromRoute('Home')
-			:$this->getServiceLocator()->get('Session')->redirect;
-			unset($this->getServiceLocator()->get('Session')->redirect);
-			return $this->redirect()->toUrl($sRedirectUrl);
-		}
+		if($this->getServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity())return $this->redirectUser();
 
 		//Define title
 		$this->layout()->title = $this->getServiceLocator()->get('Translator')->translate('register');
 
 		//Assign form
 		$this->view->form = $this->getServiceLocator()->get('RegisterForm');
-
+		/* TODO remove */error_log(print_r($_SESSION,true));
 		if($this->getRequest()->isPost()
 			&& $this->view->form->setData($aRegisterData = $this->params()->fromPost())->isValid()
 			&& $this->getServiceLocator()->get('RegistrationService')->register($aRegisterData)
-		)$this->view->isValid = true;
+		){
+			$this->view->isValid = true;
+		}
 		return $this->view;
 	}
 
@@ -68,10 +64,7 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 		if(!($sPublicKey = $this->params('public_key')))throw new \LogicException('"public_key" param is missing');
 		if(!($sEmailIdentity = $this->params('email_identity')))throw new \LogicException('"email_identity" param is missing');
 
-		if(($bReturn = $this->getServiceLocator()->get('RegistrationService')->confirmEmail($sPublicKey,$sEmailIdentity)) !== true){
-			if(is_string($bReturn))$this->view->error = $bReturn;
-			else throw new \LogicException('Confirm email process return expects string, "'.gettype($bReturn).'" given');
-		}
+		if(($bReturn = $this->getServiceLocator()->get('RegistrationService')->confirmEmail($sPublicKey,$sEmailIdentity)) !== true)$this->view->error = $bReturn;
 		return $this->view;
 	}
 

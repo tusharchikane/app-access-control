@@ -14,15 +14,22 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 		//Prevent from session value error
 		try{
 			$oAuthAccess = $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->find($iAuthAccessId);
+			if(!($oAuthAccess instanceof \BoilerAppAccessControl\Entity\AuthAccessEntity))throw new \LogicException('Auth access id "'.$iAuthAccessId.'" is unknown');
 		}
 		catch(\Exception $oException){
 			$this->getServiceLocator()->get('AuthenticationService')->logout();
 			throw new \RuntimeException('An error occurred when retrieving authenticated AuthAccess',$oException->getCode(),$oException);
 		}
-		if($oAuthAccess->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)throw new \LogicException(sprintf(
-			'AuthAccess "%s"  is not active',
-			$oAuthAccess->getAuthAccessId()
-		));
+
+		if($oAuthAccess->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE){
+			//Log out
+			$this->getServiceLocator()->get('AccessControlAuthenticationService')->clearIdentity();
+			throw new \LogicException(sprintf('AuthAccess "%s"  is not active',
+				$oAuthAccess->getAuthAccessId()
+			));
+		}
+
+
 		return $oAuthAccess;
 	}
 

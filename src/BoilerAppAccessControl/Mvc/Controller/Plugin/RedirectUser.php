@@ -46,7 +46,7 @@ class RedirectUser extends \Zend\Mvc\Controller\Plugin\AbstractPlugin{
 		$oRouter = null;
 
 		if($oEvent instanceof \Zend\Mvc\MvcEvent)$oRouter = $oEvent->getRouter();
-		elseif($oEvent instanceof \Zend\EventManager\EventInterface && $oRouter)$oRouter = $oEvent->getParam('router',false);
+		elseif($oEvent instanceof \Zend\EventManager\EventInterface)$oRouter = $oEvent->getParam('router',false);
 
 		if(!($oRouter instanceof \Zend\Mvc\Router\SimpleRouteStack))throw new \LogicException('RedirectUser plugin requires that controller event compose a router; none found');
 

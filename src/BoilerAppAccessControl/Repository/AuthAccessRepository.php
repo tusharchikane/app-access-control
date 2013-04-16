@@ -15,15 +15,6 @@ class AuthAccessRepository extends \BoilerAppDb\Repository\AbstractEntityReposit
 	);
 
 	/**
-	 * @param array $aAvailableIdentities
-	 * @return \BoilerAppAccessControl\Repository\AuthAccessRepository
-	 */
-	public function setAvailableIdentities(array $aAvailableIdentities){
-		$this->availableIdentities = $aAvailableIdentities;
-		return $this;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getAvailableIdentities(){

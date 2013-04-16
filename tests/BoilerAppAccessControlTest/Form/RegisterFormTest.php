@@ -20,7 +20,7 @@ class RegisterFormTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractTestCase{
 	 * @expectedException LogicException
 	 */
 	public function testGetCaptchaUnset(){
-		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter');
+		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Form\RegisterForm');
 		$oCaptcha = $oReflectionClass->getProperty('captcha');
 		$oCaptcha->setAccessible(true);
 		$oCaptcha->setValue($this->registerForm, null);

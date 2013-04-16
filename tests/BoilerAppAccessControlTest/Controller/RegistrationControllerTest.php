@@ -11,6 +11,41 @@ class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstrac
 		$this->assertMatchedRouteName('AccessControl/Register');
 	}
 
+	public function testRegisterActionPost(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		$oForm = $this->getApplicationServiceLocator()->get('RegisterForm');
+
+		$this->dispatch('/access-control/register',\Zend\Http\Request::METHOD_POST,array(
+			'auth_access_email_identity' => 'available@test.com',
+			'auth_access_username_identity' => 'available',
+			'auth_access_credential' => 'credential',
+			'auth_access_credential_confirm' => 'credential',
+			'auth_access_captcha' => 'captcha'
+		));
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\Registration');
+		$this->assertControllerClass('RegistrationController');
+		$this->assertMatchedRouteName('AccessControl/Register');
+	}
+
+	public function testRegisterActionAlreadyAuthenticated(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		//Authenticating
+		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
+			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
+			'valid@test.com',
+			'valid-credential'
+		);
+
+		$this->dispatch('/access-control/register');
+		$this->assertRedirectTo('/access-control/authenticate');
+	}
+
 	public function testCheckEmailIdentityAvailabilityAction(){
 		//Add authentication fixture
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
@@ -47,6 +82,18 @@ class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstrac
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		$this->dispatch('/access-control/confirm-email/'.urldecode('bc4b775da5e0d05ccbe5fa1c15').'/'.urldecode('pending@test.com'));
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\Registration');
+		$this->assertControllerClass('RegistrationController');
+		$this->assertMatchedRouteName('AccessControl/ConfirmEmail');
+	}
+
+	public function testConfirmEmailActionWithWrongIdentity(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		$this->dispatch('/access-control/confirm-email/'.urldecode('bc4b775da5e0d05ccbe5fa1c14').'/'.urldecode('valid@test.com'));
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
 		$this->assertControllerName('BoilerAppAccessControl\Controller\Registration');
