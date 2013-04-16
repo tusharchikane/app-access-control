@@ -20,6 +20,24 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 		$this->assertInstanceOf('\BoilerAppAccessControl\Service\AccessControlService', $this->authenticationDoctrineAdapter->getAccessControlService());
 	}
 
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testGetAccessControlServiceUnset(){
+		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter');
+		$oAccessControlService = $oReflectionClass->getProperty('accessControlService');
+		$oAccessControlService->setAccessible(true);
+		$oAccessControlService->setValue($this->authenticationDoctrineAdapter, null);
+		$this->authenticationDoctrineAdapter->getAccessControlService();
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testPostAuthenticateWithWrongParams(){
+		$this->authenticationDoctrineAdapter->postAuthenticate(false, false);
+	}
+
 	public function testAuthenticate(){
 		//Add authentication fixture
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));

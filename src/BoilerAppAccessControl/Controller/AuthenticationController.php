@@ -54,28 +54,6 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 	}
 
 	/**
-	 * Process hybridauth request
-	 * @return void|\Zend\Http\Response
-	 */
-	public function hybridauthAction(){
-		if(($sProvider = $this->params()->fromQuery('hauth_done')) && $this->params()->fromQuery('error') === 'access_denied'){
-			$this->flashMessenger()->setNamespace(__CLASS__)->addMessage(sprintf(
-				$this->getServiceLocator()->get('translator')->translate('provider_authentification_canceled'),
-				$sProvider
-			));
-			return $this->redirect()->toRoute('AccessControl/Authentication');
-		}
-		//Define request params
-		$oParams = $this->params();
-		\Hybrid_Endpoint::process(array_merge(
-			$oParams->fromPost(),
-			$oParams->fromQuery(),
-			$oParams->fromRoute()
-		));
-		return false;
-	}
-
-	/**
 	 * Show Reset credential form, or process form submit request
 	 * @throws \LogicException
 	 * @return \Zend\View\Model\ViewModel

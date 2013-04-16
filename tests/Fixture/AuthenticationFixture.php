@@ -36,10 +36,10 @@ class AuthenticationFixture extends \BoilerAppTest\Doctrine\Common\DataFixtures\
 			->setAuthAccessEmailIdentity('pending@test.com')
 			->setAuthAccessUsernameIdentity('pending')
 			//Not randomly generated key to be able to compare during testing
-			->setAuthAccessCredential('bc4b775da5e0d05ccbe5fa1c15')
+			->setAuthAccessCredential($oBCrypt->create(md5('pending-credential')))
 			->setAuthAccessState(\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_PENDING_STATE)
 			->setAuthAccessUser($oPendingUser)
-			->setAuthAccessPublicKey($oBCrypt->create($oAccessControlService->generateAuthAccessPublicKey()))
+			->setAuthAccessPublicKey($oBCrypt->create('bc4b775da5e0d05ccbe5fa1c15'))
 			->setEntityCreate(new \DateTime())
 		);
 

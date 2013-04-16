@@ -28,34 +28,9 @@ return array(
 	'authentication' => array(
 		'storage' => 'AuthenticationStorage',
 		'adapters' => array(
-			'LocalAuth' => 'AuthenticationDoctrineAdapter',
-			'HybridAuth' => 'AuthenticationHybridAuthAdapter'
+			'LocalAuth' => 'AuthenticationDoctrineAdapter'
 		),
 		'defaultRedirect' => 'AccessControl/Authenticate'
-	),
-	'hybrid_auth' =>  array(
-		'base_url' => 'AccessControl/HybridAuth',
-
-		'providers' => array(
-			//Set Redirect URIs = "http://xxxxx/access-control/hybridauth?hauth.done=Google" in google APIs console
-			'Google' => array(
-				'enabled' => true,
-				'keys' => array('id' => '','secret' => ''),
-				'scope' => 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-				'access_type' => 'online',
-				'approval_prompt' => 'force'
-			),
-			'Facebook' => array(
-				'enabled' => true,
-				'keys' => array( 'id' => '', 'secret' => ''),
-				'scope' => array( 'email, user_about_me, offline_access')
-			),
-			'Twitter' => array(
-				'enabled' => true,
-				'keys' => array('key' => '', 'secret' => '')
-			)
-		),
-		'debug_mode' => false
 	),
 	'controllers' => array(
 		'invokables' => array(
@@ -78,7 +53,6 @@ return array(
 			'AccessControlAuthenticationService' => 'BoilerAppAccessControl\Factory\AccessControlAuthenticationServiceFactory',
 			'AuthenticationStorage' => 'BoilerAppAccessControl\Factory\AuthenticationStorageFactory',
 			'AuthenticationDoctrineAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationDoctrineAdapterFactory',
-			'AuthenticationHybridAuthAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationHybridAuthAdapterFactory',
 			'AuthenticateForm' => 'BoilerAppAccessControl\Factory\AuthenticateFormFactory',
 			'RegisterForm' => 'BoilerAppAccessControl\Factory\RegisterFormFactory',
 			'ResetCredentialForm' => 'BoilerAppAccessControl\Factory\ResetCredentialFormFactory',

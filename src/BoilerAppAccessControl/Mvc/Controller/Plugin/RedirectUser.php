@@ -40,16 +40,18 @@ class RedirectUser extends \Zend\Mvc\Controller\Plugin\AbstractPlugin{
 	public function setDefaultRedirect($sDefaultRedirect){
 		if(!is_string($sDefaultRedirect))throw new \InvalidArgumentException('Default redirect config expects string, "'.gettype($sDefaultRedirect).'" given');
 
-		$oController = $this->getController();
+		if(!(($oController = $this->getController()) instanceof \Zend\Stdlib\DispatchableInterface))throw new \LogicException('RedirectUser plugin requires controller; none found');
 
 		$oEvent = $oController->getEvent();
 		$oRouter = null;
+
 		if($oEvent instanceof \Zend\Mvc\MvcEvent)$oRouter = $oEvent->getRouter();
-		elseif($oEvent instanceof \Zend\EventManager\EventInterface)$oRouter = $oEvent->getParam('router',false);
+		elseif($oEvent instanceof \Zend\EventManager\EventInterface && $oRouter)$oRouter = $oEvent->getParam('router',false);
+
 		if(!($oRouter instanceof \Zend\Mvc\Router\SimpleRouteStack))throw new \LogicException('RedirectUser plugin requires that controller event compose a router; none found');
 
 		//Route
-		if(strpos($sDefaultRedirect,'/') !== false && $oRouter->hasRoute(current(explode('/',$sDefaultRedirect,2))))$this->defaultRedirect = $oController->url()->fromRoute($sDefaultRedirect);
+		if($oRouter->hasRoute(current(explode('/',$sDefaultRedirect,2))))$this->defaultRedirect = $oController->url()->fromRoute($sDefaultRedirect);
 
 		//Url
 		elseif($sFilterUrl = filter_var($sDefaultRedirect,FILTER_SANITIZE_URL))$this->defaultRedirect = $sFilterUrl;

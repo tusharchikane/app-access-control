@@ -36,7 +36,7 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 	 */
 	public function checkEmailIdentityAvailabilityAction(){
 		if(!$this->getRequest()->isXmlHttpRequest())throw new \LogicException('Only ajax requests are allowed for this action');
-		if(!($sEmail = $this->params()->fromPost('email')))throw new \LogicException('Email param is missing');
+		if(!($sEmail = $this->params()->fromPost('email_identity')))throw new \LogicException('"email_identity" param is missing');
 		return $this->view->setVariable(
 			'available',
 			$this->getServiceLocator()->get('AccessControlService')->isEmailIdentityAvailable($sEmail)
@@ -50,7 +50,7 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 	 */
 	public function checkUsernameIdentityAvailabilityAction(){
 		if(!$this->getRequest()->isXmlHttpRequest())throw new \LogicException('Only ajax requests are allowed for this action');
-		if(!($sUserName = $this->params()->fromPost('username')))throw new \LogicException('Username param is missing');
+		if(!($sUserName = $this->params()->fromPost('username_identity')))throw new \LogicException('"username_identity" param is missing');
 
 		return $this->view->setVariable(
 			'available',
@@ -65,8 +65,8 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 	 * @return \Zend\View\Model\ViewModel
 	 */
 	public function confirmEmailAction(){
-		if(!($sPublicKey = $this->params('public_key')))throw new \LogicException('Public key param is missing');
-		if(!($sEmailIdentity = $this->params('email_identity')))throw new \LogicException('Email identity param is missing');
+		if(!($sPublicKey = $this->params('public_key')))throw new \LogicException('"public_key" param is missing');
+		if(!($sEmailIdentity = $this->params('email_identity')))throw new \LogicException('"email_identity" param is missing');
 
 		if(($bReturn = $this->getServiceLocator()->get('RegistrationService')->confirmEmail($sPublicKey,$sEmailIdentity)) !== true){
 			if(is_string($bReturn))$this->view->error = $bReturn;

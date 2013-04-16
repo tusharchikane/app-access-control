@@ -15,6 +15,60 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		$this->accessControlAuthenticationService = $oAccessControlAuthenticationServiceFactory->createService($this->getServiceManager());
 	}
 
+	public function testFactoryWithArrayAdapter(){
+		$this->assertInstanceOf('BoilerAppAccessControl\Authentication\AccessControlAuthenticationService',\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'adapters' => array(
+				array('name' => 'LocalAuth', 'adapter' => 'AuthenticationDoctrineAdapter')
+			)
+		), $this->getServiceManager()));
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testFactoryWithWrongTypeAdapter(){
+		\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'adapters' => array(
+				array('name' => 'LocalAuth', 'adapter' => false)
+			)
+		), $this->getServiceManager());
+	}
+
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testFactoryWithUnknownAdapter(){
+		\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'adapters' => array(
+				array('name' => 'LocalAuth', 'adapter' => 'wrong')
+			)
+		), $this->getServiceManager())->getAdapter('LocalAuth');
+	}
+
+	public function testFactoryWithClassnameStorage(){
+		$this->assertInstanceOf('BoilerAppAccessControl\Authentication\AccessControlAuthenticationService',\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'storage' => 'Zend\Authentication\Storage\Session'
+		), $this->getServiceManager()));
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testFactoryWithWrongTypeStorage(){
+		\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'storage' => false
+		), $this->getServiceManager());
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testFactoryWithUnknownStorage(){
+		\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'storage' => 'wrong'
+		), $this->getServiceManager());
+	}
+
 	public function testGetServiceLocator(){
 		$this->assertInstanceOf('\Zend\ServiceManager\ServiceLocatorInterface',$this->accessControlAuthenticationService->getServiceLocator());
 	}
@@ -23,8 +77,73 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		$this->assertInstanceOf('\BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface',$this->accessControlAuthenticationService->getAdapter('LocalAuth'));
 	}
 
-	public function testGetAuthenticationService(){
-		$this->assertInstanceOf('\Zend\Authentication\AuthenticationService',$this->accessControlAuthenticationService->getAuthenticationService());
+
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testGetStorageUnset(){
+		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Authentication\AccessControlAuthenticationService');
+		$oStorage = $oReflectionClass->getProperty('storage');
+		$oStorage->setAccessible(true);
+		$oStorage->setValue($this->accessControlAuthenticationService, null);
+		$this->accessControlAuthenticationService->getStorage();
+	}
+
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testGetAdapterUnset(){
+		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Authentication\AccessControlAuthenticationService');
+		$oAdapters = $oReflectionClass->getProperty('adapters');
+		$oAdapters->setAccessible(true);
+		$oAdapters->setValue($this->accessControlAuthenticationService, array('LocalAuth' => false));
+
+		$this->accessControlAuthenticationService->getAdapter('LocalAuth');
+	}
+
+	public function testAuthenticateWithFailureUncategorized(){
+		$oAccessControlAuthenticationService = \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'adapters' => array(
+				array(
+					'name' => 'FailAuth',
+					'adapter' => 'BoilerAppAccessControlTest\Authentication\Adapter\AuthenticationDoctrineAdapterFail'
+				)
+			),
+			'storage' => 'AuthenticationStorage'
+		), $this->getServiceManager());
+		$this->assertEquals('fail message',$oAccessControlAuthenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array('fail message')));
+	}
+
+	/**
+	 * @expectedException DomainException
+	 */
+	public function testAuthenticateWithWrongFailureCode(){
+		$oAccessControlAuthenticationService = \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'adapters' => array(
+				array(
+					'name' => 'FailAuth',
+					'adapter' => 'BoilerAppAccessControlTest\Authentication\Adapter\AuthenticationDoctrineAdapterFail'
+				)
+			),
+			'storage' => 'AuthenticationStorage'
+		), $this->getServiceManager());
+		$oAccessControlAuthenticationService->authenticate('FailAuth',-666,array());
+	}
+
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testAuthenticateFailingWithoutMessages(){
+		$oAccessControlAuthenticationService = \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
+			'adapters' => array(
+				array(
+					'name' => 'FailAuth',
+					'adapter' => 'BoilerAppAccessControlTest\Authentication\Adapter\AuthenticationDoctrineAdapterFail'
+				)
+			),
+			'storage' => 'AuthenticationStorage'
+		), $this->getServiceManager());
+		$oAccessControlAuthenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array());
 	}
 
 	public function testAuthenticate(){
@@ -75,6 +194,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Unlogged
+		$this->accessControlAuthenticationService->clearIdentity();
 		$this->assertFalse($this->accessControlAuthenticationService->hasIdentity());
 
 		//Logged
@@ -88,6 +208,13 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 
 		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential');
 		$this->assertEquals(1,$this->accessControlAuthenticationService->getIdentity());
+	}
+
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testGetIdentityWithoutIdentity(){
+		$this->accessControlAuthenticationService->clearIdentity()->getIdentity();
 	}
 
 	public function testClearIdentity(){

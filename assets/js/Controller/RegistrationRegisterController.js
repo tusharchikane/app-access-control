@@ -28,7 +28,7 @@ var BoilerAppAccessControlControllerRegistrationRegister = {
 			eEmailIdentity.setLoading();
 			new Request.JSON({
 				'url':this.url('AccessControl/CheckEmailIdentityAvailability'),
-				'data':{'email':sEmail},
+				'data':{'email_identity':sEmail},
 				'onSuccess':function(oResponse){
 					var bAvailable = oResponse.available === true;
 					//Display email availability checked
@@ -60,7 +60,7 @@ var BoilerAppAccessControlControllerRegistrationRegister = {
 			eUsernameIdentity.setLoading();
 			new Request.JSON({
 				'url':this.url('AccessControl/CheckUsernameIdentityAvailability'),
-				'data':{'username':sUserName},
+				'data':{'username_identity':sUserName},
 				'onSuccess':function(oResponse){
 					var bAvailable = oResponse.available === true;
 					//Display username availability checked

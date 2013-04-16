@@ -86,16 +86,6 @@ return array(
 						)
 					)
 				),
-				'HybridAuth' => array(
-					'type' => 'Zend\Mvc\Router\Http\Literal',
-					'options' => array(
-						'route' => '/hybridauth',
-						'defaults' => array(
-							'controller' => 'BoilerAppAccessControl\Controller\Authentication',
-							'action' => 'hybridauth'
-						)
-					)
-				),
 				'Logout' => array(
 					'type' => 'Zend\Mvc\Router\Http\Literal',
 					'options' => array(
