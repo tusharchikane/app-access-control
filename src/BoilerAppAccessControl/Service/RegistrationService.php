@@ -22,13 +22,13 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 		));
 
 		//Create User
-		$oUser = new \User\Entity\UserEntity();
+		$oUser = new \BoilerAppUser\Entity\UserEntity();
 		//Set default display name
 		$oUser->setUserDisplayName($this->getServiceLocator()->get('UserService')->getAvailableUserDisplayName(ucfirst($sUsernameIdentity)));
-		$this->getServiceLocator()->get('User\Repository\UserRepository')->create($oUser);
+		$this->getServiceLocator()->get('BoilerAppUser\Repository\UserRepository')->create($oUser);
 
 		$sEmailIdentity = $aRegisterData['auth_access_email_identity'];
-		if(!is_string($sEmailIdentity) || !filter_var($sEmailIdentity))throw new \InvalidArgumentException(sprintf(
+		if(!is_string($sEmailIdentity) || !filter_var($sEmailIdentity,FILTER_VALIDATE_EMAIL))throw new \InvalidArgumentException(sprintf(
 			'EmailIdentity expects valid email "%s" given',
 			is_string($sEmailIdentity)?$sEmailIdentity:gettype($sEmailIdentity)
 		));
@@ -100,10 +100,7 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 
 		if(!($oAuthAccess = $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->findOneBy(array(
 			'auth_access_email_identity' => $sEmailIdentity
-		))))throw new \LogicException(sprintf(
-			'AuthAccess with email identity "%s" does not exist',
-			$sEmailIdentity
-		));
+		))))throw new \LogicException('AuthAccess with email identity "'.$sEmailIdentity.'" does not exist');
 
 		//Crypter
 		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();

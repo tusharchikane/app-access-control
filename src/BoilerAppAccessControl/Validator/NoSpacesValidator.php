@@ -1,6 +1,6 @@
 <?php
 namespace BoilerAppAccessControl\Validator;
-class NoSpaces extends \Zend\Validator\AbstractValidator{
+class NoSpacesValidator extends \Zend\Validator\AbstractValidator{
     const INVALID = 'noSpacesInvalid';
     const HAS_SPACES = 'hasSpaces';
 
@@ -18,7 +18,7 @@ class NoSpaces extends \Zend\Validator\AbstractValidator{
      * @return boolean
      */
     public function isValid($sValue){
-        if(!is_string($sValue)){
+    	if(!is_string($sValue)){
             $this->error(self::INVALID);
             return false;
         }

@@ -140,6 +140,7 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 			array_slice(func_get_args(),1)
 		);
 
+
 		//Authentication
 		$oAuthResult = $oAdapter->authenticate();
 		if($this->hasIdentity())$this->clearIdentity();
@@ -166,7 +167,6 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 					return $sReturn;
 				}
 				throw new \LogicException('Result code "'.$iResultCode.'" expects messages, none given');
-				break;
 			default:
 				throw new \DomainException('Unknown result failure code : '.$iResultCode);
 		}

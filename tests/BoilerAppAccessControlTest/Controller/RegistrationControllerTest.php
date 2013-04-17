@@ -14,16 +14,20 @@ class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstrac
 	public function testRegisterActionPost(){
 		//Add authentication fixture
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
-
-		$oForm = $this->getApplicationServiceLocator()->get('RegisterForm');
+		$oCaptcha = $this->getApplicationServiceLocator()->get('RegisterForm')->get('auth_access_captcha')->getCaptcha();
+		$oCaptcha->getSession()->word = 'captcha_value';
 
 		$this->dispatch('/access-control/register',\Zend\Http\Request::METHOD_POST,array(
 			'auth_access_email_identity' => 'available@test.com',
 			'auth_access_username_identity' => 'available',
 			'auth_access_credential' => 'credential',
 			'auth_access_credential_confirm' => 'credential',
-			'auth_access_captcha' => 'captcha'
+			'auth_access_captcha' => array('auth_access_captcha' => array(
+				'input' => 'captcha_value',
+				'id' => $oCaptcha->getId()
+			))
 		));
+
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
 		$this->assertControllerName('BoilerAppAccessControl\Controller\Registration');

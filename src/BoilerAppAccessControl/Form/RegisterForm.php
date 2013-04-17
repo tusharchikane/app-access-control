@@ -6,8 +6,12 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 	 */
 	protected $captcha;
 
+	/**
+	 * @param \Zend\Captcha\AbstractWord $oCaptcha
+	 * @return \BoilerAppAccessControl\Form\RegisterForm
+	 */
 	public function setCaptcha(\Zend\Captcha\AbstractWord $oCaptcha){
-		$this->captcha = $oCaptcha;
+		$this->captcha = $oCaptcha->setName('auth_access_captcha');
 		return $this;
 	}
 
@@ -60,7 +64,7 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 				'required' => true,
 				'class' => 'required maxLength:32',
 				'autocomplete' => 'off',
-				'data-behavior' => ' Form.PasswordStrength'
+				'data-behavior' => 'Form.PasswordStrength'
 			),
 			'options' => array(
 				'label' => 'password'

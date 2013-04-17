@@ -15,18 +15,20 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 		if(!is_string($sAdapterName))throw new \InvalidArgumentException('Adapter\'s name expects string, "'.gettype($sAdapterName).'" given');
 
 		//Performs authentication attempt
-		switch($iResult = call_user_func_array(
+		$iResult = call_user_func_array(
 			array($this->getServiceLocator()->get('AccessControlAuthenticationService'),'authenticate'),
 			func_get_args()
-		)){
-			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID:
+		);
+		switch(true){
+			case $iResult === \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID:
 				return true;
 
-			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG:
+			case $iResult === \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG:
 				return $this->getServiceLocator()->get('translator')->translate('email_or_password_wrong');
 
-			case \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING:
+			case $iResult === \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING:
 				return $this->getServiceLocator()->get('translator')->translate('auth_access_state_pending');
+
 			//Unknown error
 			default:
 				return $this->getServiceLocator()->get('translator')->translate($iResult);
@@ -93,10 +95,7 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 
 		if(!($oAuthAccess = $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->findOneBy(array(
 			'auth_access_email_identity' => $sEmailIdentity
-		))))throw new \LogicException(sprintf(
-			'AuthAccess with email identity "%s" does not exist',
-			$sEmailIdentity
-		));
+		))))throw new \LogicException('AuthAccess with email identity "'.$sEmailIdentity.'" does not exist');
 
 		//Verify public key
 		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();

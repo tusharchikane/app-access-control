@@ -1,6 +1,6 @@
 <?php
 return array(
-	'auth_access_pending' => 'Le compte est en attente de confirmation',
+	'auth_access_state_pending' => 'Le compte est en attente de confirmation',
 	'authentification_provider_unavailable' => 'Le service d\'authentification "%s" est indisponible.',
 
 	'confirm_email' => 'Confirmation de mon adresse email',
