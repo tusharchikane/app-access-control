@@ -55,7 +55,6 @@
         "zendframework/zendframework": "dev-master",
         "zf2-boiler-app/app-db": "dev-master",
         "zf2-boiler-app/app-display": "dev-master",
-        "zf2-boiler-app/app-user": "dev-master",
         "zf2-boiler-app/app-messenger": "dev-master",
         "hybridauth/hybridauth": "dev-master"
     },
