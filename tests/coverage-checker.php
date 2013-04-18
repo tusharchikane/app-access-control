@@ -1,7 +1,7 @@
 <?php
 $sInputFile = $argv[1];
 $iPercentage = min(100, max(0,(int)$argv[2]));
-if(!file_exists($sInputFile))throw new \InvalidArgumentException('Input file "'.$sInputFile.'" does not exist');
+if(!is_readable($sInputFile))throw new \InvalidArgumentException('Input file "'.$sInputFile.'" does not exist');
 if(!$iPercentage)throw new InvalidArgumentException('Checked percentage param expects an integer, "'.$iPercentage.' given');
 $oXml = new SimpleXMLElement(file_get_contents($sInputFile));
 $iTotalElements = 0;

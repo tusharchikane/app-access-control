@@ -3,6 +3,7 @@ return array(
 	'modules' => array(
 		'DoctrineModule',
 		'DoctrineORMModule',
+		'BoilerAppTest',
 		'BoilerAppDb',
 		'BoilerAppUser',
 		'BoilerAppDisplay',
