@@ -10,6 +10,9 @@
             "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/zf2-boiler-app/app-access-control/issues"
+    },
     "minimum-stability" : "dev",
     "repositories":[        
         {
@@ -51,12 +54,11 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "ext-gd": "*",
         "zendframework/zendframework": "dev-master",
         "zf2-boiler-app/app-db": "dev-master",
         "zf2-boiler-app/app-display": "dev-master",
         "zf2-boiler-app/app-messenger": "dev-master",
-        "hybridauth/hybridauth": "dev-master"
+        "zf2-boiler-app/app-user": "dev-master"
     },
     "require-dev":{
     	"zf2-boiler-app/app-test": "dev-master",
@@ -67,5 +69,10 @@
             "BoilerAppAccessControl": "src"
         },
         "classmap" : ["Module.php"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
     }
 }
