@@ -14,5 +14,5 @@ before_script:
  - cp phpunit.xml.dist phpunit.xml
 
 script:
- - phpunit BoilerAppAccessControlTest
+ - phpunit
  - php ./tests/coverage-checker.php ./tests/clover.xml 100

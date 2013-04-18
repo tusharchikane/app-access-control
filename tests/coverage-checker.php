@@ -10,5 +10,8 @@ foreach($oXml->xpath('//metrics') as $aMetric){
 	$iTotalElements += (int) $metric['elements'];
 	$iCheckedElements += (int) $metric['coveredelements'];
 }
-if(($iCoverage = ($iCheckedElements / $iTotalElements) * 100) < $iPercentage)die('Code coverage is '.$iCoverage.'%, which is below the accepted '.$iPercentage.'%'.PHP_EOL);
+if(($iCoverage = ($iCheckedElements / $iTotalElements) * 100) < $iPercentage){
+	echo 'Code coverage is '.$iCoverage.'%, which is below the accepted '.$iPercentage.'%'.PHP_EOL;
+	exit(1);
+}
 echo 'Code coverage is '.$iCoverage.'% - OK!'.PHP_EOL;
