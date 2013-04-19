@@ -10,7 +10,7 @@ before_install:
  - composer install --dev
 
 before_script:
- - mysql -e 'create database app-access-control-tests;'
+ - mysql -e 'create database `app-access-control-tests`;'
  - cd tests
 
 script:
