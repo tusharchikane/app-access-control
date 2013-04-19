@@ -1,18 +1,18 @@
 language: php
 
 php:
- - 5.3.3
- - 5.3
- - 5.4
+ - "5.3.3"
+ - "5.3"
+ - "5.4"
 
 before_install:
  - composer self-update
  - composer install --dev
 
 before_script:
+ - mysql -e 'create database app-access-control-tests;'
  - cd tests
- - cp phpunit.xml.dist phpunit.xml
 
 script:
  - phpunit
- - php ./tests/coverage-checker.php ./tests/clover.xml 100
+ - php ./coverage-checker.php ./clover.xml 100

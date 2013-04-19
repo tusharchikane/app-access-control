@@ -22,7 +22,7 @@ return array(
 					'host'     => 'localhost',
 					'user'     => 'root',
 					'password' => '',
-					'dbname'   => 'doctrine_tests'
+					'dbname'   => 'app-access-control-tests'
 				)
 			)
 		)
