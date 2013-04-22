@@ -32,6 +32,44 @@ Installation
 1. Add this project in your composer.json:
 
     ```json
+    "repositories":[
+        {
+            "type": "package",
+            "package": {
+                "version": "dev-master",
+                "name": "fortawesome/font-awesome",
+                "source": {"url": "https://github.com/FortAwesome/Font-Awesome.git","type": "git","reference": "master"}
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "version": "dev-master",
+                "name": "fabiomcosta/mootools-meio-mask",
+                "source": {"url": "https://github.com/fabiomcosta/mootools-meio-mask.git","type": "git","reference": "master"}
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "version": "dev-master",
+                "name": "arian/iFrameFormRequest",
+                "source": {"url": "https://github.com/arian/iFrameFormRequest.git","type": "git","reference": "master"}
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "version": "dev-master",
+                "name": "nak5ive/Form.PasswordStrength",
+                "source": {"url": "https://github.com/nak5ive/Form.PasswordStrength.git","type": "git","reference": "master"}
+            }
+        },
+        {
+	        "type": "vcs",
+	        "url": "http://github.com/Nodge/lessphp"
+	    }
+    ],
     "require": {
         "zf2-boiler-app/app-access-control": "dev-master"
     }
@@ -51,10 +89,24 @@ Installation
     return array(
         'modules' => array(
             // ...
-            'BoilerAppAccessControl',
+            'DoctrineModule',
+			'DoctrineORMModule',
+			'AssetsBundle',
+			'TwbBundle',
+			'BoilerAppDb',
+			'BoilerAppUser',
+			'BoilerAppDisplay',
+			'BoilerAppMessenger',
+			'BoilerAppAccessControl'
         ),
         // ...
     );
     ```
 
 ## Features
+
+- Two steps registrations (confirm email adress)
+- Login with username or email adress
+- Authentication access is independent of the user account 
+- An authentication access can be used to access multiple accounts
+- An account can be accessed by multiple authentication access
