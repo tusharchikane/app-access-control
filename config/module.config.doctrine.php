@@ -4,7 +4,7 @@ return array(
 		'BoilerAppAccessControl_driver' => array(
 			'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 			'cache' => 'array',
-			'paths' => array(__DIR__ . '/../src/BoilerAppAccessControl/Entity')
+			'paths' => array(__DIR__.'/../src/BoilerAppAccessControl/Entity')
 		),
 		'orm_default' => array(
 			'drivers' => array(

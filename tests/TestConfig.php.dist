@@ -3,13 +3,13 @@ return array(
 	'modules' => array(
 		'DoctrineModule',
 		'DoctrineORMModule',
+		'AssetsBundle',
+		'TwbBundle',
 		'BoilerAppDb',
 		'BoilerAppUser',
 		'BoilerAppDisplay',
-		'BoilerAppAccessControl',
 		'BoilerAppMessenger',
-		'AssetsBundle',
-		'TwbBundle'
+		'BoilerAppAccessControl'
 	),
 	'module_listener_options' => array(
 		'config_glob_paths'    => array(
