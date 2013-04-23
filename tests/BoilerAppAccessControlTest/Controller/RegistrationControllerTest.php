@@ -57,7 +57,6 @@ class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstrac
 		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
 		$this->getRequest()->getHeaders()->addHeader(\Zend\Http\Header\Accept::fromString('Accept: application/json; version=0.2'));
 
-
 		$this->dispatch('/access-control/check-email-identity-availability',\Zend\Http\Request::METHOD_POST,array('email_identity' => 'available@test.com'));
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
