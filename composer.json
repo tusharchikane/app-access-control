@@ -19,14 +19,6 @@
 	        "type": "vcs",
 	        "url": "http://github.com/Nodge/lessphp"
 	    },
-	    {
-            "type": "package",
-            "package": {
-                "version": "dev-master",
-                "name": "fortawesome/font-awesome",
-                "source": {"url": "https://github.com/FortAwesome/Font-Awesome.git","type": "git","reference": "master"}
-            }
-        },
         {
             "type": "package",
             "package": {
@@ -54,14 +46,14 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "dev-master",
-        "zf2-boiler-app/app-db": "dev-master",
-        "zf2-boiler-app/app-display": "dev-master",
-        "zf2-boiler-app/app-messenger": "dev-master",
-        "zf2-boiler-app/app-user": "dev-master"
+        "zendframework/zendframework": "2.2.*@dev",
+        "zf2-boiler-app/app-db": "1.0.*@dev",
+        "zf2-boiler-app/app-display": "1.0.*@dev",
+        "zf2-boiler-app/app-messenger": "1.0.*@dev",
+        "zf2-boiler-app/app-user": "1.0.*@dev"
     },
     "require-dev":{
-    	"zf2-boiler-app/app-test": "dev-master",
+    	"zf2-boiler-app/app-test": "1.0.*@dev",
     	"neilime/zf2-translator-tools": "dev-master"
     },
     "autoload": {
@@ -74,8 +66,5 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
-    },
-    "config":{
-    	"process-timeout" : 4000
     }
 }

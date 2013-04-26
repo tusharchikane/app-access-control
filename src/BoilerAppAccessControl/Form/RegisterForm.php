@@ -102,6 +102,7 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 			'type' => 'submit',
 				'value' => 'register',
 				'class' => 'btn-large btn-primary'
+				'disabled' => true
 			),
 			'options' => array(
             	'ignore' => true,

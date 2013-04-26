@@ -35,7 +35,8 @@ class AuthenticateForm extends \BoilerAppDisplay\Form\AbstractForm{
 			'attributes' => array(
 				'type' => 'submit',
 				'value' => 'sign_in',
-				'class' => 'btn-large btn-primary'
+				'class' => 'btn-large btn-primary',
+				'disabled' => true
 			),
 			'options' => array(
 				'ignore' => true,
