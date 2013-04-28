@@ -5,7 +5,7 @@ php:
 
 before_install:
  - composer self-update
- - composer install --dev
+ - composer install --dev -o
 
 before_script:
  - mysql -e 'create database `app-access-control-tests`;'
