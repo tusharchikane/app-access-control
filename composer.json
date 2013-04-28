@@ -46,14 +46,14 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.*@dev",
-        "zf2-boiler-app/app-db": "1.0.*@dev",
-        "zf2-boiler-app/app-display": "1.0.*@dev",
-        "zf2-boiler-app/app-messenger": "1.0.*@dev",
-        "zf2-boiler-app/app-user": "1.0.*@dev"
+        "zendframework/zendframework": "2.2.*",
+        "zf2-boiler-app/app-db": "1.0.*",
+        "zf2-boiler-app/app-display": "1.0.*",
+        "zf2-boiler-app/app-messenger": "1.0.*",
+        "zf2-boiler-app/app-user": "1.0.*"
     },
     "require-dev":{
-    	"zf2-boiler-app/app-test": "1.0.*@dev",
+    	"zf2-boiler-app/app-test": "1.0.*",
     	"neilime/zf2-translator-tools": "dev-master"
     },
     "autoload": {
