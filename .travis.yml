@@ -8,6 +8,7 @@ before_install:
  - composer install --dev -o
 
 before_script:
+ - echo 'max_execution_time = 500' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
  - mysql -e 'create database `app-access-control-tests`;'
  - cd tests
 
