@@ -24,8 +24,7 @@ class ResetCredentialForm extends \BoilerAppDisplay\Form\AbstractForm{
 			'attributes' => array(
 				'type' => 'submit',
 				'value' => 'reset_password',
-				'class' => 'btn-large btn-primary',
-				'disabled' => true
+				'class' => 'btn-large btn-primary'
 			),
 			'options' => array(
 				'ignore' => true,

@@ -3,7 +3,7 @@ ZF2 BoilerApp "Access control" module
 
 [![Build Status](https://travis-ci.org/zf2-boiler-app/app-access-control.png?branch=master)](https://travis-ci.org/zf2-boiler-app/app-access-control)
 
-Created by Neilime
+_100% Code Coverage_
 
 NOTE : This module is in heavy development, it's not usable yet.
 If you want to contribute don't hesitate, I'll review any PR.
@@ -11,12 +11,16 @@ If you want to contribute don't hesitate, I'll review any PR.
 Introduction
 ------------
 
-__ZF2 BoilerApp "Access control" module__ is a Zend Framework 2 module
+__ZF2 BoilerApp "Access control" module__ is a Zend Framework 2 module that provides access control for ZF2 Boiler-App
 
 Requirements
 ------------
 
 * [Zend Framework 2](https://github.com/zendframework/zf2) (latest master)
+* [ZF2 BoilerApp "Database" module](https://github.com/zf2-boiler-app/app-db) (latest master)
+* [ZF2 BoilerApp "Display " module](https://github.com/zf2-boiler-app/app-display) (latest master)
+* [ZF2 BoilerApp "Messenger" module](https://github.com/zf2-boiler-app/app-messenger) (latest master)
+* [ZF2 BoilerApp "User" module](https://github.com/zf2-boiler-app/app-user) (latest master)
 
 Installation
 ------------
@@ -71,7 +75,7 @@ Installation
 	    }
     ],
     "require": {
-        "zf2-boiler-app/app-access-control": "dev-master"
+        "zf2-boiler-app/app-access-control": "1.0.*"
     }
     ```
 
