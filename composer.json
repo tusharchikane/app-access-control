@@ -46,7 +46,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.*",
+        "zendframework/zendframework": "2.3.*",
         "zf2-boiler-app/app-db": "1.0.*",
         "zf2-boiler-app/app-display": "1.0.*",
         "zf2-boiler-app/app-messenger": "1.0.*",
