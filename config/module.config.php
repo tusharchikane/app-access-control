@@ -5,8 +5,8 @@ return array(
 	'asset_bundle' => include 'module.config.assets.php',
 	'doctrine' => include 'module.config.doctrine.php',
 	'translator' => include 'module.config.translations.php',
-	'messenger' => array(
-		'view_manager' => array(
+	'medias' => array(
+		\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA => array(
 			'template_map' => array(
 				'email/registration/confirm-email' => __DIR__ . '/../view/email/registration/confirm-email.phtml',
 				'email/authentication/confirm-reset-credential' => __DIR__ . '/../view/email/authentication/confirm-reset-credential.phtml',

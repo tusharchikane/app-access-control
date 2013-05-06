@@ -33,11 +33,15 @@ return array(
 			'name' => 'Test System'
 		),
 		'transporters' => array(
-			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL => function(){
-				return new \BoilerAppMessenger\Mail\Transport\File(new \Zend\Mail\Transport\FileOptions(array(
+			\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA => function($oServiceLocator){
+				$oMailMessageTransporter = new \BoilerAppMessenger\Media\Mail\MailMessageTransporter();
+				return $oMailMessageTransporter
+				->setMessageRenderer($oServiceLocator->get('MailMessageRenderer'))
+				->setBaseDir(__DIR__)
+				->setMailTransporter(new \Zend\Mail\Transport\File(new \Zend\Mail\Transport\FileOptions(array(
 					'path' => __DIR__ . '/_files/mails'
-				)));
-			}
+				))));
+			},
 		)
 	),
 	'captcha' => array(
@@ -49,8 +53,8 @@ return array(
 				$oLogger = new \Zend\Log\Logger();
 				return $oLogger->addWriter(new \Zend\Log\Writer\Stream(STDERR));
 			},
-			'InlineStyleProcessor' => function(){
-				return \BoilerAppMessenger\StyleInliner\Processor\InlineStyleProcessor::factory(array('baseDir' => __DIR__.'/_files'));
+			'CssToInlineStylesProcessor' => function(){
+				return \BoilerAppMessenger\StyleInliner\Processor\CssToInlineStylesProcessor::factory(array('baseDir' => __DIR__.DIRECTORY_SEPARATOR.'_files'));
 			}
 		)
 	),

@@ -46,12 +46,10 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 			is_scalar($sAuthAccessIdentity)?$sAuthAccessIdentity:gettype($sAuthAccessIdentity)
 		));
 
-		//Retrieve translator
-		$oTranslator = $this->getServiceLocator()->get('translator');
-
+		//Retrieve AccessControl service
 		$oAccessControlService = $this->getServiceLocator()->get('AccessControlService');
 
-		if(!($oAuthAccess = $oAccessControlService->getAuthAccessFromIdentity($sAuthAccessIdentity)))return $oTranslator->translate('identity_does_not_match_any_registered_user');
+		if(!($oAuthAccess = $oAccessControlService->getAuthAccessFromIdentity($sAuthAccessIdentity)))return $this->getServiceLocator()->get('translator')->translate('identity_does_not_match_any_registered_user');
 
 		//If AuthAccess is in pending state
 		if($oAuthAccess->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)return $this->getServiceLocator()->get('translator')->translate('auth_access_pending');
@@ -70,17 +68,14 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 		//Retrieve Messenger service
 		$oMessengerService = $this->getServiceLocator()->get('MessengerService');
 
-		//Render view & send email to user
-		$oMessengerService->renderView($oView->setTemplate('email/authentication/confirm-reset-credential'),function($sHtml)use($oMessengerService,$oTranslator,$oAuthAccess){
-			$oMessage = new \BoilerAppMessenger\Message();
-			$oMessengerService->sendMessage(
-				$oMessage->setFrom(\BoilerAppMessenger\Message::SYSTEM_USER)
-				->setTo($oAuthAccess->getAuthAccessUser())
-				->setSubject($oTranslator->translate('reset_password'))
-				->setBody($sHtml),
-				\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
-			);
-		});
+		$oMessage = new \BoilerAppMessenger\Message\Message();
+		$oMessengerService->sendMessage(
+			$oMessage->setFrom($oMessengerService->getSystemUser())
+			->setTo($oAuthAccess->getAuthAccessUser())
+			->setSubject($this->getServiceLocator()->get('translator')->translate('reset_password'))
+			->setBody($oView->setTemplate('email/authentication/confirm-reset-credential')),
+			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
+		);
 		return true;
 	}
 
@@ -123,23 +118,17 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 			'auth_access_credential' => $sCredential
 		));
 
-		//Retrieve translator
-		$oTranslator = $this->getServiceLocator()->get('translator');
-
 		//Retrieve Messenger service
 		$oMessengerService = $this->getServiceLocator()->get('MessengerService');
 
-		//Render view & send email to user
-		$oMessengerService->renderView($oView->setTemplate('email/authentication/credential-reset'),function($sHtml)use($oMessengerService,$oTranslator,$oAuthAccess){
-			$oMessage = new \BoilerAppMessenger\Message();
-			$oMessengerService->sendMessage(
-				$oMessage->setFrom(\BoilerAppMessenger\Message::SYSTEM_USER)
-				->setTo($oAuthAccess->getAuthAccessUser())
-				->setSubject($oTranslator->translate('reset_password'))
-				->setBody($sHtml),
-				\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
-			);
-		});
+		$oMessage = new \BoilerAppMessenger\Message\Message();
+		$oMessengerService->sendMessage(
+			$oMessage->setFrom($oMessengerService->getSystemUser())
+			->setTo($oAuthAccess->getAuthAccessUser())
+			->setSubject($this->getServiceLocator()->get('translator')->translate('reset_password'))
+			->setBody($oView->setTemplate('email/authentication/credential-reset')),
+			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
+		);
 		return $this;
 	}
 

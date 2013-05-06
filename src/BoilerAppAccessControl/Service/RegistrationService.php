@@ -58,8 +58,6 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 		//Set auth access to user
 		$oUser->setUserAuthAccess($oAuthAccess);
 
-		//Send email confirmation to user
-
 		//Create email view body
 		$oView = new \Zend\View\Model\ViewModel(array(
 			'auth_access_email_identity' => $sEmailIdentity,
@@ -68,23 +66,19 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 			'auth_access_public_key' => $sPublicKey
 		));
 
+
 		//Retrieve Messenger service
 		$oMessengerService = $this->getServiceLocator()->get('MessengerService');
 
-		//Retrieve translator
-		$oTranslator = $this->getServiceLocator()->get('translator');
-
-		//Render view & send email to user
-		$oMessengerService->renderView($oView->setTemplate('email/registration/confirm-email'),function($sHtml)use($oMessengerService,$oTranslator,$oUser){
-			$oMessage = new \BoilerAppMessenger\Message();
-			$oMessengerService->sendMessage(
-				$oMessage->setFrom(\BoilerAppMessenger\Message::SYSTEM_USER)
-				->setTo($oUser)
-				->setSubject($oTranslator->translate('register'))
-				->setBody($sHtml),
-				\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
-			);
-		});
+		//Send email confirmation to user
+		$oMessage = new \BoilerAppMessenger\Message\Message();
+		$oMessengerService->sendMessage(
+			$oMessage->setFrom($oMessengerService->getSystemUser())
+			->setTo($oUser)
+			->setSubject($this->getServiceLocator()->get('translator')->translate('register'))
+			->setBody($oView->setTemplate('email/registration/confirm-email')),
+			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
+		);
 		return $this;
 	}
 
@@ -149,20 +143,15 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 		//Retrieve Messenger service
 		$oMessengerService = $this->getServiceLocator()->get('MessengerService');
 
-		//Retrieve translator
-		$oTranslator = $this->getServiceLocator()->get('translator');
-
-		//Render view & send email to user
-		$oMessengerService->renderView($oView->setTemplate('email/registration/confirm-email'),function($sHtml)use($oMessengerService,$oTranslator,$oAuthAccess){
-			$oMessage = new \BoilerAppMessenger\Message();
-			$oMessengerService->sendMessage(
-				$oMessage->setFrom(\BoilerAppMessenger\Message::SYSTEM_USER)
-				->setTo($oAuthAccess->getAuthAccessUser())
-				->setSubject($oTranslator->translate('register'))
-				->setBody($sHtml),
-				\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
-			);
-		});
+		//Send email confirmation to user
+		$oMessage = new \BoilerAppMessenger\Message\Message();
+		$oMessengerService->sendMessage(
+			$oMessage->setFrom($oMessengerService->getSystemUser())
+			->setTo($oAuthAccess->getAuthAccessUser())
+			->setSubject($this->getServiceLocator()->get('translator')->translate('register'))
+			->setBody($oView->setTemplate('email/registration/confirm-email')),
+			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
+		);
 		return $this;
 	}
 }
