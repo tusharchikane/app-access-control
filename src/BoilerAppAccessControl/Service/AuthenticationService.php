@@ -74,7 +74,7 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 			->setTo($oAuthAccess->getAuthAccessUser())
 			->setSubject($this->getServiceLocator()->get('translator')->translate('reset_password'))
 			->setBody($oView->setTemplate('email/authentication/confirm-reset-credential')),
-			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
+			\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA
 		);
 		return true;
 	}
@@ -127,7 +127,7 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 			->setTo($oAuthAccess->getAuthAccessUser())
 			->setSubject($this->getServiceLocator()->get('translator')->translate('reset_password'))
 			->setBody($oView->setTemplate('email/authentication/credential-reset')),
-			\BoilerAppMessenger\Service\MessengerService::MEDIA_EMAIL
+			\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA
 		);
 		return $this;
 	}

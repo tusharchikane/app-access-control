@@ -29,8 +29,8 @@ return array(
 	),
 	'messenger' => array(
 		'system_user' => array(
-			'email' => 'test-system@test.com',
-			'name' => 'Test System'
+			'display_name' => 'Test System',
+			'email' => 'test-system@test.com'
 		),
 		'transporters' => array(
 			\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA => function($oServiceLocator){
