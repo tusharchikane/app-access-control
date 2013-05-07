@@ -47,7 +47,7 @@ class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstrac
 		);
 
 		$this->dispatch('/access-control/register');
-		$this->assertRedirectTo('/access-control/authenticate');
+		$this->assertRedirectTo('/');
 	}
 
 	public function testCheckEmailIdentityAvailabilityAction(){

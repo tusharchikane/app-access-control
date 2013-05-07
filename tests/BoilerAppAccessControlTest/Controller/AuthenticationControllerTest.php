@@ -17,7 +17,7 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 			'auth_access_identity' => 'valid@test.com',
 			'auth_access_credential' => 'valid-credential'
 		));
-		$this->assertRedirectTo('/access-control/authenticate');
+		$this->assertRedirectTo('/');
 	}
 
 	public function testForgottenCredentialAction(){
@@ -61,6 +61,6 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 		//Log in
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate('LocalAuth','valid','valid-credential');
 		$this->dispatch('/access-control/logout');
-		$this->assertRedirectTo('/access-control/authenticate');
+		$this->assertRedirectTo('/');
 	}
 }

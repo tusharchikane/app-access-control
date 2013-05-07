@@ -15,7 +15,13 @@ class RedirectUser extends \Zend\Mvc\Controller\Plugin\AbstractPlugin{
 		$oSessionContainer = $oController->getServiceLocator()->get('SessionContainer');
 		$sRedirectUrl = $oSessionContainer->redirect;
 		unset($oSessionContainer->redirect);
-		return $oController->redirect()->toUrl(empty($sRedirectUrl)?$this->getDefaultRedirect():$sRedirectUrl);
+
+		//If redirect url is the same as the current url
+		if(($sRedirectUrl = empty($sRedirectUrl)?$this->getDefaultRedirect():$sRedirectUrl) === $oController->getRequest()->getUri()->getPath())throw new \LogicException(sprintf(
+			'Redirect url "%s" is the same as current url "%s"',
+			$sRedirectUrl, $oController->getRequest()->getUriString()
+		));
+		return $oController->redirect()->toUrl($sRedirectUrl);
 	}
 
 	/**

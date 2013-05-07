@@ -12,7 +12,8 @@ return array(
 		'storage' => 'AuthenticationStorage',
 		'adapters' => array(
 			'LocalAuth' => 'AuthenticationDoctrineAdapter'
-		)
+		),
+		'defaultRedirect' => '/'
 	),
 	'doctrine' => array(
 		'connection' => array(

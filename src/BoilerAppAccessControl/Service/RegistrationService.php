@@ -76,7 +76,7 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 			$oMessage->setFrom($oMessengerService->getSystemUser())
 			->setTo($oUser)
 			->setSubject($this->getServiceLocator()->get('translator')->translate('register'))
-			->setBody($oView->setTemplate('email/registration/confirm-email')),
+			->setBody($oView->setTemplate('mail/registration/confirm-email')),
 			\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA
 		);
 		return $this;
@@ -149,7 +149,7 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 			$oMessage->setFrom($oMessengerService->getSystemUser())
 			->setTo($oAuthAccess->getAuthAccessUser())
 			->setSubject($this->getServiceLocator()->get('translator')->translate('register'))
-			->setBody($oView->setTemplate('email/registration/confirm-email')),
+			->setBody($oView->setTemplate('mail/registration/confirm-email')),
 			\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA
 		);
 		return $this;
