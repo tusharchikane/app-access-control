@@ -26,15 +26,6 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 		)return $this->redirectUser();
 
 		if(isset($bReturn))$this->view->error = $bReturn;
-
-		//Try to define redirect url
-		if(
-			empty($this->getServiceLocator()->get('SessionContainer')->redirect)
-			&& ($sHttpReferer = $this->getRequest()->getServer('HTTP_REFERER'))
-			&& is_array($aInfosUrl = parse_url($sHttpReferer))
-			&& $this->getRequest()->getServer('HTTP_HOST') === $aInfosUrl['host']
-		)$this->getServiceLocator()->get('SessionContainer')->redirect = $sHttpReferer;
-
 		return $this->view;
 	}
 

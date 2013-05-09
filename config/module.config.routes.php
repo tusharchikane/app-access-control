@@ -59,7 +59,7 @@ return array(
 				'Authenticate' => array(
 					'type' => 'Zend\Mvc\Router\Http\Segment',
 					'options' => array(
-						'route' => '/authenticate[/:service][/:redirect]',
+						'route' => '/authenticate[/:service]',
 						'defaults' => array(
 							'controller' => 'BoilerAppAccessControl\Controller\Authentication',
 							'action'  => 'authenticate'
