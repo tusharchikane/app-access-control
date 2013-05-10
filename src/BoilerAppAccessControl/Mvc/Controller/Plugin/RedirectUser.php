@@ -8,6 +8,7 @@ class RedirectUser extends \Zend\Mvc\Controller\Plugin\AbstractPlugin{
 
 	/**
 	 * Redirect to a defined url, use "redirect" session value if exists, else defaultRedirect config
+	 * @throws \LogicException
 	 * @return \Zend\Http\Response
 	 */
 	public function __invoke(){

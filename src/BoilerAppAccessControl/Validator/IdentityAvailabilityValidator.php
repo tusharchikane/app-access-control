@@ -71,18 +71,18 @@ class IdentityAvailabilityValidator extends \Zend\Validator\AbstractValidator{
     }
 
 	/**
-	 * @param mixed $oCallback
+	 * @param callable $oCallback
 	 * @throws \BadFunctionCallException
 	 * @return \BoilerAppAccessControl\Validator\IdentityAvailabilityValidator
 	 */
-    public function setCheckAvailabilityCallback($oCallback){
+    public function setCheckAvailabilityCallback(callable $oCallback){
     	if(!is_callable($oCallback))throw new \BadFunctionCallException('$oCallback is not callable');
     	$this->options['checkAvailabilityCallback'] = $oCallback;
     	return $this;
     }
 
     /**
-     * @return mixed : valid callback or null
+     * @return callable|null
      */
     public function getCheckAvailabilityCallback(){
     	return $this->options['checkAvailabilityCallback'];

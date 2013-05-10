@@ -26,6 +26,17 @@ class AccessControlServiceTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractD
 		$this->assertInstanceOf('BoilerAppAccessControl\Entity\AuthAccessEntity',$this->accessControlService->getAuthenticatedAuthAccess());
 	}
 
+	public function testRemoveAuthenticatedAuthAccess(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		//Authentication
+		$this->getServiceManager()->get('AuthenticationService')->authenticate('LocalAuth','valid@test.com','valid-credential');
+
+		//Remove
+		$this->assertEquals($this->accessControlService, $this->accessControlService->removeAuthenticatedAuthAccess());
+	}
+
 	/**
 	 * @expectedException RuntimeException
 	 */

@@ -19,7 +19,7 @@ class RegisterInputFilter extends \Zend\InputFilter\InputFilter{
 						'identityName' => $oTranslator->translate('the_email'),
 						'checkAvailabilityCallback' => array($oAuthAccessRepository, 'isIdentityEmailAvailable')
 					)
-				),
+				)
 			)
 		))
 		->add(array(

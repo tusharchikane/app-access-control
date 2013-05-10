@@ -7,25 +7,39 @@ class RedirectUserTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractTestCase{
 	protected $redirectUser;
 
 	/**
+	 * @var \BoilerAppAccessControl\Controller\RegistrationController
+	 */
+	protected $controller;
+
+	/**
 	 * @see \BoilerAppTest\PHPUnit\TestCase\AbstractTestCase
 	 */
 	protected function setUp(){
 		parent::setUp();
-		$oRegisterFormFactory = new \BoilerAppAccessControl\Factory\RegisterFormFactory();
 		$this->redirectUser = new \BoilerAppAccessControl\Mvc\Controller\Plugin\RedirectUser();
 
-		$oController = new \BoilerAppAccessControl\Controller\RegistrationController();
+		$oServiceManager = $this->getServiceManager();
+		$aConfiguration = $oServiceManager->get('Config');
 
+		$this->controller = new \BoilerAppAccessControl\Controller\RegistrationController();
+		$this->controller->setServiceLocator($oServiceManager);
+
+		//Override event
 		$oEvent = new \Zend\EventManager\Event();
 		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Controller\RegistrationController');
 		$oEventProp = $oReflectionClass->getProperty('event');
 		$oEventProp->setAccessible(true);
-		$oEventProp->setValue($oController, $oEvent->setParam(
-			'router',
-			\Zend\Mvc\Router\Http\TreeRouteStack::factory(isset($aConfiguration['router'])?$aConfiguration['router']:array())
-		));
+		$oEventProp->setValue($this->controller, $oEvent->setParams(array(
+			'router' => \Zend\Mvc\Router\Http\TreeRouteStack::factory(isset($aConfiguration['router'])?$aConfiguration['router']:array()),
+			'response' => new \Zend\Http\Response()
+		)));
 
-		$this->redirectUser->setController($oController);
+		//Override request
+		$oRequestProp = $oReflectionClass->getProperty('request');
+		$oRequestProp->setAccessible(true);
+		$oRequestProp->setValue($this->controller,\Zend\Http\Request::fromString('GET /test HTTP/1.1\r\n\r\nSome Content'));
+
+		$this->redirectUser->setController($this->controller);
 	}
 
 	public function testSetDefaultRedirect(){
@@ -38,5 +52,13 @@ class RedirectUserTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractTestCase{
 	 */
 	public function testSetDefaultRedirectWithWrongUrl(){
 		$this->redirectUser->setDefaultRedirect('');
+	}
+
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testInvokeWithSameCurrentAndRedirectUrl(){
+		$this->redirectUser->setDefaultRedirect($this->controller->getRequest()->getUri()->getPath());
+		$this->redirectUser->__invoke();
 	}
 }

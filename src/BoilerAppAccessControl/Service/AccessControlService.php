@@ -28,10 +28,31 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 				$oAuthAccess->getAuthAccessId()
 			));
 		}
-
-
 		return $oAuthAccess;
 	}
+
+	/**
+	 * Remove authenticated auth access & user
+	 * @return \BoilerAppAccessControl\Service\AccessControlService
+	 */
+	public function removeAuthenticatedAuthAccess(){
+		$oAuthenticatedAuthAccess = $this->getAuthenticatedAuthAccess();
+		$oAuthAccessUser = $oAuthenticatedAuthAccess->getAuthAccessUser();
+		$oServiceLocator = $this->getServiceLocator();
+
+		//Remove Auth access
+		$oServiceLocator->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->remove($oAuthenticatedAuthAccess);
+
+		//Remove user
+		$oServiceLocator->get('BoilerAppUser\Repository\UserRepository')->remove($oAuthAccessUser);
+
+		//Log out
+		$oServiceLocator->get('AuthenticationService')->logout();
+
+		return $this;
+	}
+
+
 
 	/**
 	 * @param string $sAuthAccessIdentity
