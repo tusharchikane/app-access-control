@@ -2,8 +2,7 @@ ZF2 BoilerApp "Access control" module
 =====================
 
 [![Build Status](https://travis-ci.org/zf2-boiler-app/app-access-control.png?branch=master)](https://travis-ci.org/zf2-boiler-app/app-access-control)
-
-_100% Code Coverage_
+![Code coverage](https://raw.github.com/zf2-boiler-app/app-test/master/ressources/100%25-code-coverage.png "100% code coverage")
 
 NOTE : This module is in heavy development, it's not usable yet.
 If you want to contribute don't hesitate, I'll review any PR.
@@ -18,7 +17,7 @@ Requirements
 
 * [Zend Framework 2](https://github.com/zendframework/zf2) (latest master)
 * [ZF2 BoilerApp "Database" module](https://github.com/zf2-boiler-app/app-db) (latest master)
-* [ZF2 BoilerApp "Display " module](https://github.com/zf2-boiler-app/app-display) (latest master)
+* [ZF2 BoilerApp "Display" module](https://github.com/zf2-boiler-app/app-display) (latest master)
 * [ZF2 BoilerApp "Messenger" module](https://github.com/zf2-boiler-app/app-messenger) (latest master)
 * [ZF2 BoilerApp "User" module](https://github.com/zf2-boiler-app/app-user) (latest master)
 

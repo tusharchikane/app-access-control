@@ -1,0 +1,18 @@
+<?php if($this->usernameIdentityChanged){
+	echo $this->alert('username_has_been_changed','alert-success',false);
+?>
+<script type="text/javascript">
+	if('undefined' != typeof oController)oController.setAuthAccessEmailIdentity(<?=$this->escapeJson($this->authenticatedUser->getUserAuthAccess()->getAuthAccessUsernameIdentity())?>);
+</script>
+<button class="btn btn-small btn-primary pull-right" type="button" data-dismiss="modal"><?=$this->translate('close_modal')?></button>
+<?php }
+else{
+	echo $this->form($this->form,\TwbBundle\Form\View\Helper\TwbBundleForm::LAYOUT_HORIZONTAL,true);
+?>
+<script type="text/javascript">
+	if(document.id){
+		var oAuthAccessUsernameIdentity = document.id('new_auth_access_username_identity');
+		if(oAuthAccessUsernameIdentity)oAuthAccessUsernameIdentity.focus();
+	}
+</script>
+<?php } ?>

@@ -1,6 +1,6 @@
 <h3><?=$this->layout()->title?></h3>
 <div class="well">
-<?=$this->translate('new_user').' ? <a href="'.$this->url('AccessControl/Register').'">'.$this->translate('sign_up').'</a> ! | '.$this->translate('forgot_your_password').' ? <a href="'.$this->url('AccessControl/ForgottenCredential').'">'.$this->translate('reset_password').'</a>'?>
+<?=$this->translate('new_on').' '.$this->translate('application_name').' ? <a href="'.$this->url('AccessControl/Register').'">'.$this->translate('sign_up').'</a> ! | '.$this->translate('forgot_your_credential').' ? <a href="'.$this->url('AccessControl/ForgottenCredential').'">'.$this->translate('reset_credential').'</a>'?>
 </div>
 <?php
 	if(!empty($this->error)){

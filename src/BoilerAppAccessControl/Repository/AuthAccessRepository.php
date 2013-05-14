@@ -27,7 +27,7 @@ class AuthAccessRepository extends \BoilerAppDb\Repository\AbstractEntityReposit
 	 * @throws \InvalidArgumentException
 	 * @return boolean
 	 */
-	public function isIdentityEmailAvailable($sEmail){
+	public function isEmailIdentityAvailable($sEmail){
 		if(empty($sEmail) || !is_string($sEmail))throw new \InvalidArgumentException('Email expects string, "'.(empty($sEmail)?'':gettype($sEmail)).'" given');
 		return !$this->findOneBy(array('auth_access_email_identity' => $sEmail));
 	}
@@ -38,9 +38,8 @@ class AuthAccessRepository extends \BoilerAppDb\Repository\AbstractEntityReposit
 	 * @throws \InvalidArgumentException
 	 * @return boolean
 	 */
-	public function isIdentityUserNameAvailable($sUserName){
+	public function isUsernameIdentityAvailable($sUserName){
 		if(empty($sUserName) || !is_string($sUserName))throw new \InvalidArgumentException('Username expects string, "'.(empty($sUserName)?'':gettype($sUserName)).'" given');
 		return !$this->findOneBy(array('auth_access_username_identity' => $sUserName));
 	}
-
 }

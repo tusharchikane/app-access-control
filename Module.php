@@ -23,12 +23,12 @@ class Module{
 	public function onRender(\Zend\Mvc\MvcEvent $oEvent){
 		$oRequest = $oEvent->getRequest();
 		if(
-			($oView = $oEvent->getResult()) instanceof \Zend\View\Model\ModelInterface
-			&& !$oView->terminate()
+			($oView = $oEvent->getViewModel()) instanceof \Zend\View\Model\ViewModel
+			&& !($oView instanceof \Zend\View\Model\JsonModel)
 		){
 			//Set authenticatedUser var to layout
 			$oServiceManager = $oEvent->getApplication()->getServiceManager();
-			if($oServiceManager->get('AccessControlAuthenticationService')->hasIdentity())$oEvent->getViewModel()->setVariable(
+			if($oServiceManager->get('AccessControlAuthenticationService')->hasIdentity())$oView->setVariable(
 				'authenticatedUser',
 				$oServiceManager->get('AccessControlService')->getAuthenticatedAuthAccess()->getAuthAccessUser()
 			);

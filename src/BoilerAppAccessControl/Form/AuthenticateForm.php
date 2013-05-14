@@ -6,7 +6,6 @@ class AuthenticateForm extends \BoilerAppDisplay\Form\AbstractForm{
 	 * Constructor
 	 * @param string $sName
 	 * @param array $aOptions
-	 * @throws \Exception
 	 */
 	public function __construct($sName = null,$aOptions = null){
 		parent::__construct($sName,$aOptions);
@@ -18,17 +17,17 @@ class AuthenticateForm extends \BoilerAppDisplay\Form\AbstractForm{
 				'class' => 'required input-xlarge',
 				'autofocus' => 'autofocus'
 			),
-			'options'=>array('twb'=>array('prepend'=>array('type'=>'icon','icon'=>'icon-user')))
+			'options'=>array('twb' => array('prepend' => array('type' => 'icon','icon' => 'icon-user')))
 		))
 		->add(array(
 			'name' => 'auth_access_credential',
 			'attributes' => array(
 				'type'  => 'password',
-				'placeholder' => 'password',
+				'placeholder' => 'credential',
 				'required' => true,
 				'class' => 'required input-xlarge'
 			),
-			'options'=>array('twb'=>array('prepend'=>array('type'=>'icon','icon'=>'icon-lock')))
+			'options'=>array('twb' => array('prepend' => array('type' => 'icon','icon' => 'icon-lock')))
 		))
 		->add(array(
 			'name' => 'submit',

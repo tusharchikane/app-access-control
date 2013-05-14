@@ -36,10 +36,10 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 			'type' => 'email',
 			'attributes' => array(
 				'required' => true,
-				'class' => 'required validate-email emailIsAvailable',
-				'onchange' => 'oController.checkEmailIdentityAvailability(document.id(this));',
 				'autocomplete' => 'off',
-				'autofocus' => 'autofocus'
+				'autofocus' => 'autofocus',
+				'class' => 'required validate-email emailIsAvailable',
+				'onchange' => 'oController.checkEmailIdentityAvailability(document.id(this));'
 			),
 			'options' => array(
 				'label' => 'email'
@@ -48,9 +48,9 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 			'name' => 'auth_access_username_identity',
 			'attributes' => array(
 				'required' => true,
-				'class' => 'required validate-nospace maxLength:255 usernameIsAvailable',
-				'onchange' => 'oController.checkUsernameIdentityAvailability(document.id(this));',
 				'autocomplete' => 'off',
+				'class' => 'required validate-nospace maxLength:255 usernameIsAvailable',
+				'onchange' => 'oController.checkUsernameIdentityAvailability(document.id(this));'
 			),
 			'options' => array(
 				'label' => 'username'
@@ -67,19 +67,19 @@ class RegisterForm extends \BoilerAppDisplay\Form\AbstractForm{
 				'data-behavior' => 'Form.PasswordStrength'
 			),
 			'options' => array(
-				'label' => 'password'
+				'label' => 'credential'
 			)
 		))
 		->add(array(
 			'name' => 'auth_access_credential_confirm',
 			'attributes' => array(
 				'type' => 'password',
-				'class' => 'required validate-match matchInput:\'auth_access_credential\' matchName:\''.$oHtmlAttrEscaper('"'.$this->getTranslator()->translate('password').'"').'\'',
+				'class' => 'required validate-match matchInput:\'auth_access_credential\' matchName:\''.$oHtmlAttrEscaper('"'.$this->getTranslator()->translate('credential').'"').'\'',
 				'required' => true,
 				'autocomplete' => 'off'
 			),
 			'options' => array(
-				'label' => 'confirm_password'
+				'label' => 'confirm_credential'
 			)
 		))
 		->add(array(

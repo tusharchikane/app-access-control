@@ -15,9 +15,11 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 
 		//Assign form
 		$this->view->form = $this->getServiceLocator()->get('RegisterForm');
-		if($this->getRequest()->isPost()
-			&& $this->view->form->setData($aRegisterData = $this->params()->fromPost())->isValid()
-			&& $this->getServiceLocator()->get('RegistrationService')->register($aRegisterData)
+		if(
+			$this->getRequest()->isPost()
+			&& $this->view->form->setData($this->params()->fromPost())->isValid()
+			&& ($aData = $this->view->form->getData())
+			&& $this->getServiceLocator()->get('RegistrationService')->register($aData)
 		)$this->view->isValid = true;
 		return $this->view;
 	}

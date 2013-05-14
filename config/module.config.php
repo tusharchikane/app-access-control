@@ -35,17 +35,19 @@ return array(
 	'controllers' => array(
 		'invokables' => array(
 			'BoilerAppAccessControl\Controller\Registration' => 'BoilerAppAccessControl\Controller\RegistrationController',
-			'BoilerAppAccessControl\Controller\Authentication' => 'BoilerAppAccessControl\Controller\AuthenticationController'
+			'BoilerAppAccessControl\Controller\Authentication' => 'BoilerAppAccessControl\Controller\AuthenticationController',
+			'BoilerAppAccessControl\Controller\AuthAccess' => 'BoilerAppAccessControl\Controller\AuthAccessController'
 		)
 	),
 	'controller_plugins' => array(
     	'invokables' => array(
-    		'RedirectUser' => 'BoilerAppAccessControl\Mvc\Controller\Plugin\RedirectUser',
+    		'RedirectUser' => 'BoilerAppAccessControl\Mvc\Controller\Plugin\RedirectUser'
     	)
     ),
 	'service_manager' => array(
 		'invokables' => array(
 			'AccessControlService' => 'BoilerAppAccessControl\Service\AccessControlService',
+			'AuthAccessService' => 'BoilerAppAccessControl\Service\AuthAccessService',
 			'AuthenticationService' => 'BoilerAppAccessControl\Service\AuthenticationService',
 			'RegistrationService' => 'BoilerAppAccessControl\Service\RegistrationService'
 		),
@@ -53,6 +55,9 @@ return array(
 			'AccessControlAuthenticationService' => 'BoilerAppAccessControl\Factory\AccessControlAuthenticationServiceFactory',
 			'AuthenticationStorage' => 'BoilerAppAccessControl\Factory\AuthenticationStorageFactory',
 			'AuthenticationDoctrineAdapter' => 'BoilerAppAccessControl\Factory\AuthenticationDoctrineAdapterFactory',
+			'ChangeAuthAccessCredentialForm' => 'BoilerAppAccessControl\Factory\ChangeAuthAccessCredentialFormFactory',
+			'ChangeAuthAccessEmailIdentityForm' => 'BoilerAppAccessControl\Factory\ChangeAuthAccessEmailIdentityFormFactory',
+			'ChangeAuthAccessUsernameIdentityForm' => 'BoilerAppAccessControl\Factory\ChangeAuthAccessUsernameIdentityFormFactory',
 			'AuthenticateForm' => 'BoilerAppAccessControl\Factory\AuthenticateFormFactory',
 			'RegisterForm' => 'BoilerAppAccessControl\Factory\RegisterFormFactory',
 			'ResetCredentialForm' => 'BoilerAppAccessControl\Factory\ResetCredentialFormFactory',

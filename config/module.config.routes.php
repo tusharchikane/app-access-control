@@ -6,6 +6,49 @@ return array(
 			'options' => array('route' => '/access-control'),
 			'may_terminate' => true,
 			'child_routes' => array(
+				'AuthAccess' => array(
+					'type' => 'Zend\Mvc\Router\Http\Literal',
+					'options' => array(
+						'route' => '/auth-access',
+						'defaults' => array(
+							'controller' => 'BoilerAppAccessControl\Controller\AuthAccess',
+							'action' => 'index'
+						)
+					),
+					'may_terminate' => true,
+					'child_routes' => array(
+						'ChangeEmailIdentity' => array(
+							'type' => 'Zend\Mvc\Router\Http\Literal',
+							'options' => array(
+								'route' => '/change-email-identity',
+								'defaults' => array(
+									'controller' => 'BoilerAppAccessControl\Controller\AuthAccess',
+									'action' => 'changeEmailIdentity'
+								)
+							)
+						),
+						'ChangeUsernameIdentity' => array(
+							'type' => 'Zend\Mvc\Router\Http\Literal',
+							'options' => array(
+								'route' => '/change-username-identity',
+								'defaults' => array(
+									'controller' => 'BoilerAppAccessControl\Controller\AuthAccess',
+									'action' => 'changeUsernameIdentity'
+								)
+							)
+						),
+						'ChangeCredential' => array(
+							'type' => 'Zend\Mvc\Router\Http\Literal',
+							'options' => array(
+								'route' => '/change-credential',
+								'defaults' => array(
+									'controller' => 'BoilerAppAccessControl\Controller\AuthAccess',
+									'action' => 'changeCredential'
+								)
+							)
+						)
+					)
+				),
 				'Register' => array(
 					'type' => 'Zend\Mvc\Router\Http\Segment',
 					'options' => array(

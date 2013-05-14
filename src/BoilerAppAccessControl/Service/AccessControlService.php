@@ -94,7 +94,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);
 
-		return $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->isIdentityEmailAvailable($sEmailIdentity)?true:str_ireplace(
+		return $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->isEmailIdentityAvailable($sEmailIdentity)?true:str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_email'),$sEmailIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is unavailable','validator')
 		);
@@ -116,7 +116,7 @@ class AccessControlService implements \Zend\ServiceManager\ServiceLocatorAwareIn
 			$oTranslator->translate('The %identityName% "%value%" is the same as currently used','validator')
 		);
 
-		return $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->isIdentityUserNameAvailable($sUsernameIdentity)?true:str_ireplace(
+		return $this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->isUsernameIdentityAvailable($sUsernameIdentity)?true:str_ireplace(
 			array('%identityName%','%value%'),array($oTranslator->translate('the_username'),$sUsernameIdentity),
 			$oTranslator->translate('The %identityName% "%value%" is unavailable','validator')
 		);

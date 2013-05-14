@@ -17,7 +17,7 @@ class RegisterInputFilter extends \Zend\InputFilter\InputFilter{
 					'name'=> 'BoilerAppAccessControl\Validator\IdentityAvailabilityValidator',
 					'options' => array(
 						'identityName' => $oTranslator->translate('the_email'),
-						'checkAvailabilityCallback' => array($oAuthAccessRepository, 'isIdentityEmailAvailable')
+						'checkAvailabilityCallback' => array($oAuthAccessRepository, 'isEmailIdentityAvailable')
 					)
 				)
 			)
@@ -37,7 +37,7 @@ class RegisterInputFilter extends \Zend\InputFilter\InputFilter{
 					'name'=> 'BoilerAppAccessControl\Validator\IdentityAvailabilityValidator',
 					'options' => array(
 						'identityName' => $oTranslator->translate('the_username'),
-						'checkAvailabilityCallback' => array($oAuthAccessRepository, 'isIdentityUsernameAvailable')
+						'checkAvailabilityCallback' => array($oAuthAccessRepository, 'isUsernameIdentityAvailable')
 					)
 				)
 			)
