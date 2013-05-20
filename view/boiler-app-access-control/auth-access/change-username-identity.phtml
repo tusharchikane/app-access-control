@@ -2,7 +2,7 @@
 	echo $this->alert('username_has_been_changed','alert-success',false);
 ?>
 <script type="text/javascript">
-	if('undefined' != typeof oController)oController.setAuthAccessEmailIdentity(<?=$this->escapeJson($this->authenticatedUser->getUserAuthAccess()->getAuthAccessUsernameIdentity())?>);
+	if('undefined' != typeof oController)oController.setAuthAccessUsernameIdentity(<?=$this->escapeJson($this->authenticatedUser->getUserAuthAccess()->getAuthAccessUsernameIdentity())?>);
 </script>
 <button class="btn btn-small btn-primary pull-right" type="button" data-dismiss="modal"><?=$this->translate('close_modal')?></button>
 <?php }

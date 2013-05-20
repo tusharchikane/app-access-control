@@ -3,9 +3,9 @@
 <div class="span10">
 		<dl class="dl-horizontal">
 			<dt><?=$this->translate('email')?> :</dt>
-			<dd><?=$this->authenticatedAuthAccess->getAuthAccessEmailIdentity()?> | <a href="#" onclick="oController.changeAuthAccessEmailIdentity();return false;"><?=$this->translate('change_email')?></a></dd>
+			<dd><span id="authaccess_email_identity"><?=$this->authenticatedAuthAccess->getAuthAccessEmailIdentity()?></span> | <a href="#" onclick="oController.changeAuthAccessEmailIdentity();return false;"><?=$this->translate('change_email')?></a></dd>
 			<dt><?=$this->translate('username')?> :</dt>
-			<dd><?=$this->authenticatedAuthAccess->getAuthAccessUsernameIdentity()?> | <a href="#" onclick="oController.changeAuthAccessUsernameIdentity();return false;"><?=$this->translate('change_username')?></a></dd>
+			<dd><span id="authaccess_username_identity"><?=$this->authenticatedAuthAccess->getAuthAccessUsernameIdentity()?></span> | <a href="#" onclick="oController.changeAuthAccessUsernameIdentity();return false;"><?=$this->translate('change_username')?></a></dd>
 			<dt><?=$this->translate('credential')?> :</dt>
 			<dd><a href="#" onclick="oController.changeAuthAccessCredential();return false;"><?=$this->translate('change_credential')?></a></dd>
 		</dl>
