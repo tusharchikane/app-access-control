@@ -139,7 +139,7 @@
      </tr>
 
      <tr>
-      <td class="success" colspan="4">&nbsp;<a href="#62">confirmEmailAction()</a></td>
+      <td class="success" colspan="4">&nbsp;<a href="#61">confirmEmailAction()</a></td>
       <td class="success big">       <div class="progress progress-success" style="width: 100px;">
         <div class="bar" style="width: 100.00%;"></div>
        </div>
@@ -156,7 +156,7 @@
      </tr>
 
      <tr>
-      <td class="success" colspan="4">&nbsp;<a href="#75">resendConfirmationEmailAction()</a></td>
+      <td class="success" colspan="4">&nbsp;<a href="#74">resendConfirmationEmailAction()</a></td>
       <td class="success big">       <div class="progress progress-success" style="width: 100px;">
         <div class="bar" style="width: 100.00%;"></div>
        </div>
@@ -235,28 +235,27 @@
      <tr><td><div align="right"><a name="56"></a><a href="#56">56</a></div></td><td class="codeLine">    /**</td></tr>
      <tr><td><div align="right"><a name="57"></a><a href="#57">57</a></div></td><td class="codeLine">     * Process email confirmation</td></tr>
      <tr><td><div align="right"><a name="58"></a><a href="#58">58</a></div></td><td class="codeLine">     * @throws \LogicException</td></tr>
-     <tr><td><div align="right"><a name="59"></a><a href="#59">59</a></div></td><td class="codeLine">     * @throws \RuntimeException</td></tr>
-     <tr><td><div align="right"><a name="60"></a><a href="#60">60</a></div></td><td class="codeLine">     * @return \Zend\View\Model\ViewModel</td></tr>
-     <tr><td><div align="right"><a name="61"></a><a href="#61">61</a></div></td><td class="codeLine">     */</td></tr>
-     <tr><td><div align="right"><a name="62"></a><a href="#62">62</a></div></td><td class="codeLine">    public function confirmEmailAction(){</td></tr>
-     <tr class="success popin" data-title="2 tests cover line 63" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="63"></a><a href="#63">63</a></div></td><td class="codeLine">        if(!($sPublicKey = $this-&gt;params('public_key')))throw new \LogicException('&quot;public_key&quot; param is missing');</td></tr>
-     <tr class="success popin" data-title="2 tests cover line 64" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="64"></a><a href="#64">64</a></div></td><td class="codeLine">        if(!($sEmailIdentity = $this-&gt;params('email_identity')))throw new \LogicException('&quot;email_identity&quot; param is missing');</td></tr>
-     <tr><td><div align="right"><a name="65"></a><a href="#65">65</a></div></td><td class="codeLine"></td></tr>
-     <tr class="success popin" data-title="2 tests cover line 66" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="66"></a><a href="#66">66</a></div></td><td class="codeLine">        if(($bReturn = $this-&gt;getServiceLocator()-&gt;get('RegistrationService')-&gt;confirmEmail($sPublicKey,$sEmailIdentity)) !== true)$this-&gt;view-&gt;error = $bReturn;</td></tr>
-     <tr class="success popin" data-title="2 tests cover line 67" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="67"></a><a href="#67">67</a></div></td><td class="codeLine">        return $this-&gt;view;</td></tr>
-     <tr><td><div align="right"><a name="68"></a><a href="#68">68</a></div></td><td class="codeLine">    }</td></tr>
-     <tr><td><div align="right"><a name="69"></a><a href="#69">69</a></div></td><td class="codeLine"></td></tr>
-     <tr><td><div align="right"><a name="70"></a><a href="#70">70</a></div></td><td class="codeLine">    /**</td></tr>
-     <tr><td><div align="right"><a name="71"></a><a href="#71">71</a></div></td><td class="codeLine">     * Process ajax request to resend email confirmation</td></tr>
-     <tr><td><div align="right"><a name="72"></a><a href="#72">72</a></div></td><td class="codeLine">     * @throws \LogicException</td></tr>
-     <tr><td><div align="right"><a name="73"></a><a href="#73">73</a></div></td><td class="codeLine">     * @return \Zend\View\Model\JsonModel</td></tr>
-     <tr><td><div align="right"><a name="74"></a><a href="#74">74</a></div></td><td class="codeLine">     */</td></tr>
-     <tr><td><div align="right"><a name="75"></a><a href="#75">75</a></div></td><td class="codeLine">    public function resendConfirmationEmailAction(){</td></tr>
-     <tr class="success popin" data-title="1 test covers line 76" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="76"></a><a href="#76">76</a></div></td><td class="codeLine">        if(!$this-&gt;getRequest()-&gt;isXmlHttpRequest())throw new \LogicException('Only ajax requests are allowed for this action');</td></tr>
-     <tr class="success popin" data-title="1 test covers line 77" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="77"></a><a href="#77">77</a></div></td><td class="codeLine">        if(!($sAuthAccessIdentity = $this-&gt;params()-&gt;fromPost('auth_access_identity')))throw new \LogicException('auth_access_identity param is missing');</td></tr>
-     <tr class="success popin" data-title="1 test covers line 78" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="78"></a><a href="#78">78</a></div></td><td class="codeLine">        $this-&gt;getServiceLocator()-&gt;get('RegistrationService')-&gt;resendConfirmationEmail($sAuthAccessIdentity);</td></tr>
-     <tr class="success popin" data-title="1 test covers line 79" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="79"></a><a href="#79">79</a></div></td><td class="codeLine">        return $this-&gt;view;</td></tr>
-     <tr><td><div align="right"><a name="80"></a><a href="#80">80</a></div></td><td class="codeLine">    }</td></tr>
+     <tr><td><div align="right"><a name="59"></a><a href="#59">59</a></div></td><td class="codeLine">     * @return \Zend\View\Model\ViewModel</td></tr>
+     <tr><td><div align="right"><a name="60"></a><a href="#60">60</a></div></td><td class="codeLine">     */</td></tr>
+     <tr><td><div align="right"><a name="61"></a><a href="#61">61</a></div></td><td class="codeLine">    public function confirmEmailAction(){</td></tr>
+     <tr class="success popin" data-title="2 tests cover line 62" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="62"></a><a href="#62">62</a></div></td><td class="codeLine">        if(!($sPublicKey = $this-&gt;params('public_key')))throw new \LogicException('&quot;public_key&quot; param is missing');</td></tr>
+     <tr class="success popin" data-title="2 tests cover line 63" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="63"></a><a href="#63">63</a></div></td><td class="codeLine">        if(!($sEmailIdentity = $this-&gt;params('email_identity')))throw new \LogicException('&quot;email_identity&quot; param is missing');</td></tr>
+     <tr><td><div align="right"><a name="64"></a><a href="#64">64</a></div></td><td class="codeLine"></td></tr>
+     <tr class="success popin" data-title="2 tests cover line 65" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="65"></a><a href="#65">65</a></div></td><td class="codeLine">        if(($bReturn = $this-&gt;getServiceLocator()-&gt;get('RegistrationService')-&gt;confirmEmail($sPublicKey,$sEmailIdentity)) !== true)$this-&gt;view-&gt;error = $bReturn;</td></tr>
+     <tr class="success popin" data-title="2 tests cover line 66" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="66"></a><a href="#66">66</a></div></td><td class="codeLine">        return $this-&gt;view;</td></tr>
+     <tr><td><div align="right"><a name="67"></a><a href="#67">67</a></div></td><td class="codeLine">    }</td></tr>
+     <tr><td><div align="right"><a name="68"></a><a href="#68">68</a></div></td><td class="codeLine"></td></tr>
+     <tr><td><div align="right"><a name="69"></a><a href="#69">69</a></div></td><td class="codeLine">    /**</td></tr>
+     <tr><td><div align="right"><a name="70"></a><a href="#70">70</a></div></td><td class="codeLine">     * Process ajax request to resend email confirmation</td></tr>
+     <tr><td><div align="right"><a name="71"></a><a href="#71">71</a></div></td><td class="codeLine">     * @throws \LogicException</td></tr>
+     <tr><td><div align="right"><a name="72"></a><a href="#72">72</a></div></td><td class="codeLine">     * @return \Zend\View\Model\JsonModel</td></tr>
+     <tr><td><div align="right"><a name="73"></a><a href="#73">73</a></div></td><td class="codeLine">     */</td></tr>
+     <tr><td><div align="right"><a name="74"></a><a href="#74">74</a></div></td><td class="codeLine">    public function resendConfirmationEmailAction(){</td></tr>
+     <tr class="success popin" data-title="1 test covers line 75" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="75"></a><a href="#75">75</a></div></td><td class="codeLine">        if(!$this-&gt;getRequest()-&gt;isXmlHttpRequest())throw new \LogicException('Only ajax requests are allowed for this action');</td></tr>
+     <tr class="success popin" data-title="1 test covers line 76" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="76"></a><a href="#76">76</a></div></td><td class="codeLine">        if(!($sAuthAccessIdentity = $this-&gt;params()-&gt;fromPost('auth_access_identity')))throw new \LogicException('auth_access_identity param is missing');</td></tr>
+     <tr class="success popin" data-title="1 test covers line 77" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="77"></a><a href="#77">77</a></div></td><td class="codeLine">        $this-&gt;getServiceLocator()-&gt;get('RegistrationService')-&gt;resendConfirmationEmail($sAuthAccessIdentity);</td></tr>
+     <tr class="success popin" data-title="1 test covers line 78" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="78"></a><a href="#78">78</a></div></td><td class="codeLine">        return $this-&gt;view;</td></tr>
+     <tr><td><div align="right"><a name="79"></a><a href="#79">79</a></div></td><td class="codeLine">    }</td></tr>
 
     </tbody>
    </table>
@@ -268,7 +267,7 @@
      <span class="warning"><strong>Dead Code</strong></span>
     </p>
     <p>
-     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.2.10-6-gac44d7c</a> using <a href="http://www.php.net/" target="_top">PHP 5.4.13</a> and <a href="http://phpunit.de/">PHPUnit 3.7.20-8-g1c194d6</a> at Mon May 20 14:14:24 CEST 2013.</small>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.2.10-6-gac44d7c</a> using <a href="http://www.php.net/" target="_top">PHP 5.4.13</a> and <a href="http://phpunit.de/">PHPUnit 3.7.20-10-gd79d90f</a> at Thu May 23 11:03:40 CEST 2013.</small>
     </p>
    </footer>
   </div>

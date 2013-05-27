@@ -27,6 +27,16 @@ return array(
 								)
 							)
 						),
+						'ConfirmChangeEmailIdentity' => array(
+							'type' => 'Zend\Mvc\Router\Http\Segment',
+							'options' => array(
+								'route' => '/confirm-change-email-identity/:public_key/:email_identity',
+								'defaults' => array(
+									'controller' => 'BoilerAppAccessControl\Controller\AuthAccess',
+									'action' => 'confirmChangeEmailIdentity'
+								)
+							)
+						),
 						'ChangeUsernameIdentity' => array(
 							'type' => 'Zend\Mvc\Router\Http\Literal',
 							'options' => array(

@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	if('undefined' != typeof oController)oController.setAuthAccessUsernameIdentity(<?=$this->escapeJson($this->authenticatedUser->getUserAuthAccess()->getAuthAccessUsernameIdentity())?>);
 </script>
-<button class="btn btn-small btn-primary pull-right" type="button" data-dismiss="modal"><?=$this->translate('close_modal')?></button>
+<button class="btn btn-small btn-primary pull-right" type="button" data-dismiss=".modal"><?=$this->translate('close_modal')?></button>
 <?php }
 else{
 	echo $this->form($this->form,\TwbBundle\Form\View\Helper\TwbBundleForm::LAYOUT_HORIZONTAL,true);

@@ -40,7 +40,7 @@ class AuthAccessEntity extends \BoilerAppDb\Entity\AbstractEntity{
 
 	/**
 	 * @var string
-	 * @\Doctrine\ORM\Mapping\Column(type="string",length=60)
+	 * @\Doctrine\ORM\Mapping\Column(type="authaccessstateenum")
 	 */
 	protected $auth_access_state;
 

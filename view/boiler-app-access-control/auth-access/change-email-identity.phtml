@@ -1,10 +1,10 @@
-<?php if($this->emailIdentityChanged){
-	echo $this->alert('email_has_been_changed','alert-success',false);
+<?php if($this->emailConfirmationSent){
+	echo $this->alert('email_confirmation_sent','alert-success',false);
 ?>
 <script type="text/javascript">
-	if('undefined' != typeof oController)oController.setAuthAccessEmailIdentity(<?=$this->escapeJson($this->authenticatedUser->getUserAuthAccess()->getAuthAccessEmailIdentity())?>);
+	if('undefined' != typeof oController)oController.setChangeAuthAccessEmailIdentityPending(<?=$this->escapeJson($this->authenticatedUser->getUserAuthAccess()->getAuthAccessEmailIdentity())?>);
 </script>
-<button class="btn btn-small btn-primary pull-right" type="button" data-dismiss="modal"><?=$this->translate('close_modal')?></button>
+<button class="btn btn-small btn-primary pull-right" type="button" data-dismiss=".modal"><?=$this->translate('close_modal')?></button>
 <?php }
 else{
 	echo $this->form($this->form,\TwbBundle\Form\View\Helper\TwbBundleForm::LAYOUT_HORIZONTAL,true);

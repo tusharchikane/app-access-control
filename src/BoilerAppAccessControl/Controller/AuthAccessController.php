@@ -28,7 +28,20 @@ class AuthAccessController extends \BoilerAppDisplay\Mvc\Controller\AbstractActi
 			&& $this->view->form->setData($this->params()->fromPost())->isValid()
 			&& ($aData = $this->view->form->getData())
 			&& $this->getServiceLocator()->get('AuthAccessService')->changeAuthenticatedAuthAccessEmailIdentity($aData['new_auth_access_email_identity'])
-		)$this->view->emailIdentityChanged = true;
+		)$this->view->emailConfirmationSent = true;
+		return $this->view;
+	}
+
+	/**
+	 * Process change email identity confirmation
+	 * @throws \LogicException
+	 * @return \Zend\View\Model\ViewModel
+	 */
+	public function confirmChangeEmailIdentityAction(){
+		if(!($sPublicKey = $this->params('public_key')))throw new \LogicException('"public_key" param is missing');
+		if(!($sEmailIdentity = $this->params('email_identity')))throw new \LogicException('"email_identity" param is missing');
+
+		if(($bReturn = $this->getServiceLocator()->get('AuthAccessService')->confirmChangeAuthenticatedAuthAccessEmailIdentity($sPublicKey,$sEmailIdentity)) !== true)$this->view->error = $bReturn;
 		return $this->view;
 	}
 

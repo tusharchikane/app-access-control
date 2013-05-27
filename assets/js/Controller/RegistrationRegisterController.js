@@ -1,4 +1,4 @@
 var BoilerAppAccessControlControllerRegistrationRegister = {
-	Extends: AccessControlIdentityAwareController
+	Extends: BoilerAppAccessAccessControlIdentityAwareController
 };
 BoilerAppAccessControlControllerRegistrationRegister = new Class(BoilerAppAccessControlControllerRegistrationRegister);

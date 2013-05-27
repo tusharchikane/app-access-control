@@ -1,0 +1,7 @@
+<h5>
+	<?=$this->translate('please_confirm_your_email')?> :
+	<a href="<?=$this->serverUrl().$this->url('AccessControl/AuthAccess/ConfirmChangeEmailIdentity',array(
+		'public_key' => $this->auth_access_public_key,
+		'email_identity' => $this->auth_access_email_identity
+	))?>"><?=$this->translate('confirm_email')?></a>.
+</h5>

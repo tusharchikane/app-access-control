@@ -1,0 +1,6 @@
+<h3><?=$this->layout()->title?></h3>
+<?=empty($this->error)?$this->alert(
+	$this->translate('email_has_been_changed').PHP_EOL.'<a class="btn" href="'.$this->url('AccessControl/AuthAccess').'">'.$this->translate('manage_auth_access').'</a>',
+	'alert-success',
+	false
+):$this->alert($this->error,'alert-error',false)?>

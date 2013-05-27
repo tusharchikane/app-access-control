@@ -1,4 +1,4 @@
-var AccessControlIdentityAwareController = {
+var BoilerAppAccessAccessControlIdentityAwareController = {
 	Extends: Controller,
 	
 	/**
@@ -72,3 +72,4 @@ var AccessControlIdentityAwareController = {
 		return this;
 	}
 };
+BoilerAppAccessAccessControlIdentityAwareController = new Class(BoilerAppAccessAccessControlIdentityAwareController);

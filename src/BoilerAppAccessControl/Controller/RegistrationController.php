@@ -56,7 +56,6 @@ class RegistrationController extends \BoilerAppDisplay\Mvc\Controller\AbstractAc
 	/**
 	 * Process email confirmation
 	 * @throws \LogicException
-	 * @throws \RuntimeException
 	 * @return \Zend\View\Model\ViewModel
 	 */
 	public function confirmEmailAction(){

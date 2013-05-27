@@ -30,6 +30,8 @@ return array(
 
 	'logout' => 'Déconnexion',
 
+	'manage_auth_access' => 'Gestion des accès',
+
 	'new_on' => 'Nouveau sur',
 
 	'or' => 'ou',

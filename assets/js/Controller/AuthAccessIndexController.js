@@ -1,5 +1,5 @@
 var BoilerAppAccessControlControllerAuthAccessIndex = {
-	Extends: AccessControlIdentityAwareController,
+	Extends: BoilerAppAccessAccessControlIdentityAwareController,
 	
 	/**
 	 * @return BoilerAppAccessControlControllerAuthAccess
@@ -56,4 +56,4 @@ var BoilerAppAccessControlControllerAuthAccessIndex = {
 		return this;
 	}
 };
-BoilerAppAccessControlControllerAuthAccess = new Class(BoilerAppAccessControlControllerAuthAccess);
+BoilerAppAccessControlControllerAuthAccessIndex = new Class(BoilerAppAccessControlControllerAuthAccessIndex);

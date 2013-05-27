@@ -63,6 +63,25 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->assertControllerName('BoilerAppAccessControl\Controller\AuthAccess');
 		$this->assertControllerClass('AuthAccessController');
 		$this->assertMatchedRouteName('AccessControl/AuthAccess/ChangeEmailIdentity');
+	}
+
+	public function testConfirmChangeEmailIdentityAction(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		//Authenticate user
+		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
+			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
+			'valid@test.com',
+			'valid-credential'
+		);
+
+		$this->dispatch('/access-control/auth-access/confirm-change-email-identity/bc4b775da5e0d05ccbe5fa1c14/new@test.com');
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\AuthAccess');
+		$this->assertControllerClass('AuthAccessController');
+		$this->assertMatchedRouteName('AccessControl/AuthAccess/ConfirmChangeEmailIdentity');
 
 		$this->assertEquals('new@test.com',$this->getServiceManager()->get('AccessControlService')->getAuthenticatedAuthAccess()->getAuthAccessEmailIdentity());
 	}

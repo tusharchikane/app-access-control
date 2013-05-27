@@ -66,7 +66,6 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 			'auth_access_public_key' => $sPublicKey
 		));
 
-
 		//Retrieve Messenger service
 		$oMessengerService = $this->getServiceLocator()->get('MessengerService');
 

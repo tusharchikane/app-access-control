@@ -8,9 +8,10 @@ return array(
 	'medias' => array(
 		\BoilerAppMessenger\Media\Mail\MailMessageRenderer::MEDIA => array(
 			'template_map' => array(
-				'mail/registration/confirm-email' => __DIR__ . '/../view/mail/registration/confirm-email.phtml',
+				'mail/auth-access/confirm-change-email-identity' => __DIR__ . '/../view/mail/auth-access/confirm-change-email-identity.phtml',
 				'mail/authentication/confirm-reset-credential' => __DIR__ . '/../view/mail/authentication/confirm-reset-credential.phtml',
-				'mail/authentication/credential-reset' => __DIR__ . '/../view/mail/authentication/credential-reset.phtml'
+				'mail/authentication/credential-reset' => __DIR__ . '/../view/mail/authentication/credential-reset.phtml',
+				'mail/registration/confirm-email' => __DIR__ . '/../view/mail/registration/confirm-email.phtml'
 			)
 		)
 	),
