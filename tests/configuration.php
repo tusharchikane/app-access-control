@@ -1,13 +1,5 @@
 <?php
 return array(
-	'asset_bundle' => array(
-		'cachePath' => __DIR__.'/_files/cache',
-		'cacheUrl' => '@zfBaseUrl/cache/',
-		'assetsPath' => null
-	),
-	'translator' => array(
-		'locale' => 'fr_FR'
-	),
 	'authentication' => array(
 		'storage' => 'AuthenticationStorage',
 		'adapters' => array(
@@ -19,9 +11,6 @@ return array(
 		'connection' => array(
 			'orm_default' => array(
 				'params' => array(
-					'host'     => 'localhost',
-					'user'     => 'root',
-					'password' => '',
 					'dbname'   => 'app-access-control-tests'
 				)
 			)
@@ -49,10 +38,6 @@ return array(
 	),
 	'service_manager' => array(
 		'factories' => array(
-			'Logger' => function(){
-				$oLogger = new \Zend\Log\Logger();
-				return $oLogger->addWriter(new \Zend\Log\Writer\Stream(STDERR));
-			},
 			'CssToInlineStylesProcessor' => function(){
 				return \BoilerAppMessenger\StyleInliner\Processor\CssToInlineStylesProcessor::factory(array('baseDir' => __DIR__.DIRECTORY_SEPARATOR.'_files'));
 			}
