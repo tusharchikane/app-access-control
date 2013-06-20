@@ -82,4 +82,21 @@ class AuthAccessController extends \BoilerAppDisplay\Mvc\Controller\AbstractActi
 		)$this->view->credentialChanged = true;
 		return $this->view;
 	}
+
+	/**
+	 * Show remove AuthAccces confirmation form or process AuthAccess remove attempt
+	 * @throws \LogicException
+	 * @return \Zend\View\Model\ViewModel
+	 */
+	public function removeAuthAccessAction(){
+		//Assign form
+		$this->view->form = $this->getServiceLocator()->get('RemoveAuthAccessForm');
+		if(
+			$this->getRequest()->isPost()
+			&& $this->view->form->setData($this->params()->fromPost())->isValid()
+			&& ($aData = $this->view->form->getData())
+			&& $this->getServiceLocator()->get('AuthAccessService')->removeAuthenticatedAuthAccess($aData['auth_access_credential'])
+		)$this->view->authAccessRemoved = true;
+		return $this->view;
+	}
 }

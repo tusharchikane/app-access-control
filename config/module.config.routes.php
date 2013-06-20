@@ -56,6 +56,16 @@ return array(
 									'action' => 'changeCredential'
 								)
 							)
+						),
+						'RemoveAuthAccess' => array(
+							'type' => 'Zend\Mvc\Router\Http\Literal',
+							'options' => array(
+								'route' => '/remove-auth-access',
+								'defaults' => array(
+									'controller' => 'BoilerAppAccessControl\Controller\AuthAccess',
+									'action' => 'removeAuthAccess'
+								)
+							)
 						)
 					)
 				),

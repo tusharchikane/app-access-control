@@ -1,5 +1,6 @@
 <?php
 return array(
+	'auth_access_has_been_deleted' => 'Votre compte a été définitivement supprimé',
 	'auth_access_management' => 'Gestion des accès',
 	'auth_access_state_pending' => 'Le compte est en attente de confirmation',
 	'authentification_provider_unavailable' => 'Le service d\'authentification "%s" est indisponible.',
@@ -9,6 +10,7 @@ return array(
 	'change_username' =>  'Modifier l\'identifiant',
 	'confirm_email' => 'Confirmation de l\'adresse email',
 	'confirm_credential' => 'Confirmation',
+	'confirm_remove_auth_access' => 'Voulez vous réellement supprimer votre compte ?',
 	'credential' => 'Mot de passe',
 	'credential_has_been_changed' => 'Votre mot de passe a été modifié',
 	'credential_has_been_reset' => 'Votre mot de passe a été réinitialisé',
@@ -39,11 +41,13 @@ return array(
 
 	'please_confirm_reset_your_credential' => 'Pour réinitiliser votre mot de passe, veuillez cliquer sur le lien suivant',
 	'please_confirm_your_email' => 'Pour valider votre accès, veuillez cliquer sur le lien suivant',
+	'please_type_in_your_credential_to_confirm' => 'Merci de saisir votre mot de passe pour confirmer la suppression de votre compte',
 	'provider_authentification_canceled' => 'La demande d\'authentification à %s a été annulée',
 
 	'register' => 'Inscription',
 	'registration_completed_now_confirm_email' => 'Votre inscription s\'est déroulée avec succès, vous allez recevoir un email vous permettant de valider votre accès',
 	'registration_validated_now_connect' => 'Votre inscription est maintenant validée, vous pouvez désormais vous connecter.',
+	'remove_auth_access' => 'Supprimer le compte',
 	'resend_confirmation_email' => 'Renvoyer l\'email de validation',
 	'reset_credential' => 'Réinitialiser mon mot de passe',
 

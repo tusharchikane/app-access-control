@@ -138,15 +138,6 @@ class AuthAccessEntity extends \BoilerAppDb\Entity\AbstractEntity{
 	}
 
 	/**
-	 * @param \BoilerAppUser\Entity\UserEntity $oUser
-	 * @return \BoilerAppAccessControl\Entity\AuthAccessEntity
-	 */
-	public function setAuthAccessUser(\BoilerAppUser\Entity\UserEntity $oUser){
-		$this->auth_access_user = $oUser;
-		return $this;
-	}
-
-	/**
 	 * @return \BoilerAppUser\Entity\UserEntity
 	 */
 	public function getAuthAccessUser(){

@@ -17,12 +17,9 @@ class AuthAccessService implements \Zend\ServiceManager\ServiceLocatorAwareInter
 
 		if(!$oAuthAccessRepository->isEmailIdentityAvailable($sAuthAccessEmailIdentity))throw new \InvalidArgumentException('AuthAccess email identity "'.$sAuthAccessEmailIdentity.'" is not available');
 
-		//Crypter
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-
 		//Update AuthAcces public key
 		$oAuthAccess = $this->getServiceLocator()->get('AccessControlService')->getAuthenticatedAuthAccess();
-		$oAuthAccessRepository->update($oAuthAccess->setAuthAccessPublicKey($oBCrypt->create(
+		$oAuthAccessRepository->update($oAuthAccess->setAuthAccessPublicKey($this->getServiceLocator()->get('Encryptor')->create(
 			$sPublicKey = $this->getServiceLocator()->get('AccessControlService')->generateAuthAccessPublicKey()
 		)));
 
@@ -64,9 +61,8 @@ class AuthAccessService implements \Zend\ServiceManager\ServiceLocatorAwareInter
 
 		$oAuthAccess = $this->getServiceLocator()->get('AccessControlService')->getAuthenticatedAuthAccess();
 
-		//Crypter
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		if(!$oBCrypt->verify($sPublicKey, $oAuthAccess->getAuthAccessPublicKey()))throw new \LogicException(sprintf(
+		//Verify public key
+		if(!$this->getServiceLocator()->get('Encryptor')->verify($sPublicKey, $oAuthAccess->getAuthAccessPublicKey()))throw new \LogicException(sprintf(
 			'Public key "%s" is not valid for email identity "%s"',
 			$sPublicKey,$oAuthAccess->getAuthAccessEmailIdentity()
 		));
@@ -112,13 +108,41 @@ class AuthAccessService implements \Zend\ServiceManager\ServiceLocatorAwareInter
 		if(!is_string($sAuthAccessCredential))throw new \InvalidArgumentException('AuthAccess credential expects string, "'.gettype($sAuthAccessCredential).'" given');
 		if(empty($sAuthAccessCredential))throw new \InvalidArgumentException('AuthAccess credential is empty');
 
-		//Crypter
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-
 		//Update AuthAccess credential
 		$this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->update(
-			$this->getServiceLocator()->get('AccessControlService')->getAuthenticatedAuthAccess()->setAuthAccessCredential($oBCrypt->create(md5($sAuthAccessCredential)))
+			$this->getServiceLocator()->get('AccessControlService')->getAuthenticatedAuthAccess()->setAuthAccessCredential($this->getServiceLocator()->get('Encryptor')->create(md5($sAuthAccessCredential)))
 		);
+		return $this;
+	}
+
+	/**
+	 * Remove authenticated auth access & user
+	 * @param string $sAuthAccessCredential
+	 * @throws \LogicException
+	 * @return \BoilerAppAccessControl\Service\AuthAccessService
+	 */
+	public function removeAuthenticatedAuthAccess($sAuthAccessCredential){
+		if(!is_string($sAuthAccessCredential))throw new \InvalidArgumentException('AuthAccess credential expects string, "'.gettype($sAuthAccessCredential).'" given');
+		if(empty($sAuthAccessCredential))throw new \InvalidArgumentException('AuthAccess credential is empty');
+
+		$oServiceLocator = $this->getServiceLocator();
+		$oAuthenticatedAuthAccess = $this->getServiceLocator()->get('AccessControlService')->getAuthenticatedAuthAccess();
+
+		//Verify credential
+		if(!$this->getServiceLocator()->get('Encryptor')->verify(md5($sAuthAccessCredential), $oAuthenticatedAuthAccess->getAuthAccessCredential()))throw new \LogicException(sprintf(
+			'Credential is not valid for email identity "%s"',
+			$sAuthAccessCredential,$oAuthenticatedAuthAccess->getAuthAccessEmailIdentity()
+		));
+
+		//Remove user
+		$oServiceLocator->get('BoilerAppUser\Repository\UserRepository')->remove($oAuthenticatedAuthAccess->getAuthAccessUser());
+
+		//Remove Auth access
+		$oServiceLocator->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->remove($oAuthenticatedAuthAccess);
+
+		//Log out
+		$oServiceLocator->get('AuthenticationService')->logout();
+
 		return $this;
 	}
 }

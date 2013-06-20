@@ -8,6 +8,9 @@ class AuthenticationDoctrineAdapterFactory implements \Zend\ServiceManager\Facto
 	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
 	 */
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
-		return new \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter($oServiceLocator->get('AccessControlService'));
+		return new \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter(
+			$oServiceLocator->get('AccessControlService'),
+			$oServiceLocator->get('Encryptor')
+		);
     }
 }

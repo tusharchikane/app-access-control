@@ -177,10 +177,58 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->assertControllerClass('AuthAccessController');
 		$this->assertMatchedRouteName('AccessControl/AuthAccess/ChangeCredential');
 
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		$this->assertTrue($oBCrypt->verify(
+		//Verify credential
+		$this->assertTrue($this->getApplicationServiceLocator()->get('Encryptor')->verify(
 			md5('new-credential'),
 			$this->getServiceManager()->get('AccessControlService')->getAuthenticatedAuthAccess()->getAuthAccessCredential()
 		));
+	}
+
+	public function testRemoveAuthAccessActionAction(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		//Authenticate user
+		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
+			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
+			'valid@test.com',
+			'valid-credential'
+		);
+
+		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
+
+		$this->dispatch('/access-control/auth-access/remove-auth-access');
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\AuthAccess');
+		$this->assertControllerClass('AuthAccessController');
+		$this->assertMatchedRouteName('AccessControl/AuthAccess/RemoveAuthAccess');
+	}
+
+	public function testRemoveAuthAccessActionPost(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+
+		//Authenticate user
+		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
+			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
+			'valid@test.com',
+			'valid-credential'
+		);
+
+		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
+
+		$this->dispatch('/access-control/auth-access/remove-auth-access',\Zend\Http\Request::METHOD_POST,array(
+			'auth_access_credential' => 'valid-credential',
+		));
+
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\AuthAccess');
+		$this->assertControllerClass('AuthAccessController');
+		$this->assertMatchedRouteName('AccessControl/AuthAccess/RemoveAuthAccess');
+
+		//Check that AuthAccess has been logged out
+		$this->assertFalse($this->getApplicationServiceLocator()->get('AccessControlAuthenticationService')->hasIdentity());
 	}
 }

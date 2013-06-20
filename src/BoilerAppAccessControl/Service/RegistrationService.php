@@ -21,12 +21,6 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 			is_string($sUsernameIdentity)?$sUsernameIdentity:gettype($sUsernameIdentity)
 		));
 
-		//Create User
-		$oUser = new \BoilerAppUser\Entity\UserEntity();
-		//Set default display name
-		$oUser->setUserDisplayName($this->getServiceLocator()->get('UserService')->getAvailableUserDisplayName(ucfirst($sUsernameIdentity)));
-		$this->getServiceLocator()->get('BoilerAppUser\Repository\UserRepository')->create($oUser);
-
 		$sEmailIdentity = $aRegisterData['auth_access_email_identity'];
 		if(!is_string($sEmailIdentity) || !filter_var($sEmailIdentity,FILTER_VALIDATE_EMAIL))throw new \InvalidArgumentException(sprintf(
 			'EmailIdentity expects valid email "%s" given',
@@ -40,7 +34,7 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 		));
 
 		//Crypter
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
+		$oEncryptor = $this->getServiceLocator()->get('Encryptor');
 
 		//Create AuthAccess
 		$oAuthAccess = new \BoilerAppAccessControl\Entity\AuthAccessEntity();
@@ -48,15 +42,18 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 		->setAuthAccessUsernameIdentity($sUsernameIdentity)
 
 		//Set crypted credential
-		->setAuthAccessCredential($oBCrypt->create(md5($sCredential)))
-		->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $this->getServiceLocator()->get('AccessControlService')->generateAuthAccessPublicKey()))
-		->setAuthAccessState(\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_PENDING_STATE)
-		->setAuthAccessUser($oUser);
+		->setAuthAccessCredential($oEncryptor->create(md5($sCredential)))
+		->setAuthAccessPublicKey($oEncryptor->create($sPublicKey = $this->getServiceLocator()->get('AccessControlService')->generateAuthAccessPublicKey()))
+		->setAuthAccessState(\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_PENDING_STATE);
 
 		$this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->create($oAuthAccess);
 
-		//Set auth access to user
-		$oUser->setUserAuthAccess($oAuthAccess);
+		//Create User
+		$oUser = new \BoilerAppUser\Entity\UserEntity();
+		$this->getServiceLocator()->get('BoilerAppUser\Repository\UserRepository')->create($oUser
+			->setUserDisplayName($this->getServiceLocator()->get('UserService')->getAvailableUserDisplayName(ucfirst($sUsernameIdentity)))
+			->setUserAuthAccess($oAuthAccess)
+		);
 
 		//Create email view body
 		$oView = new \Zend\View\Model\ViewModel(array(
@@ -95,9 +92,8 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 			'auth_access_email_identity' => $sEmailIdentity
 		))))throw new \LogicException('AuthAccess with email identity "'.$sEmailIdentity.'" does not exist');
 
-		//Crypter
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		if(!$oBCrypt->verify($sPublicKey, $oAuthAccess->getAuthAccessPublicKey()))throw new \LogicException(sprintf(
+		//Verify credential
+		if(!$this->getServiceLocator()->get('Encryptor')->verify($sPublicKey, $oAuthAccess->getAuthAccessPublicKey()))throw new \LogicException(sprintf(
 			'Public key "%s" is not valid for email identity "%s"',
 			$sPublicKey,$sEmailIdentity
 		));
@@ -129,8 +125,7 @@ class RegistrationService implements \Zend\ServiceManager\ServiceLocatorAwareInt
 		));
 
 		//Reset public key
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		$oAuthAccess->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $oAccessControlService->generateAuthAccessPublicKey()));
+		$oAuthAccess->setAuthAccessPublicKey($this->getServiceLocator()->get('Encryptor')->create($sPublicKey = $oAccessControlService->generateAuthAccessPublicKey()));
 		$this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->update($oAuthAccess);
 
 		//Create email view body

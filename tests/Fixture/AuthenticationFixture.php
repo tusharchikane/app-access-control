@@ -2,45 +2,45 @@
 namespace BoilerAppAccessControlTest\Fixture;
 class AuthenticationFixture extends \BoilerAppTest\Doctrine\Common\DataFixtures\AbstractFixture{
 	public function load(\Doctrine\Common\Persistence\ObjectManager $oObjectManager){
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
+		$oEncryptor = $this->getServiceLocator()->get('Encryptor');
 		$oAccessControlService = $this->getServiceLocator()->get('AccessControlService');
 
 		//Valid authentication
-		$oValidUser =  new \BoilerAppuser\Entity\UserEntity();
-		$oObjectManager->persist($oValidUser
-			->setUserDisplayName('Valid')
-			->setEntityCreate(new \DateTime())
-		);
-
 		$oAuthAccessEntity = new \BoilerAppAccessControl\Entity\AuthAccessEntity();
 		$oObjectManager->persist($oAuthAccessEntity
 			->setAuthAccessEmailIdentity('valid@test.com')
 			->setAuthAccessUsernameIdentity('valid')
-			->setAuthAccessCredential($oBCrypt->create(md5('valid-credential')))
+			->setAuthAccessCredential($oEncryptor->create(md5('valid-credential')))
 			->setAuthAccessState(\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)
-			->setAuthAccessUser($oValidUser)
 			//Not randomly generated key to be able to compare during testing
-			->setAuthAccessPublicKey($oBCrypt->create('bc4b775da5e0d05ccbe5fa1c14'))
+			->setAuthAccessPublicKey($oEncryptor->create('bc4b775da5e0d05ccbe5fa1c14'))
 			->setEntityCreate(new \DateTime())
+		);
+
+		$oValidUser =  new \BoilerAppuser\Entity\UserEntity();
+		$oObjectManager->persist($oValidUser
+			->setUserDisplayName('Valide')
+			->setEntityCreate(new \DateTime())
+			->setUserAuthAccess($oAuthAccessEntity)
 		);
 
 		//Pending authentication
-		$oPendingUser =  new \BoilerAppuser\Entity\UserEntity();
-		$oObjectManager->persist($oPendingUser
-			->setUserDisplayName('Pending')
-			->setEntityCreate(new \DateTime())
-		);
-
 		$oAuthAccessEntity = new \BoilerAppAccessControl\Entity\AuthAccessEntity();
 		$oObjectManager->persist($oAuthAccessEntity
 			->setAuthAccessEmailIdentity('pending@test.com')
 			->setAuthAccessUsernameIdentity('pending')
 			//Not randomly generated key to be able to compare during testing
-			->setAuthAccessCredential($oBCrypt->create(md5('pending-credential')))
+			->setAuthAccessCredential($oEncryptor->create(md5('pending-credential')))
 			->setAuthAccessState(\BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_PENDING_STATE)
-			->setAuthAccessUser($oPendingUser)
-			->setAuthAccessPublicKey($oBCrypt->create('bc4b775da5e0d05ccbe5fa1c15'))
+			->setAuthAccessPublicKey($oEncryptor->create('bc4b775da5e0d05ccbe5fa1c15'))
 			->setEntityCreate(new \DateTime())
+		);
+
+		$oPendingUser =  new \BoilerAppuser\Entity\UserEntity();
+		$oObjectManager->persist($oPendingUser
+			->setUserDisplayName('Pending')
+			->setEntityCreate(new \DateTime())
+			->setUserAuthAccess($oAuthAccessEntity)
 		);
 
 		//Flush data

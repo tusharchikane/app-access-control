@@ -1,0 +1,2 @@
+<h3><?=$this->layout()->title?></h3>
+<?=$this->authAccessRemoved?$this->alert('auth_access_has_been_deleted','alert-success',false):$this->form($this->form,\TwbBundle\Form\View\Helper\TwbBundleForm::LAYOUT_HORIZONTAL,true)?>

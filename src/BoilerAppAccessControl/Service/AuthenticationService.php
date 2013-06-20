@@ -55,8 +55,7 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 		if($oAuthAccess->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)return $this->getServiceLocator()->get('translator')->translate('auth_access_pending');
 
 		//Reset public key
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		$oAuthAccess->setAuthAccessPublicKey($oBCrypt->create($sPublicKey = $oAccessControlService->generateAuthAccessPublicKey()));
+		$oAuthAccess->setAuthAccessPublicKey($this->getServiceLocator()->get('Encryptor')->create($sPublicKey = $oAccessControlService->generateAuthAccessPublicKey()));
 		$this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->update($oAuthAccess);
 
 		//Create email view body
@@ -93,11 +92,12 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 		))))throw new \LogicException('AuthAccess with email identity "'.$sEmailIdentity.'" does not exist');
 
 		//Verify public key
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		if(!$oBCrypt->verify($sPublicKey, $oAuthAccess->getAuthAccessPublicKey()))throw new \LogicException(sprintf(
+		$oEncryptor = $this->getServiceLocator()->get('Encryptor');
+		if(!$oEncryptor->verify($sPublicKey, $oAuthAccess->getAuthAccessPublicKey()))throw new \LogicException(sprintf(
 			'Public key "%s" is not valid for email identity "%s"',
 			$sPublicKey,$sEmailIdentity
 		));
+
 		//Check AuthAccess state
 		elseif($oAuthAccess->getAuthAccessState() !== \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE)throw new \LogicException(sprintf(
 			'AuthAccess "%s" is not active',
@@ -108,9 +108,9 @@ class AuthenticationService implements \Zend\ServiceManager\ServiceLocatorAwareI
 
 		$this->getServiceLocator()->get('BoilerAppAccessControl\Repository\AuthAccessRepository')->update($oAuthAccess
 		//Reset credential
-		->setAuthAccessCredential($oBCrypt->create(md5($sCredential = md5(date('Y-m-d').str_shuffle(uniqid())))))
+		->setAuthAccessCredential($oEncryptor->create(md5($sCredential = md5(date('Y-m-d').str_shuffle(uniqid())))))
 		//Reset public key
-		->setAuthAccessPublicKey($oBCrypt->create($this->getServiceLocator()->get('AccessControlService')->generateAuthAccessPublicKey())));
+		->setAuthAccessPublicKey($oEncryptor->create($this->getServiceLocator()->get('AccessControlService')->generateAuthAccessPublicKey())));
 
 		//Create email view body
 		$oView = new \Zend\View\Model\ViewModel(array(

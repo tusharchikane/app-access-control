@@ -8,6 +8,11 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 	protected $accessControlService;
 
 	/**
+	 * @var \Zend\Crypt\Password\PasswordInterface
+	 */
+	protected $encryptor;
+
+	/**
 	 * @var array
 	 */
 	protected $resultRow;
@@ -15,9 +20,11 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 	/**
 	 * Constructor
 	 * @param \BoilerAppAccessControl\Service\AccessControlService $oAccessControlService
+	 * @param \Zend\Crypt\Password\PasswordInterface $oEncryptor
 	 */
-	public function __construct(\BoilerAppAccessControl\Service\AccessControlService $oAccessControlService = null){
+	public function __construct(\BoilerAppAccessControl\Service\AccessControlService $oAccessControlService = null, \Zend\Crypt\Password\PasswordInterface $oEncryptor = null){
 		if($oAccessControlService)$this->setAccessControlService($oAccessControlService);
+		if($oEncryptor)$this->setEncryptor($oEncryptor);
 	}
 
 	/**
@@ -36,6 +43,24 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 	public function getAccessControlService(){
 		if($this->accessControlService instanceof \BoilerAppAccessControl\Service\AccessControlService)return $this->accessControlService;
 		throw new \LogicException('AccessControl service is undefined');
+	}
+
+	/**
+	 * @param \Zend\Crypt\Password\PasswordInterface $oEncryptor
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
+	 */
+	public function setEncryptor(\Zend\Crypt\Password\PasswordInterface $oEncryptor){
+		$this->encryptor = $oEncryptor;
+		return $this;
+	}
+
+	/**
+	 * @throws \LogicException
+	 * @return \Zend\Crypt\Password\PasswordInterface
+	 */
+	public function getEncryptor(){
+		if($this->encryptor instanceof \Zend\Crypt\Password\PasswordInterface)return $this->encryptor;
+		throw new \LogicException('Encryptor is undefined');
 	}
 
 	/**
@@ -64,10 +89,7 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 		if(!($oAuthAccess = $this->getAccessControlService()->getAuthAccessFromIdentity($this->getIdentity())))return new \Zend\Authentication\Result(\Zend\Authentication\Result::FAILURE_IDENTITY_NOT_FOUND,null);
 
 		//Verify credential
-
-		//Crypter
-		$oBCrypt = new \Zend\Crypt\Password\Bcrypt();
-		if(!$oBCrypt->verify(
+		if(!$this->getEncryptor()->verify(
 			md5($this->getCredential()),
 			$oAuthAccess->getAuthAccessCredential()
 		))return new \Zend\Authentication\Result(\Zend\Authentication\Result::FAILURE_CREDENTIAL_INVALID,null);
