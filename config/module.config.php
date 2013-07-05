@@ -18,7 +18,7 @@ return array(
 	),
 	'captcha' => array(
 		'fontDir' => __DIR__.'/../data/fonts',
-		'font' =>  'arial.ttf',
+		'font' =>  __DIR__.'/../data/fonts/arial.ttf',
 		'fsize' => 30,
 		'width' => 220,
 		'height' => 70,
