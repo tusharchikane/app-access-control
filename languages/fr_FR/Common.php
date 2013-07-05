@@ -18,6 +18,7 @@ return array(
 	'credential_reset_sent' => 'Vous allez recevoir un email vous permettant de réinitialiser votre mot de passe',
 
 	'date_time' => 'Date / heure',
+	'access_type' => 'Type d\'accès',
 
 	'email' => 'Adresse email',
 	'email_already_confirmed' => 'Votre adresse email est déjà confirmée',
