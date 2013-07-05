@@ -36,7 +36,7 @@ foreach($this->latestActivityLogs as $oLog){
 		if($oUserAgentInfos->parent)$sDevice .= ($sDevice?' / ':'').$oUserAgentInfos->parent;
 	}
 
-	if(($sIPAdress = $oLog->getLogIPAddress()) && $oLog->getLogSessionId() === $this->currentSessionId)$sIPAdress .= '('.$this->translate('current_session').')';
+	if(($sIPAdress = $oLog->getLogIPAddress()) && $oLog->getLogSessionId() === $this->currentSessionId)$sIPAdress .= ' ('.$this->translate('current_session').')';
 ?>
 		<tr>
 			<td><?=$this->dateFormat($oLog->getEntityCreate(),\IntlDateFormatter::MEDIUM,\IntlDateFormatter::MEDIUM)?></td>
