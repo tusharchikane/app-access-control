@@ -8,6 +8,7 @@
 			<dd><span id="authaccess_username_identity"><?=$this->authenticatedAuthAccess->getAuthAccessUsernameIdentity()?></span> | <a href="#" onclick="oController.changeAuthAccessUsernameIdentity();return false;"><?=$this->translate('change_username')?></a></dd>
 			<dt><?=$this->translate('credential')?> :</dt>
 			<dd><a href="#" onclick="oController.changeAuthAccessCredential();return false;"><?=$this->translate('change_credential')?></a></dd>
+			<dd>&nbsp;</dd>
 			<dd>
 				<a class="btn btn-small btn-danger" href="<?=$this->url('AccessControl/AuthAccess/RemoveAuthAccess')?>" onclick="return confirm(oController.translate('confirm_remove_auth_access'));">
 					<i class="icon-warning-sign"></i>
