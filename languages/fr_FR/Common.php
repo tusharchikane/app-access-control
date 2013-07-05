@@ -16,6 +16,7 @@ return array(
 	'credential_has_been_reset' => 'Votre mot de passe a été réinitialisé',
 	'credential_has_been_reset_email_has_been_sent' => 'Votre mot de passe a été réinitialisé, vous allez recevoir un email contenant vos nouvelles informations de connexion',
 	'credential_reset_sent' => 'Vous allez recevoir un email vous permettant de réinitialiser votre mot de passe',
+	'current_session' => 'Session courante',
 
 	'date_time' => 'Date / heure',
 	'access_type' => 'Type d\'accès',
