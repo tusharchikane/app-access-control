@@ -3,6 +3,7 @@ namespace BoilerAppAccessControlTest\Controller;
 class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractHttpControllerTestCase{
 
 	public function testRegisterAction(){
+		$this->createDatabase();
 		$this->dispatch('/access-control/register');
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');

@@ -3,6 +3,7 @@ return array(
 	'modules' => array(
 		'DoctrineModule',
 		'DoctrineORMModule',
+		'Neilime\Browscap',
 		'AssetsBundle',
 		'TwbBundle',
 		'BoilerAppDb',

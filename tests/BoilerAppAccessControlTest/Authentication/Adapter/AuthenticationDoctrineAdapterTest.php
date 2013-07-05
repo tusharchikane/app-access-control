@@ -32,6 +32,17 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 	}
 
 	/**
+	 * @expectedException LogicException
+	 */
+	public function testGetEncryptorUnset(){
+		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter');
+		$oEncryptor = $oReflectionClass->getProperty('encryptor');
+		$oEncryptor->setAccessible(true);
+		$oEncryptor->setValue($this->authenticationDoctrineAdapter, null);
+		$this->authenticationDoctrineAdapter->getEncryptor();
+	}
+
+	/**
 	 * @expectedException InvalidArgumentException
 	 */
 	public function testPostAuthenticateWithWrongParams(){

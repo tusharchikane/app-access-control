@@ -145,4 +145,13 @@ class AuthAccessService implements \Zend\ServiceManager\ServiceLocatorAwareInter
 
 		return $this;
 	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function getAuthenticatedAuthAccessLatestActivityLogs(){
+		return $this->getServiceLocator()->get('BoilerAppLogger\Repository\LogRepository')->getLatestActivityLogs(
+			$this->getServiceLocator()->get('AccessControlService')->getAuthenticatedAuthAccess()
+		);
+	}
 }

@@ -109,7 +109,7 @@
 
     </tbody>
    </table>
-   <table class="table table-borderless table-condensed">
+   <table id="code" class="table table-borderless table-condensed">
     <tbody>
      <tr><td><div align="right"><a name="1"></a><a href="#1">1</a></div></td><td class="codeLine">&lt;?php</td></tr>
      <tr><td><div align="right"><a name="2"></a><a href="#2">2</a></div></td><td class="codeLine">namespace BoilerAppAccessControl\Factory;</td></tr>
@@ -121,7 +121,7 @@
      <tr><td><div align="right"><a name="8"></a><a href="#8">8</a></div></td><td class="codeLine">     * @return \Zend\Crypt\Password\Bcrypt</td></tr>
      <tr><td><div align="right"><a name="9"></a><a href="#9">9</a></div></td><td class="codeLine">     */</td></tr>
      <tr><td><div align="right"><a name="10"></a><a href="#10">10</a></div></td><td class="codeLine">    public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){</td></tr>
-     <tr class="success popin" data-title="20 tests cover line 11" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Authentication\AccessControlAuthenticationServiceTest::testGetAdapter&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testIndexAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeEmailIdentityAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeEmailIdentityActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testConfirmChangeEmailIdentityAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeUsernameIdentityAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeUsernameIdentityActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeCredentialAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeCredentialActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testRemoveAuthAccessActionAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testRemoveAuthAccessActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testAuthenticateActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testForgottenCredentialActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testResetCredentialAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testLogoutAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testRegisterActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testRegisterActionAlreadyAuthenticated&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="11"></a><a href="#11">11</a></div></td><td class="codeLine">        return new \Zend\Crypt\Password\Bcrypt();</td></tr>
+     <tr class="success popin" data-title="22 tests cover line 11" data-content="&lt;ul&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Authentication\AccessControlAuthenticationServiceTest::testGetAdapter&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testIndexAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeEmailIdentityAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeEmailIdentityActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testConfirmChangeEmailIdentityAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeUsernameIdentityAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeUsernameIdentityActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeCredentialAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testChangeCredentialActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testRemoveAuthAccessActionAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthAccessControllerTest::testRemoveAuthAccessActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testAuthenticateActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testPendingAuthenticateActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testWrongAuthenticateActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testForgottenCredentialActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testResetCredentialAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\AuthenticationControllerTest::testLogoutAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testRegisterActionPost&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testRegisterActionAlreadyAuthenticated&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailAction&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testConfirmEmailActionWithWrongIdentity&lt;/li&gt;&lt;li class=&quot;success&quot;&gt;BoilerAppAccessControlTest\Controller\RegistrationControllerTest::testResendConfirmationEmailAction&lt;/li&gt;&lt;/ul&gt;" data-placement="bottom" data-html="true"><td><div align="right"><a name="11"></a><a href="#11">11</a></div></td><td class="codeLine">        return new \Zend\Crypt\Password\Bcrypt();</td></tr>
      <tr><td><div align="right"><a name="12"></a><a href="#12">12</a></div></td><td class="codeLine">    }</td></tr>
 
     </tbody>
@@ -134,12 +134,35 @@
      <span class="warning"><strong>Dead Code</strong></span>
     </p>
     <p>
-     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.2.11-2-g8d0a472</a> using <a href="http://www.php.net/" target="_top">PHP 5.4.13</a> and <a href="http://phpunit.de/">PHPUnit 3.7.21-3-g1d9d8a8</a> at Thu Jun 20 18:56:11 CEST 2013.</small>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.3-g38f4e1f</a> using <a href="http://www.php.net/" target="_top">PHP 5.4.13</a> and <a href="http://phpunit.de/">PHPUnit 3.8-g6a45d52</a> at Fri Jul 5 15:10:15 CEST 2013.</small>
     </p>
+    <a title="Back to the top" id="toplink" href="#"><i class="icon-arrow-up"></i></a>
    </footer>
   </div>
   <script src="js/jquery.min.js" type="text/javascript"></script>
   <script src="js/bootstrap.min.js" type="text/javascript"></script>
-  <script type="text/javascript">$('.popin').popover({trigger: 'hover'});</script>
+  <script type="text/javascript">
+  $(function() {
+   var $window   = $(window)
+     , $top_link = $('#toplink')
+     , $body     = $('body, html')
+     , offset    = $('#code').offset().top;
+
+   $top_link.hide().click(function(event) {
+    event.preventDefault();
+    $body.animate({scrollTop:0}, 800);
+   });
+
+   $window.scroll(function() {
+    if($window.scrollTop() > offset) {
+     $top_link.fadeIn();
+    } else {
+     $top_link.fadeOut();
+    }
+   }).scroll();
+
+   $('.popin').popover({trigger: 'hover'});
+  });
+  </script>
  </body>
 </html>

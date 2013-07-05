@@ -4,7 +4,7 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 
 	public function testIndexAction(){
 		//Add authentication fixture
-		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\ActivityLogsFixture'));
 
 		//Authenticate user
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(

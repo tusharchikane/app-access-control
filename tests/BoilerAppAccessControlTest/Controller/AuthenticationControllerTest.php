@@ -2,6 +2,7 @@
 namespace BoilerAppAccessControlTest\Controller;
 class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractHttpControllerTestCase{
 	public function testAuthenticateAction(){
+		$this->createDatabase();
 		$this->dispatch('/access-control/authenticate');
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
@@ -20,7 +21,36 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 		$this->assertRedirectTo('/');
 	}
 
+	public function testPendingAuthenticateActionPost(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+		$this->dispatch('/access-control/authenticate',\Zend\Http\Request::METHOD_POST,array(
+			'auth_access_identity' => 'pending@test.com',
+			'auth_access_credential' => 'pending-credential'
+		));
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
+		$this->assertControllerClass('AuthenticationController');
+		$this->assertMatchedRouteName('AccessControl/Authenticate');
+	}
+
+	public function testWrongAuthenticateActionPost(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+		$this->dispatch('/access-control/authenticate',\Zend\Http\Request::METHOD_POST,array(
+			'auth_access_identity' => 'valid@test.com',
+			'auth_access_credential' => 'wrong-credential'
+		));
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
+		$this->assertControllerClass('AuthenticationController');
+		$this->assertMatchedRouteName('AccessControl/Authenticate');
+	}
+
 	public function testForgottenCredentialAction(){
+		$this->createDatabase();
 		$this->dispatch('/access-control/forgotten-credential');
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');
@@ -34,6 +64,19 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 		$this->dispatch('/access-control/forgotten-credential',\Zend\Http\Request::METHOD_POST,array(
 			'auth_access_identity' => 'valid@test.com',
+		));
+		$this->assertResponseStatusCode(200);
+		$this->assertModuleName('BoilerAppAccessControl');
+		$this->assertControllerName('BoilerAppAccessControl\Controller\Authentication');
+		$this->assertControllerClass('AuthenticationController');
+		$this->assertMatchedRouteName('AccessControl/ForgottenCredential');
+	}
+
+	public function testPendingForgottenCredentialActionPost(){
+		//Add authentication fixture
+		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
+		$this->dispatch('/access-control/forgotten-credential',\Zend\Http\Request::METHOD_POST,array(
+			'auth_access_identity' => 'pending@test.com',
 		));
 		$this->assertResponseStatusCode(200);
 		$this->assertModuleName('BoilerAppAccessControl');

@@ -17,6 +17,8 @@ return array(
 	'credential_has_been_reset_email_has_been_sent' => 'Votre mot de passe a été réinitialisé, vous allez recevoir un email contenant vos nouvelles informations de connexion',
 	'credential_reset_sent' => 'Vous allez recevoir un email vous permettant de réinitialiser votre mot de passe',
 
+	'date_time' => 'Date / heure',
+
 	'email' => 'Adresse email',
 	'email_already_confirmed' => 'Votre adresse email est déjà confirmée',
 	'email_confirmation_sent' => 'Vous allez recevoir un email vous permettant de valider votre accès.',
@@ -29,7 +31,9 @@ return array(
 
 	'identity_does_not_match_any_registered_user' => 'Cette adresse email / identifiant ne correspond à aucun utilisateur enregistré',
 	'im_not_a_robot' => 'Je ne suis pas un robot',
+	'ip' => 'Adresse IP',
 
+	'latest_activity' => 'Activité récente',
 	'logout' => 'Déconnexion',
 
 	'manage_auth_access' => 'Gestion des accès',

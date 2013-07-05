@@ -1,5 +1,5 @@
 <h3><?=$this->layout()->title?></h3>
-<div class="row-fluid" style="margin-bottom:10px;">
+<div class="row-fluid">
 	<div class="span10">
 		<dl class="dl-horizontal">
 			<dt><?=$this->translate('email')?> :</dt>
@@ -16,4 +16,30 @@
 			&nbsp;<?=$this->translate('remove_auth_access')?>
 		</a>
 	</div>
+</div>
+<div class="row-fluid" style="margin-bottom:10px;">
+	<h3><?=$this->translate('latest_activity')?> : </h3>
+    <table class="table table-striped">
+    	<thead>
+    		<tr>
+				<th><?=$this->translate('date_time')?></th>
+				<th><?=$this->translate('ip')?></th>
+				<th><?=$this->translate('device')?></th>
+    		</tr>
+    	</thead>
+<?php
+foreach($this->latestActivityLogs as $oLog){
+	if(($oRequestHeaders = $oLog->getLogRequestHeaders()) && ($oUserAgent = $oRequestHeaders->get('user-agent'))){
+		$oUserAgentInfos = $this->get_browser($oUserAgent);
+		$sDevice = $oUserAgentInfos->platform?:'';
+		if($oUserAgentInfos->parent)$sDevice .= ($sDevice?' / ':'').$oUserAgentInfos->parent;
+	}
+?>
+		<tr>
+			<td><?=$this->dateFormat($oLog->getEntityCreate(),IntlDateFormatter::MEDIUM,IntlDateFormatter::MEDIUM)?></td>
+			<td><?=$oLog->getLogIPAddress()?:'-'?></td>
+			<th><?=empty($sDevice)?'-':$sDevice?></th>
+		</tr>
+<?php } ?>
+    </table>
 </div>

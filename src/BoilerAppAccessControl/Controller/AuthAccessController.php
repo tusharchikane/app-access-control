@@ -10,6 +10,7 @@ class AuthAccessController extends \BoilerAppDisplay\Mvc\Controller\AbstractActi
 		//Define title
 		$this->layout()->title = $this->getServiceLocator()->get('Translator')->translate('auth_access_management');
 		$this->view->authenticatedAuthAccess = $this->getServiceLocator()->get('AccessControlService')->getAuthenticatedAuthAccess();
+		$this->view->latestActivityLogs = $this->getServiceLocator()->get('AuthAccessService')->getAuthenticatedAuthAccessLatestActivityLogs();
 		return $this->view;
 	}
 
