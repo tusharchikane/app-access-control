@@ -14,7 +14,7 @@
         "issues": "https://github.com/zf2-boiler-app/app-access-control/issues"
     },
     "minimum-stability" : "dev",
-    "repositories":[        
+    "repositories":[
         {
             "type": "package",
             "package": {
@@ -38,12 +38,21 @@
                 "name": "nak5ive/Form.PasswordStrength",
                 "source": {"url": "https://github.com/nak5ive/Form.PasswordStrength.git","type": "git","reference": "master"}
             }
-        },
-        {
-	        "type": "vcs",
-	        "url": "http://github.com/neilime/lessphp"
-	    }
+        }
     ],
+    "require": {
+        "php": ">=5.3.3",
+        "ext-intl": "*",
+        "zendframework/zendframework": "dev-master",
+        "neilime/zf2-assets-bundle": "dev-master",
+        "neilime/zf2-twb-bundle": "dev-master",
+        "neilime/zf2-tree-layout-stack": "dev-master",
+        "fortawesome/font-awesome": "dev-master",
+        "fabiomcosta/mootools-meio-mask": "dev-master",
+        "arian/iFrameFormRequest": "dev-master",
+       	"nak5ive/Form.PasswordStrength": "dev-master",
+       	"twitter/bootstrap": "dev-master"
+    },
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "dev-master",
