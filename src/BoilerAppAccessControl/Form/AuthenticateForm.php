@@ -30,6 +30,16 @@ class AuthenticateForm extends \BoilerAppDisplay\Form\AbstractForm{
 			'options'=>array('twb' => array('prepend' => array('type' => 'icon','icon' => 'icon-lock')))
 		))
 		->add(array(
+			'name' => 'auth_access_remember',
+			'attributes' => array(
+				'label' => 'remember_me',
+				'use_hidden_element' => false,
+				'type'  => 'checkbox',
+				'class' => 'input-xlarge'
+			)
+		))
+
+		->add(array(
 			'name' => 'submit',
 			'attributes' => array(
 				'type' => 'submit',

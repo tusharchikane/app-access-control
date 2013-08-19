@@ -22,7 +22,8 @@ class AuthenticationController extends \BoilerAppDisplay\Mvc\Controller\Abstract
 			&& ($bReturn = $this->getServiceLocator()->get('AuthenticationService')->authenticate(
 				\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 				$aData['auth_access_identity'],
-				$aData['auth_access_credential']
+				$aData['auth_access_credential'],
+				!!$aData['auth_access_remember']
 			)) === true
 		)return $this->redirectUser();
 

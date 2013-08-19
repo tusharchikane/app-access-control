@@ -21,19 +21,19 @@ class AuthenticationServiceTest extends \BoilerAppTest\PHPUnit\TestCase\Abstract
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Wrong identity
-		$this->assertEquals('L\'adresse email et/ou le mot de passe semblent incorrects',$this->authenticationService->authenticate('LocalAuth','wrong','valid-credential'));
+		$this->assertEquals('L\'adresse email et/ou le mot de passe semblent incorrects',$this->authenticationService->authenticate('LocalAuth','wrong','valid-credential',true));
 
 		//Wrong credential
-		$this->assertEquals('L\'adresse email et/ou le mot de passe semblent incorrects',$this->authenticationService->authenticate('LocalAuth','valid','wrong-credential'));
+		$this->assertEquals('L\'adresse email et/ou le mot de passe semblent incorrects',$this->authenticationService->authenticate('LocalAuth','valid','wrong-credential',true));
 
 		//Pending state
-		$this->assertEquals('Le compte est en attente de confirmation',$this->authenticationService->authenticate('LocalAuth','pending','pending-credential'));
+		$this->assertEquals('Le compte est en attente de confirmation',$this->authenticationService->authenticate('LocalAuth','pending','pending-credential',true));
 
 		//Unknown error
 		$this->getServiceManager()->get('AccessControlAuthenticationService')->setAdapters(array(
 			'FailAuth' => 'BoilerAppAccessControlTest\Authentication\Adapter\AuthenticationDoctrineAdapterFail'
 		));
-		$this->assertEquals('fail message',$this->authenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array('fail message')));
+		$this->assertEquals('fail message',$this->authenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array('fail message'),true));
 	}
 
 	/**

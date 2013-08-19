@@ -44,7 +44,8 @@ class RegistrationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstrac
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->dispatch('/access-control/register');

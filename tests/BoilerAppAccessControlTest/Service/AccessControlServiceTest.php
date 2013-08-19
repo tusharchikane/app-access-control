@@ -21,7 +21,7 @@ class AccessControlServiceTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractD
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Authentication
-		$this->getServiceManager()->get('AuthenticationService')->authenticate('LocalAuth','valid@test.com','valid-credential');
+		$this->getServiceManager()->get('AuthenticationService')->authenticate('LocalAuth','valid@test.com','valid-credential',true);
 
 		$this->assertInstanceOf('BoilerAppAccessControl\Entity\AuthAccessEntity',$this->accessControlService->getAuthenticatedAuthAccess());
 	}
@@ -64,7 +64,7 @@ class AccessControlServiceTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractD
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Authenticate
-		$this->getServiceManager()->get('AuthenticationService')->authenticate('LocalAuth','valid@test.com','valid-credential');
+		$this->getServiceManager()->get('AuthenticationService')->authenticate('LocalAuth','valid@test.com','valid-credential',true);
 
 		$this->assertEquals('L\'adresse email "valid@test.com" est identique',$this->accessControlService->isEmailIdentityAvailable('valid@test.com'));
 

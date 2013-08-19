@@ -47,7 +47,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 
 	public function testFactoryWithClassnameStorage(){
 		$this->assertInstanceOf('BoilerAppAccessControl\Authentication\AccessControlAuthenticationService',\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::factory(array(
-			'storage' => 'Zend\Authentication\Storage\Session'
+			'storage' => 'BoilerAppAccessControl\Authentication\Storage\SessionStorage'
 		), $this->getServiceManager()));
 	}
 
@@ -111,7 +111,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 			),
 			'storage' => 'AuthenticationStorage'
 		), $this->getServiceManager());
-		$this->assertEquals('fail message',$oAccessControlAuthenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array('fail message')));
+		$this->assertEquals('fail message',$oAccessControlAuthenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array('fail message'),true));
 	}
 
 	/**
@@ -127,7 +127,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 			),
 			'storage' => 'AuthenticationStorage'
 		), $this->getServiceManager());
-		$oAccessControlAuthenticationService->authenticate('FailAuth',-666,array());
+		$oAccessControlAuthenticationService->authenticate('FailAuth',-666,array(),true);
 	}
 
 	/**
@@ -143,7 +143,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 			),
 			'storage' => 'AuthenticationStorage'
 		), $this->getServiceManager());
-		$oAccessControlAuthenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array());
+		$oAccessControlAuthenticationService->authenticate('FailAuth',\Zend\Authentication\Result::FAILURE_UNCATEGORIZED,array(),true);
 	}
 
 	public function testAuthenticate(){
@@ -153,39 +153,39 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		//Wrong authentication
 		$this->assertEquals(
 			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG,
-			$this->accessControlAuthenticationService->authenticate('LocalAuth','wrong','valid-credential')
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','wrong','valid-credential',true)
 		);
 
 		$this->assertEquals(
 			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG,
-			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid@test.com','wrong-credential')
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid@test.com','wrong-credential',true)
 		);
 
 		$this->assertEquals(
 			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_IDENTITY_WRONG,
-			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending','wrong-credential')
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending','wrong-credential',true)
 		);
 
 		//Pending authentication
 		$this->assertEquals(
 			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING,
-			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending','pending-credential')
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending','pending-credential',true)
 		);
 
 		$this->assertEquals(
 			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_AUTH_ACCESS_STATE_PENDING,
-			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending@test.com','pending-credential')
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','pending@test.com','pending-credential',true)
 		);
 
 		//Valid authentication
 		$this->assertEquals(
 			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID,
-			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential')
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential',true)
 		);
 
 		$this->assertEquals(
 			\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService::AUTH_RESULT_VALID,
-			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid@test.com','valid-credential')
+			$this->accessControlAuthenticationService->authenticate('LocalAuth','valid@test.com','valid-credential',true)
 		);
 	}
 
@@ -198,7 +198,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		$this->assertFalse($this->accessControlAuthenticationService->hasIdentity());
 
 		//Logged
-		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential');
+		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential',true);
 		$this->assertTrue($this->accessControlAuthenticationService->hasIdentity());
 	}
 
@@ -206,7 +206,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		//Add authentication fixture
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
-		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential');
+		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential',true);
 		$this->assertEquals(1,$this->accessControlAuthenticationService->getIdentity());
 	}
 
@@ -221,7 +221,7 @@ class AccessControlAuthenticationServiceTest extends \BoilerAppTest\PHPUnit\Test
 		//Add authentication fixture
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
-		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential');
+		$this->accessControlAuthenticationService->authenticate('LocalAuth','valid','valid-credential',true);
 		$this->assertInstanceOf('\BoilerAppAccessControl\Authentication\AccessControlAuthenticationService',$this->accessControlAuthenticationService->clearIdentity());
 	}
 }

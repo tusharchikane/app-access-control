@@ -8,6 +8,9 @@ class SessionManagerFactory implements \Zend\ServiceManager\FactoryInterface{
 	 * @return \Zend\Session\SessionManager
 	 */
 	public function createService(\Zend\ServiceManager\ServiceLocatorInterface $oServiceLocator){
-		return new \Zend\Session\SessionManager();
+		$oSessionConfig = new \Zend\Session\Config\SessionConfig();
+		$aConfiguration = $oServiceLocator->get('config');
+		if(isset($aConfiguration['authentication']['remember_me_ttl']))$oSessionConfig->setRememberMeSeconds($aConfiguration['authentication']['remember_me_ttl']);
+		return new \Zend\Session\SessionManager($oSessionConfig);
     }
 }

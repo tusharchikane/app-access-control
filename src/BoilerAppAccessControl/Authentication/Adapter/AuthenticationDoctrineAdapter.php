@@ -18,6 +18,11 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 	protected $resultRow;
 
 	/**
+	 * @var null|int
+	 */
+	protected $mustRememberMe;
+
+	/**
 	 * Constructor
 	 * @param \BoilerAppAccessControl\Service\AccessControlService $oAccessControlService
 	 * @param \Zend\Crypt\Password\PasswordInterface $oEncryptor
@@ -64,17 +69,39 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 	}
 
 	/**
-	 * @param string $sIdentity
-	 * @param string $sCredential
+	 * @param boolean $bMustRememberMe
 	 * @throws \InvalidArgumentException
 	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
 	 */
-	public function postAuthenticate($sIdentity,$sCredential){
-		if(!is_string($sIdentity) || !is_string($sCredential))throw new \InvalidArgumentException(sprintf(
-			'Identity (%s) and/or credential(%s) are not strings',
-			gettype($sIdentity),gettype($sCredential)
-		));
-		return $this->setIdentity($sIdentity)->setCredential($sCredential);
+	public function setMustRememberMe($bMustRememberMe){
+		if(is_bool($bMustRememberMe)){
+			$this->mustRememberMe = $bMustRememberMe;
+			return $this;
+		}
+		throw new \InvalidArgumentException('"Must Remember me" expects boolean, "'.gettype($bMustRememberMe).'" given');
+	}
+
+	/**
+	 * @see \BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface::mustRememberMe()
+	 * @throws \LogicException
+	 * @return boolean
+	 */
+	public function mustRememberMe(){
+		if(is_bool($this->mustRememberMe))return $this->mustRememberMe;
+		throw new \LogicException('"Must Remember me" is undefined');
+	}
+
+	/**
+	 * @param string $sIdentity
+	 * @param string $sCredential
+     * @param boolean $bMustRememberMe
+	 * @throws \InvalidArgumentException
+	 * @return \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter
+	 */
+	public function postAuthenticate($sIdentity,$sCredential,$bMustRememberMe){
+		if(!is_string($sIdentity))throw new \InvalidArgumentException('Identity expects string, "'.gettype($sIdentity).'" given');
+		if(!is_string($sCredential))throw new \InvalidArgumentException('Credential expects string, "'.gettype($sCredential).'" given');
+		return $this->setIdentity($sIdentity)->setCredential($sCredential)->setMustRememberMe($bMustRememberMe);
 	}
 
 	/**
@@ -117,16 +144,16 @@ class AuthenticationDoctrineAdapter extends \Zend\Authentication\Adapter\Abstrac
 				if(in_array($sReturnColumn, $aAvailableColumns))$oReturnObject->{$sReturnColumn} = $this->resultRow[$sReturnColumn];
 			}
 			return $oReturnObject;
-
 		}
-		elseif(null !== $aOmitColumns){
+
+		if(null !== $aOmitColumns){
 			$aOmitColumns = (array)$aOmitColumns;
 			foreach ($this->resultRow as $sResultColumn => $sResultValue) {
 				if(!in_array($sResultColumn, $aOmitColumns))$oReturnObject->{$sResultColumn} = $sResultValue;
 			}
 			return $oReturnObject;
-
 		}
+
 		foreach($this->resultRow as $sResultColumn => $sResultValue){
 			$oReturnObject->{$sResultColumn} = $sResultValue;
 		}

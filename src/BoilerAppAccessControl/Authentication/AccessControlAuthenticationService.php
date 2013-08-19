@@ -13,7 +13,7 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 	protected $adapters = array();
 
 	/**
-	 * @var \Zend\Authentication\Storage\StorageInterface
+	 * @var \BoilerAppAccessControl\Authentication\Storage\StorageInterface
 	 */
 	protected $storage;
 
@@ -35,9 +35,9 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 
 		//Storage
 		if(isset($aConfiguration['storage'])){
-			if(!($aConfiguration['storage'] instanceof \Zend\Authentication\Storage\StorageInterface)){
+			if(!($aConfiguration['storage'] instanceof \BoilerAppAccessControl\Authentication\Storage\StorageInterface)){
 				if(!is_string($aConfiguration['storage']))throw new \InvalidArgumentException(sprintf(
-					'Storage configuration expects \Zend\Authentication\Storage\StorageInterface or string, "%s" given',
+					'Storage configuration expects \BoilerAppAccessControl\Authentication\Storage\StorageInterface or string, "%s" given',
 					is_object($aConfiguration['storage'])?get_class($aConfiguration['storage']):gettype($aConfiguration['storage'])
 				));
 				if($oServiceLocator->has($aConfiguration['storage']))$aConfiguration['storage'] = $oServiceLocator->get($aConfiguration['storage']);
@@ -106,20 +106,20 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 	}
 
 	/**
-	 * @param \Zend\Authentication\Storage\StorageInterface $oStorage
+	 * @param \BoilerAppAccessControl\Authentication\Storage\StorageInterface $oStorage
 	 * @return \BoilerAppAccessControl\Authentication\AccessControlAuthenticationService
 	 */
-	public function setStorage(\Zend\Authentication\Storage\StorageInterface $oStorage){
+	public function setStorage(\BoilerAppAccessControl\Authentication\Storage\StorageInterface $oStorage){
 		$this->storage = $oStorage;
 		return $this;
 	}
 
 	/**
 	 * @throws \LogicException
-	 * @return \Zend\Authentication\Storage\StorageInterface
+	 * @return \BoilerAppAccessControl\Authentication\Storage\StorageInterface
 	 */
 	public function getStorage(){
-		if($this->storage instanceof \Zend\Authentication\Storage\StorageInterface)return $this->storage;
+		if($this->storage instanceof \BoilerAppAccessControl\Authentication\Storage\StorageInterface)return $this->storage;
 		throw new \LogicException('Storage is undefined');
 	}
 
@@ -139,7 +139,6 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 			array($this->getAdapter($sAdapterName),'postAuthenticate'),
 			array_slice(func_get_args(),1)
 		);
-
 
 		//Authentication
 		$oAuthResult = $oAdapter->authenticate();
@@ -175,7 +174,8 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 		if(!isset($iAuthAccessId,$sAuthAccessState))throw new \LogicException('Auth access id or auth access state are undefined');
 
 		if($sAuthAccessState === \BoilerAppAccessControl\Repository\AuthAccessRepository::AUTH_ACCESS_ACTIVE_STATE){
-			//Store user id
+			//Store user id and remember it if needed
+			if($oAdapter->mustRememberMe())$this->getStorage()->rememberMe();
 			$this->getStorage()->write($iAuthAccessId);
 			return self::AUTH_RESULT_VALID;
 		}
@@ -208,7 +208,7 @@ class AccessControlAuthenticationService implements \Zend\ServiceManager\Service
 	public function clearIdentity(){
 		if(!$this->hasIdentity())throw new \LogicException('There is no stored identity');
 		//Clear auth storage
-		$this->getStorage()->clear();
+		$this->getStorage()->forgetMe()->clear();
 
 		//Clear adapter storage
 		foreach($this->adapters as $sAdapterName => $oAdapter){

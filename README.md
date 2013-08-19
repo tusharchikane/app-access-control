@@ -2,6 +2,8 @@ ZF2 BoilerApp "Access control" module
 =====================
 
 [![Build Status](https://travis-ci.org/zf2-boiler-app/app-access-control.png?branch=master)](https://travis-ci.org/zf2-boiler-app/app-access-control)
+[![Latest Stable Version](https://poser.pugx.org/zf2-boiler-app/app-access-control/v/stable.png)](https://packagist.org/packages/zf2-boiler-app/app-access-control)
+[![Total Downloads](https://poser.pugx.org/zf2-boiler-app/app-access-control/downloads.png)](https://packagist.org/packages/zf2-boiler-app/app-access-control)
 ![Code coverage](https://raw.github.com/zf2-boiler-app/app-test/master/ressources/100%25-code-coverage.png "100% code coverage")
 
 NOTE : This module is in heavy development, it's not usable yet.

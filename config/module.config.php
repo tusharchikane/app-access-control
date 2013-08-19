@@ -33,7 +33,8 @@ return array(
 		'adapters' => array(
 			'LocalAuth' => 'AuthenticationDoctrineAdapter'
 		),
-		'defaultRedirect' => 'AccessControl/Authenticate'
+		'defaultRedirect' => 'AccessControl/Authenticate',
+		'remember_me_ttl' => 1209600
 	),
 	'controllers' => array(
 		'invokables' => array(

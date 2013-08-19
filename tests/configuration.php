@@ -40,7 +40,8 @@ return array(
 		'factories' => array(
 			'CssToInlineStylesProcessor' => function(){
 				return \BoilerAppMessenger\StyleInliner\Processor\CssToInlineStylesProcessor::factory(array('baseDir' => __DIR__.DIRECTORY_SEPARATOR.'_files'));
-			}
+			},
+			'SessionManager' => 'BoilerAppAccessControlTest\Authentication\SessionManagerFactory'
 		)
 	),
 	'view_manager' => array(

@@ -53,6 +53,7 @@ return array(
 	'register' => 'Inscription',
 	'registration_completed_now_confirm_email' => 'Votre inscription s\'est déroulée avec succès, vous allez recevoir un email vous permettant de valider votre accès',
 	'registration_validated_now_connect' => 'Votre inscription est maintenant validée, vous pouvez désormais vous connecter.',
+	'remember_me' => 'Se souvenir de moi',
 	'remove_auth_access' => 'Supprimer le compte',
 	'resend_confirmation_email' => 'Renvoyer l\'email de validation',
 	'reset_credential' => 'Réinitialiser mon mot de passe',

@@ -10,7 +10,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->dispatch('/access-control/auth-access');
@@ -29,7 +30,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
@@ -50,7 +52,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
@@ -73,7 +76,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->dispatch('/access-control/auth-access/confirm-change-email-identity/bc4b775da5e0d05ccbe5fa1c14/new@test.com');
@@ -94,7 +98,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
@@ -115,7 +120,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
@@ -140,7 +146,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
@@ -161,7 +168,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
@@ -192,7 +200,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');
@@ -213,7 +222,8 @@ class AuthAccessControllerTest extends \BoilerAppTest\PHPUnit\TestCase\AbstractH
 		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate(
 			\BoilerAppAccessControl\Service\AuthenticationService::LOCAL_AUTHENTICATION,
 			'valid@test.com',
-			'valid-credential'
+			'valid-credential',
+			true
 		);
 
 		$this->getRequest()->getHeaders()->addHeaderLine('X_REQUESTED_WITH', 'XMLHttpRequest');

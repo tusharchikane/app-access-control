@@ -16,7 +16,8 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 		$this->dispatch('/access-control/authenticate',\Zend\Http\Request::METHOD_POST,array(
 			'auth_access_identity' => 'valid@test.com',
-			'auth_access_credential' => 'valid-credential'
+			'auth_access_credential' => 'valid-credential',
+			'auth_access_remember' => 1
 		));
 		$this->assertRedirectTo('/');
 	}
@@ -102,7 +103,7 @@ class AuthenticationControllerTest extends \BoilerAppTest\PHPUnit\TestCase\Abstr
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Log in
-		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate('LocalAuth','valid','valid-credential');
+		$this->getApplicationServiceLocator()->get('AuthenticationService')->authenticate('LocalAuth','valid','valid-credential',false);
 		$this->dispatch('/access-control/logout');
 		$this->assertRedirectTo('/');
 	}

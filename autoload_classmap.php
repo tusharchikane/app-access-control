@@ -4,6 +4,8 @@ return array(
     'BoilerAppAccessControl\Authentication\AccessControlAuthenticationService'       => __DIR__ . '/src/BoilerAppAccessControl/Authentication/AccessControlAuthenticationService.php',
     'BoilerAppAccessControl\Authentication\Adapter\AuthenticationAdapterInterface'   => __DIR__ . '/src/BoilerAppAccessControl/Authentication/Adapter/AuthenticationAdapterInterface.php',
     'BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter'    => __DIR__ . '/src/BoilerAppAccessControl/Authentication/Adapter/AuthenticationDoctrineAdapter.php',
+    '\BoilerAppAccessControl\Authentication\Storage\SessionStorage'                  => __DIR__ . '/src/BoilerAppAccessControl/Authentication/Storage/SessionStorage.php',
+    'BoilerAppAccessControl\Authentication\Storage\StorageInterface'                 => __DIR__ . '/src/BoilerAppAccessControl/Authentication/Storage/StorageInterface.php',
     'BoilerAppAccessControl\Controller\AuthAccessController'                         => __DIR__ . '/src/BoilerAppAccessControl/Controller/AuthAccessController.php',
     'BoilerAppAccessControl\Controller\AuthenticationController'                     => __DIR__ . '/src/BoilerAppAccessControl/Controller/AuthenticationController.php',
     'BoilerAppAccessControl\Controller\RegistrationController'                       => __DIR__ . '/src/BoilerAppAccessControl/Controller/RegistrationController.php',

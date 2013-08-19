@@ -15,8 +15,9 @@ class AuthenticationDoctrineAdapterFail extends \BoilerAppAccessControl\Authenti
 	 * @see \BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter::postAuthenticate()
 	 * @param int $iResultCode
 	 * @param array $aMessages
+	 * @param boolean $bMustRememberMe
 	 */
-	public function postAuthenticate($iResultCode,$aMessages = array()){
+	public function postAuthenticate($iResultCode,$aMessages = array(), $bMustRememberMe){
 		$this->resultCode = $iResultCode;
 		$this->messages = $aMessages;
 	}

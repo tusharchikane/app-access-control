@@ -32,6 +32,24 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 	}
 
 	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testSetMustRememberMeWithWrongParam(){
+		$this->authenticationDoctrineAdapter->setMustRememberMe('wrong');
+	}
+
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testMustRememberMeUnset(){
+		$oReflectionClass = new \ReflectionClass('BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter');
+		$oEncryptor = $oReflectionClass->getProperty('mustRememberMe');
+		$oEncryptor->setAccessible(true);
+		$oEncryptor->setValue($this->authenticationDoctrineAdapter, null);
+		$this->authenticationDoctrineAdapter->mustRememberMe();
+	}
+
+	/**
 	 * @expectedException LogicException
 	 */
 	public function testGetEncryptorUnset(){
@@ -46,7 +64,7 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 	 * @expectedException InvalidArgumentException
 	 */
 	public function testPostAuthenticateWithWrongParams(){
-		$this->authenticationDoctrineAdapter->postAuthenticate(false, false);
+		$this->authenticationDoctrineAdapter->postAuthenticate(false, false,false);
 	}
 
 	public function testAuthenticate(){
@@ -56,7 +74,7 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 		//Identity not found
 		$this->assertInstanceOf(
 			'\BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter',
-			$this->authenticationDoctrineAdapter->postAuthenticate('wrong','valid-credential')
+			$this->authenticationDoctrineAdapter->postAuthenticate('wrong','valid-credential',true)
 		);
 		$this->assertInstanceOf('\Zend\Authentication\Result', $oResult = $this->authenticationDoctrineAdapter->authenticate());
 		$this->assertEquals(\Zend\Authentication\Result::FAILURE_IDENTITY_NOT_FOUND,$oResult->getCode());
@@ -64,7 +82,7 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 		//Credential invalid
 		$this->assertInstanceOf(
 			'\BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter',
-			$this->authenticationDoctrineAdapter->postAuthenticate('valid','wrong-credential')
+			$this->authenticationDoctrineAdapter->postAuthenticate('valid','wrong-credential',true)
 		);
 		$this->assertInstanceOf('\Zend\Authentication\Result', $oResult = $this->authenticationDoctrineAdapter->authenticate());
 		$this->assertEquals(\Zend\Authentication\Result::FAILURE_CREDENTIAL_INVALID,$oResult->getCode());
@@ -72,7 +90,7 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 		//Success
 		$this->assertInstanceOf(
 			'\BoilerAppAccessControl\Authentication\Adapter\AuthenticationDoctrineAdapter',
-			$this->authenticationDoctrineAdapter->postAuthenticate('valid','valid-credential')
+			$this->authenticationDoctrineAdapter->postAuthenticate('valid','valid-credential',true)
 		);
 		$this->assertInstanceOf('\Zend\Authentication\Result', $oResult = $this->authenticationDoctrineAdapter->authenticate());
 		$this->assertEquals(\Zend\Authentication\Result::SUCCESS,$oResult->getCode());
@@ -83,7 +101,7 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 		$this->addFixtures(array('BoilerAppAccessControlTest\Fixture\AuthenticationFixture'));
 
 		//Authentication succeed
-		$this->authenticationDoctrineAdapter->postAuthenticate('valid','valid-credential')->authenticate();
+		$this->authenticationDoctrineAdapter->postAuthenticate('valid','valid-credential',true)->authenticate();
 		$oResultRow = $this->authenticationDoctrineAdapter->getResultRowObject();
 		$this->assertObjectHasAttribute('auth_access_id', $oResultRow);
 		$this->assertObjectHasAttribute('auth_access_state', $oResultRow);
@@ -97,7 +115,7 @@ class AuthenticationDoctrineAdapterTest extends \BoilerAppTest\PHPUnit\TestCase\
 		$this->assertObjectHasAttribute('auth_access_state', $oResultRow);
 
 		//Authentication failed
-		$this->authenticationDoctrineAdapter->postAuthenticate('wrong','valid-credential')->authenticate();
+		$this->authenticationDoctrineAdapter->postAuthenticate('wrong','valid-credential',true)->authenticate();
 		$this->assertFalse($this->authenticationDoctrineAdapter->getResultRowObject());
 	}
 }

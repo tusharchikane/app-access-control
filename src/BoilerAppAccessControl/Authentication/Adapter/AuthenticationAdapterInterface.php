@@ -8,4 +8,9 @@ interface AuthenticationAdapterInterface extends \Zend\Authentication\Adapter\Ad
 	 * @return stdClass|boolean
 	 */
 	public function getResultRowObject($aReturnColumns = null, $aOmitColumns = null);
+
+	/**
+	 * @return boolean
+	 */
+	public function mustRememberMe();
 }
