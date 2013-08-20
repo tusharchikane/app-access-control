@@ -19,7 +19,7 @@
 	</div>
 </div>
 <div class="row-fluid" style="margin-bottom:10px;">
-	<h3><?=$this->translate('latest_activity')?> : </h3>
+	<h4><?=$this->translate('latest_activity')?> : </h4>
     <table class="table table-striped">
     	<thead>
     		<tr>
@@ -32,8 +32,8 @@
 foreach($this->latestActivityLogs as $oLog){
 	if(($oRequestHeaders = $oLog->getLogRequestHeaders()) && ($oUserAgent = $oRequestHeaders->get('user-agent'))){
 		$oUserAgentInfos = $this->get_browser($oUserAgent);
-		$sDevice = $oUserAgentInfos->platform?:'';
-		if($oUserAgentInfos->parent)$sDevice .= ($sDevice?' / ':'').$oUserAgentInfos->parent;
+		$sDevice = empty($oUserAgentInfos->platform)?'':$oUserAgentInfos->platform;
+		if(!empty($oUserAgentInfos->parent))$sDevice .= ($sDevice?' / ':'').$oUserAgentInfos->parent;
 	}
 
 	if(($sIPAdress = $oLog->getLogIPAddress()) && $oLog->getLogSessionId() === $this->currentSessionId)$sIPAdress .= ' ('.$this->translate('current_session').')';
