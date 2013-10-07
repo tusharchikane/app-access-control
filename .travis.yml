@@ -15,7 +15,7 @@ before_install:
  - mkdir ../deploy
  - php ./vendor/bin/deploy_module.php -d ../deploy -v
 # Install php packages
-  - sudo apt-get update > /dev/null
+  - "sudo apt-get update > /dev/null"
   - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
 # Create VirtualHost
   - sudo sed -i -e "s,/var/www,$(pwd)/../deploy/public,g" /etc/apache2/sites-available/default
