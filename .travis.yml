@@ -12,6 +12,7 @@ before_install:
 # Install project
  - composer install --dev -o
 #deploy module
+ - mkdir ../deploy
  - php ./vendor/bin/deploy_module.php -d ../deploy -v
 #Define "default" sites-available
  - echo $(pwd)
