@@ -11,6 +11,20 @@ before_install:
  - composer self-update
 # Install project
  - composer install --dev -o
+#deploy module
+ - php ./vendor/bin/deploy_module.php -d ../deploy -v
+#Define "default" sites-available
+ - echo $(pwd)
+ - cd ../deploy
+ - sudo sed -i -e "s,/var/www,$(pwd)/public,g" /etc/apache2/sites-available/default
+ - sudo /etc/init.d/apache2 restart
+ - cd ../app-access-control
+#Run selenium
+ - "sh -e /etc/init.d/xvfb start"
+ - "export DISPLAY=:99.0"
+ - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.25.0.jar"
+ - "java -jar selenium-server-standalone-2.25.0.jar > /dev/null 2>&1 &"
+ - "sleep 30"
 
 before_script:
 # Create database
